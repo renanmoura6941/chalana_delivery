@@ -1,4 +1,4 @@
-class Produto {
+class ProdutoModelo {
   final String nome;
   final String descrissao;
   final List<String> imagens;
@@ -6,7 +6,7 @@ class Produto {
   final int acessos;
   final String categorias;
 
-  const Produto(this.nome, this.preco, this.descrissao, this.imagens,
+  const ProdutoModelo(this.nome, this.preco, this.descrissao, this.imagens,
       this.acessos, this.categorias);
 
   @override
