@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "463134150633",
+    "firebase_url": "https://chalana-delivery-a694b.firebaseio.com",
+    "project_id": "chalana-delivery-a694b",
+    "storage_bucket": "chalana-delivery-a694b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:463134150633:android:c761dd8dce647d508ec578",
+        "android_client_info": {
+          "package_name": "br.com.nanermoura.chalana_delivery"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "463134150633-qdssgak2uk0vgvkm1ca5pfmgvtkm3u1b.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "br.com.nanermoura.chalana_delivery",
+            "certificate_hash": "c8878be82ca7059ae65680e52c9a905f275bb8e2"
+          }
+        },
+        {
+          "client_id": "463134150633-1h18reqcc5t1fo188jghhggrcnut9rsp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAnG3iMcyVQJQRRaNO5OtXvCG0yVdwjcww"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "463134150633-1h18reqcc5t1fo188jghhggrcnut9rsp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
