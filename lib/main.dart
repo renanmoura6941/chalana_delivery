@@ -6,7 +6,7 @@ import 'package:get_it/get_it.dart';
 void main() {
   //Instanciar o repositorio.
   final GetIt getIt = GetIt.I;
-  getIt.registerSingleton(() => Repositorio());
+  getIt.registerSingleton<Repositorio>(Repositorio());
 
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
@@ -20,6 +20,15 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  final Repositorio repo = GetIt.I.get<Repositorio>();
+
+  @override
+  void initState() {
+    repo.getProdutos();
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return TelaPrincipal();

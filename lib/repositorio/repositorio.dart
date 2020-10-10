@@ -13,7 +13,7 @@ class Repositorio {
         nome: doc['nome'].toString(),
         preco: doc['preco'] as double,
         categorias: doc['categoria'].toString(),
-        imagens: doc['imagens'] as List<String>,
+        imagens: (doc['imagens'] as List).map((e) => e.toString()).toList(),
         descrissao: doc['descrissao'].toString(),
         acessos: doc['acessos'] as int,
       );
