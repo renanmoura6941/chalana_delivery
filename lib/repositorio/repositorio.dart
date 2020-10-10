@@ -2,7 +2,7 @@ import 'package:chalana_delivery/modelos/produto_modelo.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Repositorio {
-  Future<List<ProdutoModelo>> listaProdutos() async {
+  Future<List<ProdutoModelo>> getProdutos() async {
     final querySnapshot = await Firestore.instance
         .collection('produtos')
         .orderBy("acessos", descending: true)
