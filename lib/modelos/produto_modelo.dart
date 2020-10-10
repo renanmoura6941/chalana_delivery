@@ -6,8 +6,14 @@ class ProdutoModelo {
   final int acessos;
   final String categorias;
 
-  const ProdutoModelo(this.nome, this.preco, this.descrissao, this.imagens,
-      this.acessos, this.categorias);
+  const ProdutoModelo({
+    this.nome,
+    this.preco,
+    this.descrissao,
+    this.imagens,
+    this.acessos,
+    this.categorias,
+  });
 
   @override
   String toString() {

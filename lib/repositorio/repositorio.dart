@@ -2,7 +2,21 @@ import 'package:chalana_delivery/modelos/produto_modelo.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Repositorio {
-  List<ProdutoModelo> listaProdutos() {
-    // Firestore.instance.collection(path)
+  Future<List<ProdutoModelo>> listaProdutos() async {
+    final querySnapshot = await Firestore.instance
+        .collection('produtos')
+        .orderBy("acessos", descending: true)
+        .getDocuments();
+
+    return querySnapshot.documents.map((doc) {
+      return ProdutoModelo(
+        nome: doc['nome'].toString(),
+        preco: doc['preco'] as double,
+        categorias: doc['categoria'].toString(),
+        imagens: doc['imagens'] as List<String>,
+        descrissao: doc['descrissao'].toString(),
+        acessos: doc['acessos'] as int,
+      );
+    }).toList();
   }
 }
