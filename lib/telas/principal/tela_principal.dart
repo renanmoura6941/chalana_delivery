@@ -1,3 +1,4 @@
+import 'package:chalana_delivery/telas/principal/componentes/card.dart';
 import 'package:flutter/material.dart';
 
 class TelaPrincipal extends StatefulWidget {
@@ -17,7 +18,7 @@ class _TelaPrincipalState extends State<TelaPrincipal> {
       crossAxisSpacing: 10,
       mainAxisSpacing: 10,
       children: List.generate(data.length, (index) {
-        return Card();
+        return CardPrincipal();
       }),
     );
   }

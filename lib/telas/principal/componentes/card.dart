@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class Card extends StatelessWidget {
+class CardPrincipal extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
