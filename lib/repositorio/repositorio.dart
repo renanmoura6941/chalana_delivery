@@ -11,7 +11,7 @@ class Repositorio {
     return querySnapshot.documents.map((doc) {
       return ProdutoModelo(
         nome: doc['nome'].toString(),
-        preco: doc['preco'] * 1.0 as double,
+        preco: doc['preco'] as double,
         categorias: doc['categoria'].toString(),
         imagens: (doc['imagens'] as List).map((e) => e.toString()).toList(),
         descrissao: doc['descrissao'].toString(),
