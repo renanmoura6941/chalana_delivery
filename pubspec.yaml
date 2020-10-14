@@ -33,6 +33,7 @@ dependencies:
   firebase_storage: ^3.1.5
   provider: ^4.1.2
   get_it: ^5.0.1
+  carousel_pro: ^1.0.0
 
  
 
