@@ -26,6 +26,10 @@ class _TelaPrincipalState extends State<TelaPrincipal> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text("Chalana delivery",),
+      ),
       backgroundColor: Colors.white,
       body: SafeArea(
           child: Padding(
