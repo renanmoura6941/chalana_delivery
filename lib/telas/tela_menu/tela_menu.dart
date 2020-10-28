@@ -2,21 +2,15 @@ import 'package:chalana_delivery/telas/tela_carrinho/tela_carrinho.dart';
 import 'package:chalana_delivery/telas/tela_principal/tela_principal.dart';
 import 'package:flutter/material.dart';
 
-/// This is the main application widget.
-
-/// This is the stateful widget that the main application instantiates.
 class TelaMenu extends StatefulWidget {
   @override
   _TelaMenuState createState() => _TelaMenuState();
 }
 
-/// This is the private State class that goes with TelaMenu.
 class _TelaMenuState extends State<TelaMenu> {
-  int _selectedIndex = 0;
-  List<Widget> telas = [TelaPrincipal(), TelaCarrinho()];
 
-  static const TextStyle optionStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+  List<Widget> telas = [TelaPrincipal(), TelaCarrinho()];
+  int _selectedIndex = 0;
 
   void _onItemTapped(int index) {
     setState(() {
