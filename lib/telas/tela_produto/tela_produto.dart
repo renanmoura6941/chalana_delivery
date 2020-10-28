@@ -1,12 +1,12 @@
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_open_whatsapp/flutter_open_whatsapp.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class TelaProduto extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    
     List<String> imagens = [
       "https://delivery.supermuffato.com.br/arquivos/ids/258950-1000-1000/7897395099329.jpg?v=637127241430430000",
       "https://www.imigrantesbebidas.com.br/bebida/images/products/full/222_Cerveja_Heineken_Long_Neck_330_ml.jpg"
@@ -99,19 +99,21 @@ class TelaProduto extends StatelessWidget {
 
                       List<Map> dados = [produto, produto2];
 
-                     
                       String q = "%0A";
                       String divisor = "------------------------------------";
                       double total = 0;
-                       String mensagem = "Minha solicitação:$q";
+                      String mensagem = "Minha solicitação:$q";
                       for (var e in dados) {
                         mensagem +=
                             "$divisor$q*Produto*: ${e['nome']}$q*Quantidade*: ${e['quantidade']}$q*Preço da unidade*: R\$ ${e['unidade'].toStringAsFixed(2)}$q*Valor*: R\$ ${e['valor'].toStringAsFixed(2)}$q";
-                     total +=e['valor'];
-                     
+                        total += e['valor'];
                       }
 
-                      mensagem+=divisor+q+q+q+"*Preço total da solicitação*: ${total.toStringAsFixed(2)}";
+                      mensagem += divisor +
+                          q +
+                          q +
+                          q +
+                          "*Preço total da solicitação*: ${total.toStringAsFixed(2)}";
 
                       String url =
                           "https://api.whatsapp.com/send/?phone=5585992954232&text=${mensagem}&app_absent=0";
