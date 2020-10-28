@@ -1,6 +1,9 @@
+import 'package:chalana_delivery/modelos/pedido_modelo.dart';
 import 'package:chalana_delivery/telas/tela_carrinho/mock/pedidos_mock.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'components/card_produto_carrinho.dart';
+import 'components/confirm_button_carrinho.dart';
 
 class TelaCarrinho extends StatefulWidget {
   @override
@@ -8,6 +11,16 @@ class TelaCarrinho extends StatefulWidget {
 }
 
 class _TelaCarrinhoState extends State<TelaCarrinho> {
+  List<PedidoModelo> list_produto = [];
+
+  @override
+  void initState() {
+    setState(() {
+      list_produto = GetIt.I.get<List<PedidoModelo>>();
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,18 +29,18 @@ class _TelaCarrinhoState extends State<TelaCarrinho> {
         title: Text('Carrinho'),
       ),
       body: ListView.builder(
-        itemCount: MockCarrinho.pedidos_mock.length,
+        itemCount: list_produto.length + 1,
         itemBuilder: (_, index) {
+          if (index == list_produto.length) {
+            return ConfirmButtonCar(
+              onPressed: () {
+                print("Confirmar pedido");
+              },
+            );
+          }
           return CardProdutoCarrinho(
-            pedido: MockCarrinho.pedidos_mock[index],
+            pedido: list_produto[index],
           );
-        },
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          MockCarrinho.pedidos_mock.forEach((element) {
-            print(element.preco());
-          });
         },
       ),
     );

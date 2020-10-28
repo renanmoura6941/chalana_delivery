@@ -1,21 +1,21 @@
+import 'package:chalana_delivery/modelos/pedido_modelo.dart';
 import 'package:flutter/material.dart';
 
 import 'contador_widget.dart';
 
 class GerenciarProdCar extends StatefulWidget {
-  final double preco;
-  final void Function(int) onChange;
+  final PedidoModelo pedido;
 
-  const GerenciarProdCar({Key key, this.preco, this.onChange})
-      : super(key: key);
+  const GerenciarProdCar({
+    Key key,
+    this.pedido,
+  }) : super(key: key);
 
   @override
   _GerenciarProdCarState createState() => _GerenciarProdCarState();
 }
 
 class _GerenciarProdCarState extends State<GerenciarProdCar> {
-  int _current_qtd = 1;
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -24,23 +24,13 @@ class _GerenciarProdCarState extends State<GerenciarProdCar> {
       child: Row(
         children: [
           Expanded(
-            child: Container(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Expanded(
-                    child: ContadorButton(
-                      qtd_produto: _current_qtd,
-                      onTap: (newQtd) {
-                        setState(() {
-                          _current_qtd = newQtd;
-                          widget.onChange(_current_qtd);
-                        });
-                      },
-                    ),
-                  ),
-                ],
-              ),
+            child: ContadorButton(
+              qtd_produto: widget.pedido.quantidade,
+              onTap: (newQtd) {
+                setState(() {
+                  widget.pedido.quantidade = newQtd;
+                });
+              },
             ),
           ),
           Expanded(
@@ -50,7 +40,7 @@ class _GerenciarProdCarState extends State<GerenciarProdCar> {
               child: FittedBox(
                 fit: BoxFit.fitWidth,
                 child: Text(
-                  "R\$: ${(widget.preco * _current_qtd).toStringAsFixed(2)}",
+                  "R\$: ${(widget.pedido.produto.preco * widget.pedido.quantidade).toStringAsFixed(2)}",
                   style: TextStyle(
                     fontSize: 27,
                   ),
