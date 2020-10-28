@@ -2,7 +2,12 @@ import 'package:flutter/material.dart';
 
 import 'qtd_widget_button.dart';
 
-class CobtadorWidget extends StatelessWidget {
+class ContadorButton extends StatelessWidget {
+  final int qtd_produto;
+  final void Function(int qtd) onTap;
+
+  const ContadorButton({Key key, this.qtd_produto = 1, this.onTap})
+      : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -17,7 +22,11 @@ class CobtadorWidget extends StatelessWidget {
         mainAxisSize: MainAxisSize.max,
         children: [
           QtdWidgetButton(
-            onTap: () {},
+            onTap: () {
+              if (qtd_produto > 1) {
+                onTap(qtd_produto - 1);
+              }
+            },
             child: Text(
               '−',
               style: TextStyle(fontSize: 25),
@@ -26,18 +35,20 @@ class CobtadorWidget extends StatelessWidget {
           Expanded(
             child: Container(
               alignment: Alignment.center,
-              child: Text('12'),
+              child: Text("$qtd_produto"),
               decoration: BoxDecoration(
                 border: Border.symmetric(
                   vertical: BorderSide(
-                    color: Colors.blue,
+                    color: Colors.cyan,
                   ),
                 ),
               ),
             ),
           ),
           QtdWidgetButton(
-            onTap: () {},
+            onTap: () {
+              onTap(qtd_produto + 1);
+            },
             child: Text(
               '+',
               style: TextStyle(fontSize: 18),

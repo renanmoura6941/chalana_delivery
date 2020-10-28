@@ -11,14 +11,17 @@ class QtdProdCarWidget extends StatelessWidget {
       child: Row(
         children: [
           Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text('Quantidade: '),
-                Expanded(
-                  child: CobtadorWidget(),
-                ),
-              ],
+            child: Container(
+              // color: Colors.purple,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('Quantidade: '),
+                  Expanded(
+                    child: ContadorButton(),
+                  ),
+                ],
+              ),
             ),
           ),
           Expanded(

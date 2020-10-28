@@ -1,8 +1,9 @@
+import 'package:chalana_delivery/modelos/pedido_modelo.dart';
+import 'package:chalana_delivery/modelos/produto_modelo.dart';
+import 'package:chalana_delivery/telas/tela_carrinho/constants.dart';
+import 'package:chalana_delivery/telas/tela_carrinho/mock/pedidos_mock.dart';
 import 'package:flutter/material.dart';
-
-import 'components/produto_carrinho_widget.dart';
-import 'components/qtd_prod_car_widget.dart';
-import 'constants.dart';
+import 'components/card_produto_carrinho.dart';
 
 class TelaCarrinho extends StatefulWidget {
   @override
@@ -17,20 +18,41 @@ class _TelaCarrinhoState extends State<TelaCarrinho> {
         centerTitle: true,
         title: Text('Carrinho'),
       ),
-      body: Card(
-        // color: Colors.red,
-        elevation: 5,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            ProdutoCarrinhoWidget(
-              imagem: IMG,
-              nome: "Nome do produto",
-            ),
-            QtdProdCarWidget(),
-          ],
-        ),
+      body: ListView.builder(
+        itemCount: MockCarrinho.pedidos_mock.length,
+        itemBuilder: (_, index) {
+          return CardProdutoCarrinho(
+            pedido: MockCarrinho.pedidos_mock[index],
+          );
+        },
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          MockCarrinho.pedidos_mock.forEach((element) {
+            print(element.preco());
+          });
+        },
+      ),
+
+      // SingleChildScrollView(
+      //   child: Column(
+      //     children: widget.produtos.map((e) {
+      //       return CardProdutoCarrinho(
+      //         imagem: e.produto.imagens[0],
+      //         nome_produto: e.produto.nome,
+      //         preco: e.produto.preco,
+      //       );
+      //     }).toList(),
+
+      // [
+      //   CardProdutoCarrinho(
+      //     imagem: IMG,
+      //     nome_produto: "Cerveja Corona",
+      //     preco: 3.50,
+      //   ),
+      // ],
+      // ),
+      // ),
     );
   }
 }
