@@ -79,6 +79,13 @@ class _TelaEditarProdutoState extends State<TelaEditarProduto> {
       appBar: AppBar(
         title: Text("Editar produto"),
         centerTitle: true,
+        actions: [
+          IconButton(
+              icon: Icon(Icons.edit),
+              onPressed: () {
+                Navigator.pushNamed(context, "editar_ou_cadastrt_produto");
+              })
+        ],
       ),
       body: ListView(
         children: [

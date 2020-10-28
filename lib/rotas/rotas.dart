@@ -14,7 +14,7 @@ class Rotas {
       "login": MaterialPageRoute(builder: (_) => TelaLogin()),
       "cadastro": MaterialPageRoute(builder: (_) => TelaCadastrar()),
       "produto": MaterialPageRoute(builder: (_) => TelaProduto()),
-      "cadastrar produto":
+      "editar_ou_cadastrt_produto":
           MaterialPageRoute(builder: (_) => TelaEditarProduto()),
       "carrinho": MaterialPageRoute(builder: (_) => TelaCarrinho()),
       "principal": MaterialPageRoute(builder: (_) => TelaPrincipal()),
