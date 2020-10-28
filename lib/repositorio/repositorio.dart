@@ -10,6 +10,7 @@ class Repositorio {
 
     return querySnapshot.documents.map((doc) {
       return ProdutoModelo(
+        id:doc.documentID,
         nome: doc['nome'].toString(),
         preco: doc['preco'].toDouble(),
         categorias: doc['categoria'].toString(),
