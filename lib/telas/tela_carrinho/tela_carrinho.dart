@@ -1,4 +1,5 @@
 import 'package:chalana_delivery/modelos/pedido_modelo.dart';
+import 'package:chalana_delivery/modelos/produto_modelo.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -6,6 +7,8 @@ import 'components/card_produto_carrinho.dart';
 import 'components/confirm_button_carrinho.dart';
 
 class TelaCarrinho extends StatefulWidget {
+  ProdutoModelo produtoModelo;
+  TelaCarrinho({this.produtoModelo});
   @override
   _TelaCarrinhoState createState() => _TelaCarrinhoState();
 }

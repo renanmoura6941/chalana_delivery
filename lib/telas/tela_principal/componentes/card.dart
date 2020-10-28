@@ -9,7 +9,7 @@ class CardPrincipal extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.pushNamed(context, "produto");
+        Navigator.pushNamed(context, "produto", arguments: produtoModelo);
       },
       child: Container(
         child: Column(

@@ -1,27 +1,28 @@
 import 'package:carousel_pro/carousel_pro.dart';
-import 'package:flutter/foundation.dart';
+import 'package:chalana_delivery/modelos/produto_modelo.dart';
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class TelaProduto extends StatelessWidget {
+  ProdutoModelo produtoModelo;
+  TelaProduto(this.produtoModelo);
   @override
   Widget build(BuildContext context) {
-    List<String> imagens = [
-      "https://delivery.supermuffato.com.br/arquivos/ids/258950-1000-1000/7897395099329.jpg?v=637127241430430000",
-      "https://www.imigrantesbebidas.com.br/bebida/images/products/full/222_Cerveja_Heineken_Long_Neck_330_ml.jpg"
-    ];
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Cerveja"),
+        title: Text(produtoModelo.nome),
         centerTitle: true,
         actions: [
-          IconButton(icon: Icon(Icons.edit), onPressed: (){
-            Navigator.pushNamed(context, "tela_editar_produto");
-          }),
-          IconButton(icon: Icon(Icons.add), onPressed: (){
-            Navigator.pushNamed(context, "tela_adicionar_produto");
-          })
+          IconButton(
+              icon: Icon(Icons.edit),
+              onPressed: () {
+                Navigator.pushNamed(context, "tela_editar_produto");
+              }),
+          IconButton(
+              icon: Icon(Icons.add),
+              onPressed: () {
+                Navigator.pushNamed(context, "tela_adicionar_produto");
+              })
         ],
       ),
       body: ListView(
@@ -32,7 +33,7 @@ class TelaProduto extends StatelessWidget {
               dotSize: 6,
               //dotBgColor: Colors.transparent,
               autoplay: false,
-              images: imagens.map((url) {
+              images: produtoModelo.imagens.map((url) {
                 return NetworkImage(url);
               }).toList(),
               dotIncreasedColor: Colors.blue,
@@ -46,7 +47,7 @@ class TelaProduto extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(
-                  "product.name",
+                  produtoModelo.nome,
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
                 ),
                 Padding(
@@ -60,7 +61,7 @@ class TelaProduto extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  'R\$ 19.99',
+                  'R\$ '+ produtoModelo.preco.toStringAsFixed(2),
                   style: TextStyle(
                     fontSize: 22.0,
                     fontWeight: FontWeight.bold,
@@ -75,7 +76,7 @@ class TelaProduto extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  "product.description",
+                  produtoModelo.descrissao,
                   style: const TextStyle(fontSize: 16),
                 ),
                 SizedBox(
@@ -91,7 +92,7 @@ class TelaProduto extends StatelessWidget {
                       style: TextStyle(fontSize: 18),
                     ),
                     onPressed: () async {
-                      Navigator.pushNamed(context, "carrinho");
+                      Navigator.pushNamed(context, "carrinho", arguments: produtoModelo);
                     },
                   ),
                 )
@@ -99,9 +100,7 @@ class TelaProduto extends StatelessWidget {
             ),
           )
         ],
-        
       ),
-     
     );
   }
 }

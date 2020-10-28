@@ -13,12 +13,12 @@ class Rotas {
     final Map<String, dynamic> routes = {
       "login": MaterialPageRoute(builder: (_) => TelaLogin()),
       "cadastro": MaterialPageRoute(builder: (_) => TelaCadastrar()),
-      "produto": MaterialPageRoute(builder: (_) => TelaProduto()),
+      "produto": MaterialPageRoute(builder: (_) => TelaProduto(args)),
       "tela_editar_produto":
           MaterialPageRoute(builder: (_) => TelaEditarProduto()),
       "tela_adicionar_produto":
           MaterialPageRoute(builder: (_) => TelaAdicionarProduto()),
-      "carrinho": MaterialPageRoute(builder: (_) => TelaCarrinho()),
+      "carrinho": MaterialPageRoute(builder: (_) => TelaCarrinho(produtoModelo:args ,)),
       "principal": MaterialPageRoute(builder: (_) => TelaPrincipal()),
     };
     if (routes.containsKey(settings.name)) {
