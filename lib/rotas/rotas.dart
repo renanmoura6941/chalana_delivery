@@ -1,11 +1,24 @@
-
+import 'package:chalana_delivery/telas/tela_cadastrar/tela_cadastrar.dart';
+import 'package:chalana_delivery/telas/tela_carrinho/tela_carrinho.dart';
+import 'package:chalana_delivery/telas/tela_editar_produto/tela_editar_produto.dart';
+import 'package:chalana_delivery/telas/tela_login/tela_login.dart';
+import 'package:chalana_delivery/telas/tela_produto/tela_produto.dart';
 import 'package:flutter/material.dart';
 
-class RouterGenerator {
+import '../tela_principal.dart';
+
+class Rotas {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     final args = settings.arguments;
     final Map<String, dynamic> routes = {
-      //  "Conteúdos Gerais": MaterialPageRoute(builder: (_) => GeneralContent(args: args,)),
+      "login": MaterialPageRoute(builder: (_) => TelaLogin()),
+      "cadastro": MaterialPageRoute(builder: (_) => TelaCadastrar()),
+      "produto": MaterialPageRoute(builder: (_) => TelaProduto()),
+      "cadastrar produto":
+          MaterialPageRoute(builder: (_) => TelaEditarProduto()),
+      "carrinho": MaterialPageRoute(builder: (_) => TelaCarrinho()),
+      "principal": MaterialPageRoute(builder: (_) => TelaPrincipal()),
+
       //   "Conteúdos Específicos":MaterialPageRoute(builder: (_) => SpecifcContent(args: args)),
       //   "Recursos Didáticos":MaterialPageRoute(builder: (_) => DidacticResources(args: args)),
       //      "development": MaterialPageRoute(builder: (_) => ScreenDevelopment()),

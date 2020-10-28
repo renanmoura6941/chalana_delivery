@@ -1,4 +1,4 @@
-import 'package:chalana_delivery/telas/principal/componentes/card.dart';
+import 'package:chalana_delivery/telas/tela_principal/componentes/card.dart';
 import 'package:flutter/material.dart';
 
 class TelaPrincipal extends StatefulWidget {
