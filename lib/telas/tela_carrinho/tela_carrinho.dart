@@ -89,6 +89,11 @@ class _TelaCarrinhoState extends State<TelaCarrinho> {
                 }
                 return CardProdutoCarrinho(
                   pedido: list_produto[index],
+                  onPressed: () {
+                    setState(() {
+                      list_produto.removeAt(index);
+                    });
+                  },
                 );
               },
             ),
