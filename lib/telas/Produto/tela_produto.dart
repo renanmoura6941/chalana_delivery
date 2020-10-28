@@ -72,17 +72,15 @@ class TelaProduto extends StatelessWidget {
                   height: 30,
                 ),
                 Container(
-                  
                   width: double.infinity,
                   height: 45,
                   child: RaisedButton(
                     color: Colors.blue,
-                    child: Text("Adicionar ao carrinho", style: TextStyle(
-                      fontSize: 18
-                    ),),
-                    onPressed: (){
-
-                    },
+                    child: Text(
+                      "Adicionar ao carrinho",
+                      style: TextStyle(fontSize: 18),
+                    ),
+                    onPressed: () {},
                   ),
                 )
               ],
