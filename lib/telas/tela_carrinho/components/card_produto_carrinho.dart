@@ -19,10 +19,7 @@ class CardProdutoCarrinho extends StatelessWidget {
             produto: pedido.produto,
           ),
           GerenciarProdCar(
-            preco: pedido.produto.preco,
-            onChange: (qtd) {
-              pedido.quantidade = qtd;
-            },
+            pedido: pedido,
           ),
         ],
       ),
