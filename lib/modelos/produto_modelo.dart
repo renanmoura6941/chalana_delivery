@@ -18,6 +18,6 @@ class ProdutoModelo {
 
   @override
   String toString() {
-    return "nome: $nome, descrissao: $descrissao,preco: $preco acessos: $acessos, categorias: $categorias, imagens: $imagens";
+    return "id: $id, nome: $nome, descrissao: $descrissao,preco: $preco acessos: $acessos, categorias: $categorias, imagens: $imagens";
   }
 }
