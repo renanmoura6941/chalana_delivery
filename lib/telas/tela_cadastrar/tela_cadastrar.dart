@@ -1,6 +1,6 @@
   
 
-import 'package:chalana_delivery/telas/tela_cadastrar/model/usuario.dart';
+import 'package:chalana_delivery/modelos/usuario_modelo.dart';
 import 'package:flutter/material.dart';
 
 
