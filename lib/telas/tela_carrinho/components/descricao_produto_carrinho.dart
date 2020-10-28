@@ -6,11 +6,6 @@ class DescricaoProdutoCarrinho extends StatelessWidget {
 
   const DescricaoProdutoCarrinho({Key key, this.produto}) : super(key: key);
 
-  // final String imagem;
-  // final String nome_produto;
-
-  // const DescricaoProdutoCarrinho({Key key, this.imagem, this.nome_produto})
-  //     : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Container(
