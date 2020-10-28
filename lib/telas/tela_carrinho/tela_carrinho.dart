@@ -12,13 +12,12 @@ class TelaCarrinho extends StatefulWidget {
 }
 
 class _TelaCarrinhoState extends State<TelaCarrinho> {
-  List<PedidoModelo> list_produto = [];
   final controller = ControllerCarriho();
 
   @override
   void initState() {
     setState(() {
-      list_produto = GetIt.I.get<List<PedidoModelo>>();
+      controller.list_produto = GetIt.I.get<List<PedidoModelo>>();
     });
     super.initState();
   }
@@ -30,7 +29,7 @@ class _TelaCarrinhoState extends State<TelaCarrinho> {
         centerTitle: true,
         title: Text('Carrinho'),
       ),
-      body: list_produto.isEmpty
+      body: controller.list_produto.isEmpty
           ? Center(
               child: Text(
                 "Lista vazia!",
@@ -40,9 +39,9 @@ class _TelaCarrinhoState extends State<TelaCarrinho> {
               ),
             )
           : ListView.builder(
-              itemCount: list_produto.length + 1,
+              itemCount: controller.list_produto.length + 1,
               itemBuilder: (_, index) {
-                if (index == list_produto.length) {
+                if (index == controller.list_produto.length) {
                   return ConfirmButtonCar(
                     onPressed: () async {
                       await controller.confirmarPedido();
@@ -50,10 +49,10 @@ class _TelaCarrinhoState extends State<TelaCarrinho> {
                   );
                 }
                 return CardProdutoCarrinho(
-                  pedido: list_produto[index],
+                  pedido: controller.list_produto[index],
                   onPressed: () {
                     setState(() {
-                      list_produto.removeAt(index);
+                      controller.list_produto.removeAt(index);
                     });
                   },
                 );
