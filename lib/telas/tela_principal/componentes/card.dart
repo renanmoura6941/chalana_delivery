@@ -1,12 +1,15 @@
+import 'package:chalana_delivery/helpers/api_whats_app.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_open_whatsapp/flutter_open_whatsapp.dart';
+
 
 class CardPrincipal extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: (){
-
+      onTap: () {
         Navigator.pushNamed(context, "produto");
+        
       },
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
