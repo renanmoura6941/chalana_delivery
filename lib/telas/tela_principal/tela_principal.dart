@@ -36,27 +36,20 @@ class _TelaPrincipalState extends State<TelaPrincipal> {
       body: SafeArea(
           child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15),
-        child: SingleChildScrollView(
-          child: Center(
-            child: FutureBuilder(
-                initialData: Center(
-                  child: CircularProgressIndicator(),
-                ),
-                future: GetIt.I.get<Repositorio>().getProdutos(),
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    return Column(
-                      children: [
-                        gridView(snapshot.data),
-                      ],
-                    );
-                  } else {
-                    return Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  }
-                }),
-          ),
+        child: Center(
+          child: FutureBuilder(
+              future: GetIt.I.get<Repositorio>().getProdutos(),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return Column(
+                    children: [
+                      gridView(snapshot.data),
+                    ],
+                  );
+                } else {
+                  return CircularProgressIndicator();
+                }
+              }),
         ),
       )),
     );
