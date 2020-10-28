@@ -1,4 +1,5 @@
 class ProdutoModelo {
+  final String id;
   final String nome;
   final String descrissao;
   final List<String> imagens;
@@ -6,7 +7,7 @@ class ProdutoModelo {
   final int acessos;
   final String categorias;
 
-  const ProdutoModelo({
+  const ProdutoModelo({this.id, 
     this.nome,
     this.preco,
     this.descrissao,
