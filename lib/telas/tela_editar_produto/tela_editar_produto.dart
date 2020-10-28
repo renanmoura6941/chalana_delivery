@@ -13,7 +13,7 @@ class _TelaEditarProdutoState extends State<TelaEditarProduto> {
   File _image;
   final picker = ImagePicker();
 
-  Future getImage() async {
+  Future _imgFromCamera() async {
     final pickedFile = await picker.getImage(source: ImageSource.camera);
 
     setState(() {
@@ -23,6 +23,49 @@ class _TelaEditarProdutoState extends State<TelaEditarProduto> {
         print('No image selected.');
       }
     });
+  }
+
+  Future _imgFromGallery() async {
+    final pickedFile = await picker.getImage(source: ImageSource.gallery);
+
+    if (pickedFile != null) {
+      _image = File(pickedFile.path);
+      setState(() {
+        _image = File(pickedFile.path);
+      });
+    } else {
+      print('No image selected.');
+    }
+  }
+
+  void _showPicker(context) {
+    showModalBottomSheet(
+        context: context,
+        builder: (BuildContext bc) {
+          return SafeArea(
+            child: Container(
+              child:  Wrap(
+                children: <Widget>[
+                   ListTile(
+                      leading:  Icon(Icons.photo_library),
+                      title:  Text('Galeria'),
+                      onTap: () {
+                        _imgFromGallery();
+                        Navigator.of(context).pop();
+                      }),
+                   ListTile(
+                    leading:  Icon(Icons.photo_camera),
+                    title:  Text('Camera'),
+                    onTap: () {
+                      _imgFromCamera();
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ],
+              ),
+            ),
+          );
+        });
   }
 
   @override
@@ -61,8 +104,8 @@ class _TelaEditarProdutoState extends State<TelaEditarProduto> {
                         radius: 30,
                         child: Icon(Icons.photo_camera),
                       ),
-                      onTap: () async {
-                        await getImage();
+                      onTap: ()  {
+                        _showPicker(context);
                       },
                     ))
               ],
