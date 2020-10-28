@@ -4,7 +4,7 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../modelos/pedido_modelo.dart';
 
 class ControllerCarriho {
-  List<PedidoModelo> list_produto = [];
+  List<PedidoModelo> list_pedidos = [];
 
   Future<void> confirmarPedido() async {
     print("Confirmar pedido");
