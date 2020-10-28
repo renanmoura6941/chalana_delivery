@@ -29,7 +29,7 @@ class _MyAppState extends State<MyApp> {
 
   @override
   void initState() {
-    repo.getProdutos();
+     repo.getProdutos();
 
     super.initState();
   }

@@ -1,18 +1,17 @@
-import 'package:chalana_delivery/helpers/api_whats_app.dart';
+import 'package:chalana_delivery/modelos/produto_modelo.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_open_whatsapp/flutter_open_whatsapp.dart';
-
 
 class CardPrincipal extends StatelessWidget {
+  ProdutoModelo produtoModelo;
+  CardPrincipal(this.produtoModelo);
+
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
         Navigator.pushNamed(context, "produto");
-        
       },
       child: Container(
-        
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -20,19 +19,19 @@ class CardPrincipal extends StatelessWidget {
             AspectRatio(
               aspectRatio: 1.7,
               child: Image.network(
-                "https://www.imigrantesbebidas.com.br/bebida/images/products/full/222_Cerveja_Heineken_Long_Neck_330_ml.jpg",
+                produtoModelo.imagens.first,
               ),
             ),
             Container(
               color: Colors.transparent,
-              child: Text('Prouto x sfdws fsdfads ewer wsfer afd',
+              child: Text(produtoModelo.nome,
                   maxLines: 2,
                   style: TextStyle(
                     fontSize: 15,
                   )),
             ),
             Text(
-              "R\$ 19,99",
+              "R\$ " + produtoModelo.preco.toStringAsFixed(2),
               maxLines: 2,
               style: TextStyle(
                 fontWeight: FontWeight.w900,
