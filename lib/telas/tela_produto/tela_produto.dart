@@ -15,6 +15,14 @@ class TelaProduto extends StatelessWidget {
       appBar: AppBar(
         title: Text("Cerveja"),
         centerTitle: true,
+        actions: [
+          IconButton(icon: Icon(Icons.edit), onPressed: (){
+            Navigator.pushNamed(context, "tela_editar_produto");
+          }),
+          IconButton(icon: Icon(Icons.add), onPressed: (){
+            Navigator.pushNamed(context, "tela_adicionar_produto");
+          })
+        ],
       ),
       body: ListView(
         children: [
@@ -91,7 +99,9 @@ class TelaProduto extends StatelessWidget {
             ),
           )
         ],
+        
       ),
+     
     );
   }
 }

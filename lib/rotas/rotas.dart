@@ -1,3 +1,4 @@
+import 'package:chalana_delivery/telas/tela_adicionar_produto/tela_editar_produto.dart';
 import 'package:chalana_delivery/telas/tela_cadastrar/tela_cadastrar.dart';
 import 'package:chalana_delivery/telas/tela_carrinho/tela_carrinho.dart';
 import 'package:chalana_delivery/telas/tela_editar_produto/tela_editar_produto.dart';
@@ -6,7 +7,6 @@ import 'package:chalana_delivery/telas/tela_principal/tela_principal.dart';
 import 'package:chalana_delivery/telas/tela_produto/tela_produto.dart';
 import 'package:flutter/material.dart';
 
-
 class Rotas {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     final args = settings.arguments;
@@ -14,8 +14,10 @@ class Rotas {
       "login": MaterialPageRoute(builder: (_) => TelaLogin()),
       "cadastro": MaterialPageRoute(builder: (_) => TelaCadastrar()),
       "produto": MaterialPageRoute(builder: (_) => TelaProduto()),
-      "editar_ou_cadastrt_produto":
+      "tela_editar_produto":
           MaterialPageRoute(builder: (_) => TelaEditarProduto()),
+      "tela_adicionar_produto":
+          MaterialPageRoute(builder: (_) => TelaAdicionarProduto()),
       "carrinho": MaterialPageRoute(builder: (_) => TelaCarrinho()),
       "principal": MaterialPageRoute(builder: (_) => TelaPrincipal()),
     };

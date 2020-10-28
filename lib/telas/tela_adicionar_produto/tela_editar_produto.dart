@@ -1,14 +1,15 @@
 import 'dart:io';
+
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
-class TelaEditarProduto extends StatefulWidget {
+class TelaAdicionarProduto extends StatefulWidget {
   @override
-  _TelaEditarProdutoState createState() => _TelaEditarProdutoState();
+  _TelaAdicionarProdutoState createState() => _TelaAdicionarProdutoState();
 }
 
-class _TelaEditarProdutoState extends State<TelaEditarProduto> {
+class _TelaAdicionarProdutoState extends State<TelaAdicionarProduto> {
   File _image;
   final picker = ImagePicker();
 
@@ -76,7 +77,7 @@ class _TelaEditarProdutoState extends State<TelaEditarProduto> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Editar produto"),
+        title: Text("Adicionar produto"),
         centerTitle: true,
        
       ),
