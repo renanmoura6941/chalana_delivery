@@ -18,10 +18,6 @@ class Rotas {
           MaterialPageRoute(builder: (_) => TelaEditarProduto()),
       "carrinho": MaterialPageRoute(builder: (_) => TelaCarrinho()),
       "principal": MaterialPageRoute(builder: (_) => TelaPrincipal()),
-
-      //   "Conteúdos Específicos":MaterialPageRoute(builder: (_) => SpecifcContent(args: args)),
-      //   "Recursos Didáticos":MaterialPageRoute(builder: (_) => DidacticResources(args: args)),
-      //      "development": MaterialPageRoute(builder: (_) => ScreenDevelopment()),
     };
     if (routes.containsKey(settings.name)) {
       return routes[settings.name];
