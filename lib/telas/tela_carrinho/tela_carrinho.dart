@@ -1,5 +1,4 @@
 import 'package:chalana_delivery/modelos/pedido_modelo.dart';
-import 'package:chalana_delivery/telas/tela_carrinho/mock/pedidos_mock.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'components/card_produto_carrinho.dart';
@@ -28,21 +27,30 @@ class _TelaCarrinhoState extends State<TelaCarrinho> {
         centerTitle: true,
         title: Text('Carrinho'),
       ),
-      body: ListView.builder(
-        itemCount: list_produto.length + 1,
-        itemBuilder: (_, index) {
-          if (index == list_produto.length) {
-            return ConfirmButtonCar(
-              onPressed: () {
-                print("Confirmar pedido");
+      body: list_produto.isEmpty
+          ? Center(
+              child: Text(
+                "Lista vazia!",
+                style: TextStyle(
+                  fontSize: 30,
+                ),
+              ),
+            )
+          : ListView.builder(
+              itemCount: list_produto.length + 1,
+              itemBuilder: (_, index) {
+                if (index == list_produto.length) {
+                  return ConfirmButtonCar(
+                    onPressed: () {
+                      print("Confirmar pedido");
+                    },
+                  );
+                }
+                return CardProdutoCarrinho(
+                  pedido: list_produto[index],
+                );
               },
-            );
-          }
-          return CardProdutoCarrinho(
-            pedido: list_produto[index],
-          );
-        },
-      ),
+            ),
     );
   }
 }
