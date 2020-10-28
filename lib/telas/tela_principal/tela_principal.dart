@@ -10,6 +10,7 @@ class _TelaPrincipalState extends State<TelaPrincipal> {
 
   Widget gridView() {
     List<int> data = List.generate(10, (index) => index);
+    
     return GridView.count(
       physics: BouncingScrollPhysics(),
       padding: EdgeInsets.symmetric(vertical: 10),
