@@ -2,19 +2,18 @@ import 'package:flutter/material.dart';
 
 import 'contador_widget.dart';
 
-class QtdEPrecoProdutoCarrinho extends StatefulWidget {
+class GerenciarProdCar extends StatefulWidget {
   final double preco;
   final void Function(int) onChange;
 
-  const QtdEPrecoProdutoCarrinho({Key key, this.preco, this.onChange})
+  const GerenciarProdCar({Key key, this.preco, this.onChange})
       : super(key: key);
 
   @override
-  _QtdEPrecoProdutoCarrinhoState createState() =>
-      _QtdEPrecoProdutoCarrinhoState();
+  _GerenciarProdCarState createState() => _GerenciarProdCarState();
 }
 
-class _QtdEPrecoProdutoCarrinhoState extends State<QtdEPrecoProdutoCarrinho> {
+class _GerenciarProdCarState extends State<GerenciarProdCar> {
   int _current_qtd = 1;
 
   @override
@@ -22,16 +21,13 @@ class _QtdEPrecoProdutoCarrinhoState extends State<QtdEPrecoProdutoCarrinho> {
     return Container(
       padding: EdgeInsets.all(8),
       height: 60,
-      // color: Colors.red,
       child: Row(
         children: [
           Expanded(
             child: Container(
-              // color: Colors.purple,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Text('Quantidade: '),
                   Expanded(
                     child: ContadorButton(
                       qtd_produto: _current_qtd,
@@ -49,13 +45,11 @@ class _QtdEPrecoProdutoCarrinhoState extends State<QtdEPrecoProdutoCarrinho> {
           ),
           Expanded(
             child: Container(
-              // color: Colors.amber,
               alignment: Alignment.bottomRight,
               height: double.infinity,
               child: FittedBox(
                 fit: BoxFit.fitWidth,
                 child: Text(
-                  // "R\$: 1000000000000000000000000000000",
                   "R\$: ${(widget.preco * _current_qtd).toStringAsFixed(2)}",
                   style: TextStyle(
                     fontSize: 27,

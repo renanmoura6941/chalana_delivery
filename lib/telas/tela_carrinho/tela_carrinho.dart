@@ -1,6 +1,3 @@
-import 'package:chalana_delivery/modelos/pedido_modelo.dart';
-import 'package:chalana_delivery/modelos/produto_modelo.dart';
-import 'package:chalana_delivery/telas/tela_carrinho/constants.dart';
 import 'package:chalana_delivery/telas/tela_carrinho/mock/pedidos_mock.dart';
 import 'package:flutter/material.dart';
 import 'components/card_produto_carrinho.dart';
@@ -33,26 +30,6 @@ class _TelaCarrinhoState extends State<TelaCarrinho> {
           });
         },
       ),
-
-      // SingleChildScrollView(
-      //   child: Column(
-      //     children: widget.produtos.map((e) {
-      //       return CardProdutoCarrinho(
-      //         imagem: e.produto.imagens[0],
-      //         nome_produto: e.produto.nome,
-      //         preco: e.produto.preco,
-      //       );
-      //     }).toList(),
-
-      // [
-      //   CardProdutoCarrinho(
-      //     imagem: IMG,
-      //     nome_produto: "Cerveja Corona",
-      //     preco: 3.50,
-      //   ),
-      // ],
-      // ),
-      // ),
     );
   }
 }
