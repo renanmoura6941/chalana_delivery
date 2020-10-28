@@ -5,7 +5,8 @@ class CardPrincipal extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: (){
-        
+
+        Navigator.pushNamed(context, "produto");
       },
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,

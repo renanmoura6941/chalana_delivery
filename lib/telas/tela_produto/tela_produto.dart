@@ -80,7 +80,9 @@ class TelaProduto extends StatelessWidget {
                       "Adicionar ao carrinho",
                       style: TextStyle(fontSize: 18),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pushNamed(context, "carrinho");
+                    },
                   ),
                 )
               ],

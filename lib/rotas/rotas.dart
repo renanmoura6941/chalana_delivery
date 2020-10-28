@@ -2,10 +2,10 @@ import 'package:chalana_delivery/telas/tela_cadastrar/tela_cadastrar.dart';
 import 'package:chalana_delivery/telas/tela_carrinho/tela_carrinho.dart';
 import 'package:chalana_delivery/telas/tela_editar_produto/tela_editar_produto.dart';
 import 'package:chalana_delivery/telas/tela_login/tela_login.dart';
+import 'package:chalana_delivery/telas/tela_principal/tela_principal.dart';
 import 'package:chalana_delivery/telas/tela_produto/tela_produto.dart';
 import 'package:flutter/material.dart';
 
-import '../tela_principal.dart';
 
 class Rotas {
   static Route<dynamic> generateRoute(RouteSettings settings) {
