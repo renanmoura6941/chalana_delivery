@@ -44,18 +44,18 @@ class _TelaEditarProdutoState extends State<TelaEditarProduto> {
         builder: (BuildContext bc) {
           return SafeArea(
             child: Container(
-              child:  Wrap(
+              child: Wrap(
                 children: <Widget>[
-                   ListTile(
-                      leading:  Icon(Icons.photo_library),
-                      title:  Text('Galeria'),
+                  ListTile(
+                      leading: Icon(Icons.photo_library),
+                      title: Text('Galeria'),
                       onTap: () {
                         _imgFromGallery();
                         Navigator.of(context).pop();
                       }),
-                   ListTile(
-                    leading:  Icon(Icons.photo_camera),
-                    title:  Text('Camera'),
+                  ListTile(
+                    leading: Icon(Icons.photo_camera),
+                    title: Text('Camera'),
                     onTap: () {
                       _imgFromCamera();
                       Navigator.of(context).pop();
@@ -104,7 +104,7 @@ class _TelaEditarProdutoState extends State<TelaEditarProduto> {
                         radius: 30,
                         child: Icon(Icons.photo_camera),
                       ),
-                      onTap: ()  {
+                      onTap: () {
                         _showPicker(context);
                       },
                     ))

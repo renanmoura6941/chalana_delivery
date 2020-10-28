@@ -1,4 +1,5 @@
 import 'package:chalana_delivery/repositorio/repositorio.dart';
+import 'package:chalana_delivery/router/router_generator.dart';
 import 'package:chalana_delivery/telas/Produto/tela_produto.dart';
 import 'package:chalana_delivery/telas/principal/tela_principal.dart';
 import 'package:chalana_delivery/telas/tela_editar_produto/tela_editar_produto.dart';
@@ -13,6 +14,7 @@ void main() {
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
     home: MyApp(),
+    onGenerateRoute: RouterGenerator.generateRoute,
   ));
 }
 
