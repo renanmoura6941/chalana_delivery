@@ -7,8 +7,9 @@ class ConfirmButtonCar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      padding: EdgeInsets.all(16),
       width: double.infinity,
-      height: 45,
+      height: 75,
       child: RaisedButton(
         color: Colors.blue,
         child: Text(
