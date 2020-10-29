@@ -23,7 +23,6 @@ class TelaProduto extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var listaPedidos = GetIt.I.get<List<PedidoModelo>>();
-
     return Scaffold(
       appBar: AppBar(
         title: Text(produtoModelo.nome),
@@ -32,7 +31,7 @@ class TelaProduto extends StatelessWidget {
           IconButton(
               icon: Icon(Icons.edit),
               onPressed: () {
-                Navigator.pushNamed(context, "tela_editar_produto");
+                Navigator.pushNamed(context, "tela_editar_produto",arguments: produtoModelo);
               }),
           IconButton(
               icon: Icon(Icons.add),

@@ -1,9 +1,12 @@
 import 'dart:io';
 import 'package:carousel_pro/carousel_pro.dart';
+import 'package:chalana_delivery/modelos/produto_modelo.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 class TelaEditarProduto extends StatefulWidget {
+  ProdutoModelo produtoModelo;
+  TelaEditarProduto(this.produtoModelo);
   @override
   _TelaEditarProdutoState createState() => _TelaEditarProdutoState();
 }
@@ -78,7 +81,6 @@ class _TelaEditarProdutoState extends State<TelaEditarProduto> {
       appBar: AppBar(
         title: Text("Editar produto"),
         centerTitle: true,
-       
       ),
       body: ListView(
         children: [
@@ -151,7 +153,6 @@ class _TelaEditarProdutoState extends State<TelaEditarProduto> {
           )
         ],
       ),
-    
     );
   }
 }

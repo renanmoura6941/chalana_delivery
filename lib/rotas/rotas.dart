@@ -1,3 +1,4 @@
+import 'package:chalana_delivery/modelos/produto_modelo.dart';
 import 'package:chalana_delivery/telas/tela_adicionar_produto/tela_editar_produto.dart';
 import 'package:chalana_delivery/telas/tela_cadastrar/tela_cadastrar.dart';
 import 'package:chalana_delivery/telas/tela_carrinho/tela_carrinho.dart';
@@ -15,7 +16,7 @@ class Rotas {
       "cadastro": MaterialPageRoute(builder: (_) => TelaCadastrar()),
       "produto": MaterialPageRoute(builder: (_) => TelaProduto(args)),
       "tela_editar_produto":
-          MaterialPageRoute(builder: (_) => TelaEditarProduto()),
+          MaterialPageRoute(builder: (_) => TelaEditarProduto(args)),
       "tela_adicionar_produto":
           MaterialPageRoute(builder: (_) => TelaAdicionarProduto()),
       "carrinho": MaterialPageRoute(builder: (_) => TelaCarrinho(produtoModelo:args ,)),
