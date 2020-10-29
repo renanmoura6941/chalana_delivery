@@ -31,7 +31,8 @@ class TelaProduto extends StatelessWidget {
           IconButton(
               icon: Icon(Icons.edit),
               onPressed: () {
-                Navigator.pushNamed(context, "tela_editar_produto",arguments: produtoModelo);
+                Navigator.pushNamed(context, "tela_editar_produto",
+                    arguments: produtoModelo);
               }),
           IconButton(
               icon: Icon(Icons.add),
@@ -49,7 +50,18 @@ class TelaProduto extends StatelessWidget {
               //dotBgColor: Colors.transparent,
               autoplay: false,
               images: produtoModelo.imagens.map((url) {
-                return NetworkImage(url);
+                return Image.network(url, loadingBuilder: (BuildContext context,
+                    Widget child, ImageChunkEvent loadingProgress) {
+                  if (loadingProgress == null) return child;
+                  return Center(
+                    child: CircularProgressIndicator(
+                      value: loadingProgress.expectedTotalBytes != null
+                          ? loadingProgress.cumulativeBytesLoaded /
+                              loadingProgress.expectedTotalBytes
+                          : null,
+                    ),
+                  );
+                });
               }).toList(),
               dotIncreasedColor: Colors.blue,
               dotBgColor: Colors.transparent,

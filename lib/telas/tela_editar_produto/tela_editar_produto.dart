@@ -12,8 +12,12 @@ class TelaEditarProduto extends StatefulWidget {
 }
 
 class _TelaEditarProdutoState extends State<TelaEditarProduto> {
-  File _image;
+  TextEditingController nomeController = TextEditingController();
+  TextEditingController precoController = TextEditingController();
+  TextEditingController descricaoController = TextEditingController();
+  List<String> imagens = [];
   final picker = ImagePicker();
+  File _image;
 
   Future _imgFromCamera() async {
     final pickedFile = await picker.getImage(source: ImageSource.camera);
@@ -70,13 +74,21 @@ class _TelaEditarProdutoState extends State<TelaEditarProduto> {
         });
   }
 
+  void carregarDadosProduto() {
+    nomeController.text = widget.produtoModelo.nome;
+    precoController.text = widget.produtoModelo.preco.toStringAsFixed(2);
+    descricaoController.text = widget.produtoModelo.descrissao;
+    imagens = widget.produtoModelo.imagens;
+  }
+
+  @override
+  void initState() {
+    carregarDadosProduto();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    List<String> imagens = [
-      "https://delivery.supermuffato.com.br/arquivos/ids/258950-1000-1000/7897395099329.jpg?v=637127241430430000",
-      "https://www.imigrantesbebidas.com.br/bebida/images/products/full/222_Cerveja_Heineken_Long_Neck_330_ml.jpg"
-    ];
-
     return Scaffold(
       appBar: AppBar(
         title: Text("Editar produto"),
@@ -92,7 +104,19 @@ class _TelaEditarProdutoState extends State<TelaEditarProduto> {
                   dotSize: 6,
                   autoplay: false,
                   images: imagens.map((url) {
-                    return NetworkImage(url);
+                    return Image.network(url, loadingBuilder:
+                        (BuildContext context, Widget child,
+                            ImageChunkEvent loadingProgress) {
+                      if (loadingProgress == null) return child;
+                      return Center(
+                        child: CircularProgressIndicator(
+                          value: loadingProgress.expectedTotalBytes != null
+                              ? loadingProgress.cumulativeBytesLoaded /
+                                  loadingProgress.expectedTotalBytes
+                              : null,
+                        ),
+                      );
+                    });
                   }).toList(),
                   dotIncreasedColor: Colors.blue,
                   dotBgColor: Colors.transparent,
@@ -128,11 +152,17 @@ class _TelaEditarProdutoState extends State<TelaEditarProduto> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text("Nome"),
-                TextField(),
+                TextFormField(
+                  controller: nomeController,
+                ),
                 Text("Preço"),
-                TextField(),
+                TextFormField(
+                  controller: precoController,
+                ),
                 Text("Descrição"),
-                TextField(),
+                TextFormField(
+                  controller: descricaoController,
+                ),
                 SizedBox(
                   height: 30,
                 ),
