@@ -4,35 +4,46 @@ import 'package:chalana_delivery/modelos/produto_modelo.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
-class TelaProduto extends StatelessWidget {
-  ProdutoModelo produtoModelo;
+import '../../modelos/pedido_modelo.dart';
+
+class TelaProduto extends StatefulWidget {
+  final ProdutoModelo produtoModelo;
   TelaProduto(this.produtoModelo);
 
-  temPedido(List<PedidoModelo> listaPedidos) {
-    bool temPedido = false;
-    listaPedidos.firstWhere((e) {
-      if (e.produto.id == produtoModelo.id) {
-        temPedido = true;
-      }
-    }, orElse: () {
-      return null;
+  @override
+  _TelaProdutoState createState() => _TelaProdutoState();
+}
+
+class _TelaProdutoState extends State<TelaProduto> {
+  bool esta_no_carrinho = false;
+  List<PedidoModelo> list_pedidos = GetIt.I.get<List<PedidoModelo>>();
+
+  bool estaNoCarrinho() {
+    return list_pedidos
+        .where((e) => e.produto.id == widget.produtoModelo.id)
+        .isNotEmpty;
+  }
+
+  @override
+  void initState() {
+    setState(() {
+      esta_no_carrinho = estaNoCarrinho();
     });
-    return temPedido;
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    var listaPedidos = GetIt.I.get<List<PedidoModelo>>();
     return Scaffold(
       appBar: AppBar(
-        title: Text(produtoModelo.nome),
+        title: Text(widget.produtoModelo.nome),
         centerTitle: true,
         actions: [
           IconButton(
               icon: Icon(Icons.edit),
               onPressed: () {
                 Navigator.pushNamed(context, "tela_editar_produto",
-                    arguments: produtoModelo);
+                    arguments: widget.produtoModelo);
               }),
           IconButton(
               icon: Icon(Icons.add),
@@ -49,7 +60,7 @@ class TelaProduto extends StatelessWidget {
               dotSize: 6,
               //dotBgColor: Colors.transparent,
               autoplay: false,
-              images: produtoModelo.imagens.map((url) {
+              images: widget.produtoModelo.imagens.map((url) {
                 return Image.network(url, loadingBuilder: (BuildContext context,
                     Widget child, ImageChunkEvent loadingProgress) {
                   if (loadingProgress == null) return child;
@@ -74,7 +85,7 @@ class TelaProduto extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(
-                  produtoModelo.nome,
+                  widget.produtoModelo.nome,
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
                 ),
                 Padding(
@@ -88,7 +99,7 @@ class TelaProduto extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  'R\$ ' + produtoModelo.preco.toStringAsFixed(2),
+                  'R\$ ' + widget.produtoModelo.preco.toStringAsFixed(2),
                   style: TextStyle(
                     fontSize: 22.0,
                     fontWeight: FontWeight.bold,
@@ -103,28 +114,45 @@ class TelaProduto extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  produtoModelo.descrissao,
+                  widget.produtoModelo.descrissao,
                   style: const TextStyle(fontSize: 16),
                 ),
                 SizedBox(
                   height: 30,
                 ),
-                if (!temPedido(listaPedidos))
-                  Container(
-                    width: double.infinity,
-                    height: 45,
-                    child: RaisedButton(
-                      color: Colors.blue,
-                      child: Text(
-                        "Adicionar ao carrinho",
-                        style: TextStyle(fontSize: 18),
+                esta_no_carrinho
+                    ? Container(
+                        width: double.infinity,
+                        color: Colors.green[400],
+                        alignment: Alignment.center,
+                        height: 45,
+                        child: Text(
+                          "Produto está no carrinho",
+                          style: TextStyle(fontSize: 18),
+                        ),
+                      )
+                    : Container(
+                        width: double.infinity,
+                        height: 45,
+                        child: RaisedButton(
+                          color: Colors.blue,
+                          child: Text(
+                            "Adicionar ao carrinho",
+                            style: TextStyle(fontSize: 18),
+                          ),
+                          onPressed: () {
+                            list_pedidos.add(
+                              PedidoModelo(
+                                quantidade: 1,
+                                produto: widget.produtoModelo,
+                              ),
+                            );
+                            setState(() {
+                              esta_no_carrinho = estaNoCarrinho();
+                            });
+                          },
+                        ),
                       ),
-                      onPressed: () async {
-                        Navigator.pushNamed(context, "carrinho",
-                            arguments: produtoModelo);
-                      },
-                    ),
-                  )
               ],
             ),
           )
