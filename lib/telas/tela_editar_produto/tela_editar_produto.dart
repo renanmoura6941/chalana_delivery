@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:carousel_pro/carousel_pro.dart';
+import 'package:chalana_delivery/helpers/validators_functions.dart';
 import 'package:chalana_delivery/modelos/produto_modelo.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -15,6 +16,7 @@ class _TelaEditarProdutoState extends State<TelaEditarProduto> {
   TextEditingController nomeController = TextEditingController();
   TextEditingController precoController = TextEditingController();
   TextEditingController descricaoController = TextEditingController();
+  final GlobalKey<FormState> formkey = GlobalKey<FormState>();
   List<String> imagens = [];
   final picker = ImagePicker();
   File _image;
@@ -137,7 +139,7 @@ class _TelaEditarProdutoState extends State<TelaEditarProduto> {
               ],
             ),
           ),
-          // AspectRatio(
+          // // AspectRatio(
           //   aspectRatio: 1,
           //   child: Container(
           //     color: Colors.blue,
@@ -146,39 +148,50 @@ class _TelaEditarProdutoState extends State<TelaEditarProduto> {
           //     ),
           //   ),
           // ),
+
           Padding(
             padding: const EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text("Nome"),
-                TextFormField(
-                  controller: nomeController,
-                ),
-                Text("Preço"),
-                TextFormField(
-                  controller: precoController,
-                ),
-                Text("Descrição"),
-                TextFormField(
-                  controller: descricaoController,
-                ),
-                SizedBox(
-                  height: 30,
-                ),
-                Container(
-                  width: double.infinity,
-                  height: 45,
-                  child: RaisedButton(
-                    color: Colors.blue,
-                    child: Text(
-                      "Salvar produto",
-                      style: TextStyle(fontSize: 18),
-                    ),
-                    onPressed: () {},
+            child: Form(
+              key: formkey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text("Nome"),
+                  TextFormField(
+                    controller: nomeController,
+                    validator: (valor) => validarNome(valor),
                   ),
-                )
-              ],
+                  Text("Preço"),
+                  TextFormField(
+                    controller: precoController,
+                    validator: (valor) => validarPreco(valor),
+                  ),
+                  Text("Descrição"),
+                  TextFormField(
+                    controller: descricaoController,
+                    validator:(valor)=>validarDescricao(valor),
+                  ),
+                  SizedBox(
+                    height: 30,
+                  ),
+                  Container(
+                    width: double.infinity,
+                    height: 45,
+                    child: RaisedButton(
+                      color: Colors.blue,
+                      child: Text(
+                        "Salvar produto",
+                        style: TextStyle(fontSize: 18),
+                      ),
+                      onPressed: () {
+                        if (formkey.currentState.validate()) {
+                          formkey.currentState.save();
+                        }
+                      },
+                    ),
+                  )
+                ],
+              ),
             ),
           )
         ],
