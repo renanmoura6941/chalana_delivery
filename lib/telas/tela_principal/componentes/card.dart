@@ -18,9 +18,19 @@ class CardPrincipal extends StatelessWidget {
           children: [
             AspectRatio(
               aspectRatio: 1.7,
-              child: Image.network(
-                produtoModelo.imagens.first,
-              ),
+              child: Image.network(produtoModelo.imagens.first, loadingBuilder:
+                  (BuildContext context, Widget child,
+                      ImageChunkEvent loadingProgress) {
+                if (loadingProgress == null) return child;
+                return Center(
+                  child: CircularProgressIndicator(
+                    value: loadingProgress.expectedTotalBytes != null
+                        ? loadingProgress.cumulativeBytesLoaded /
+                            loadingProgress.expectedTotalBytes
+                        : null,
+                  ),
+                );
+              }),
             ),
             Container(
               color: Colors.transparent,

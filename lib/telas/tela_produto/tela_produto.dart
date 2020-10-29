@@ -1,12 +1,28 @@
 import 'package:carousel_pro/carousel_pro.dart';
+import 'package:chalana_delivery/modelos/pedido_modelo.dart';
 import 'package:chalana_delivery/modelos/produto_modelo.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 
 class TelaProduto extends StatelessWidget {
   ProdutoModelo produtoModelo;
   TelaProduto(this.produtoModelo);
+
+  temPedido(List<PedidoModelo> listaPedidos) {
+    bool temPedido = false;
+    listaPedidos.firstWhere((e) {
+      if (e.produto.id == produtoModelo.id) {
+        temPedido = true;
+      }
+    }, orElse: () {
+      return null;
+    });
+    return temPedido;
+  }
+
   @override
   Widget build(BuildContext context) {
+    var listaPedidos = GetIt.I.get<List<PedidoModelo>>();
 
     return Scaffold(
       appBar: AppBar(
@@ -61,7 +77,7 @@ class TelaProduto extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  'R\$ '+ produtoModelo.preco.toStringAsFixed(2),
+                  'R\$ ' + produtoModelo.preco.toStringAsFixed(2),
                   style: TextStyle(
                     fontSize: 22.0,
                     fontWeight: FontWeight.bold,
@@ -82,20 +98,22 @@ class TelaProduto extends StatelessWidget {
                 SizedBox(
                   height: 30,
                 ),
-                Container(
-                  width: double.infinity,
-                  height: 45,
-                  child: RaisedButton(
-                    color: Colors.blue,
-                    child: Text(
-                      "Adicionar ao carrinho",
-                      style: TextStyle(fontSize: 18),
+                if (!temPedido(listaPedidos))
+                  Container(
+                    width: double.infinity,
+                    height: 45,
+                    child: RaisedButton(
+                      color: Colors.blue,
+                      child: Text(
+                        "Adicionar ao carrinho",
+                        style: TextStyle(fontSize: 18),
+                      ),
+                      onPressed: () async {
+                        Navigator.pushNamed(context, "carrinho",
+                            arguments: produtoModelo);
+                      },
                     ),
-                    onPressed: () async {
-                      Navigator.pushNamed(context, "carrinho", arguments: produtoModelo);
-                    },
-                  ),
-                )
+                  )
               ],
             ),
           )
