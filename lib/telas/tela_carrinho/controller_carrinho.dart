@@ -7,30 +7,15 @@ class ControllerCarriho {
   List<PedidoModelo> list_pedidos = [];
 
   Future<void> confirmarPedido() async {
-    print("Confirmar pedido");
-    var produto = {
-      'nome': "Cerveja da boa",
-      'quantidade': 4,
-      'unidade': 2.00,
-      'valor': 8.00
-    };
-    var produto2 = {
-      'nome': "vinho especial",
-      'quantidade': 10,
-      'unidade': 2.00,
-      'valor': 20.00
-    };
-
-    List<Map> dados = [produto, produto2];
-
     String q = "%0A";
     String divisor = "------------------------------------";
     double total = 0;
     String mensagem = "Minha solicitação:$q";
-    for (var e in dados) {
+
+    for (var e in list_pedidos) {
       mensagem +=
-          "$divisor$q*Produto*: ${e['nome']}$q*Quantidade*: ${e['quantidade']}$q*Preço da unidade*: R\$ ${e['unidade'].toStringAsFixed(2)}$q*Valor*: R\$ ${e['valor'].toStringAsFixed(2)}$q";
-      total += e['valor'];
+          "$divisor$q*Produto*: ${e.produto.nome}$q*Quantidade*: ${e.quantidade}$q*Preço da unidade*: R\$ ${e.produto.preco.toStringAsFixed(2)}$q*Valor*: R\$ ${(e.quantidade * e.produto.preco).toStringAsFixed(2)}$q";
+      total += e.quantidade * e.produto.preco;
     }
 
     mensagem += divisor +
@@ -44,6 +29,7 @@ class ControllerCarriho {
 
     try {
       await launch(url);
+      //TODO:limpar carrinho
     } catch (erro) {
       debugPrint("erro ao enviar mensagem: $erro");
     }
