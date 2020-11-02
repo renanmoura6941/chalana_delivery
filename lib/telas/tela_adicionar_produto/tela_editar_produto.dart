@@ -146,18 +146,14 @@ class _TelaAdicionarProdutoState extends State<TelaAdicionarProduto> {
                     child: Row(
                       children: [
                         if (produtoImagensLocal.isNotEmpty)
-                          Positioned(
-                              bottom: 1,
-                              right: 1,
-                              child: InkWell(
-                                child: CircleAvatar(
-                                  radius: 30,
-                                  child: Icon(Icons.remove),
-                                ),
-                                onTap: () {
-                                  remover();
-                                },
-                              )),
+                          InkWell(
+                              child: CircleAvatar(
+                                radius: 30,
+                                child: Icon(Icons.remove),
+                              ),
+                              onTap: () {
+                                remover();
+                              }),
                         InkWell(
                           child: CircleAvatar(
                             radius: 30,
