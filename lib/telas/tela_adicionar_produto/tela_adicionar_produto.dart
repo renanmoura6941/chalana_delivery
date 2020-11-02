@@ -1,28 +1,19 @@
 import 'dart:io';
 import 'package:carousel_pro/carousel_pro.dart';
-import 'package:chalana_delivery/helpers/validators_functions.dart';
-import 'package:chalana_delivery/modelos/produto_modelo.dart';
+import 'package:chalana_delivery/componentes/butao_confirmar/butao_confirmar.dart';
 import 'package:chalana_delivery/telas/tela_adicionar_produto/componetes/selecionar_imagem.dart';
 import 'package:chalana_delivery/telas/tela_adicionar_produto/modelo/Imagem_selecionar_modelo.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
-// ignore: must_be_immutable
-class TelaEditarProduto extends StatefulWidget {
-  ProdutoModelo produtoModelo;
-  TelaEditarProduto(this.produtoModelo);
+class TelaAdicionarProduto extends StatefulWidget {
   @override
-  _TelaEditarProdutoState createState() => _TelaEditarProdutoState();
+  _TelaAdicionarProdutoState createState() => _TelaAdicionarProdutoState();
 }
 
-class _TelaEditarProdutoState extends State<TelaEditarProduto> {
-  TextEditingController nomeController = TextEditingController();
-  TextEditingController precoController = TextEditingController();
-  TextEditingController descricaoController = TextEditingController();
-  final GlobalKey<FormState> formkey = GlobalKey<FormState>();
-  List<String> imagens = [];
-  List<ImagemModelo> imagemModelo = [];
+class _TelaAdicionarProdutoState extends State<TelaAdicionarProduto> {
+  List<ImagemModelo> imagemModelo;
 
   Future<void> recuperarImagemFirebase(StorageTaskSnapshot snapshot) async {
     String url = await snapshot.ref.getDownloadURL();
@@ -92,7 +83,6 @@ class _TelaEditarProdutoState extends State<TelaEditarProduto> {
         }),
         child: ImagemWidget(
             imagem: imagemModelo[index].imagem,
-            imagemUrl: imagemModelo[index].imagemUrl,
             selecionado: imagemModelo[index].selecionado),
       );
     });
@@ -149,20 +139,9 @@ class _TelaEditarProdutoState extends State<TelaEditarProduto> {
 
   bool temItemSelecionado() => itemselecionados() > 0 ? true : false;
 
-  void carregarDadosProduto() {
-    nomeController.text = widget.produtoModelo.nome;
-    precoController.text = widget.produtoModelo.preco.toStringAsFixed(2);
-    descricaoController.text = widget.produtoModelo.descrissao;
-    widget.produtoModelo.imagens.forEach((e) {
-      imagemModelo.add(ImagemModelo(
-        imagemUrl: e,
-      ));
-    });
-  }
-
   @override
   void initState() {
-    carregarDadosProduto();
+    imagemModelo = [];
     super.initState();
   }
 
@@ -170,7 +149,7 @@ class _TelaEditarProdutoState extends State<TelaEditarProduto> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Editar produto"),
+        title: Text("Adicionar produto"),
         centerTitle: true,
       ),
       body: ListView(
@@ -214,47 +193,20 @@ class _TelaEditarProdutoState extends State<TelaEditarProduto> {
           ),
           Padding(
             padding: const EdgeInsets.all(16),
-            child: Form(
-              key: formkey,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text("Nome"),
-                  TextFormField(
-                    controller: nomeController,
-                    validator: (valor) => validarNome(valor),
-                  ),
-                  Text("Preço"),
-                  TextFormField(
-                    controller: precoController,
-                    validator: (valor) => validarPreco(valor),
-                  ),
-                  Text("Descrição"),
-                  TextFormField(
-                    controller: descricaoController,
-                    validator: (valor) => validarDescricao(valor),
-                  ),
-                  SizedBox(
-                    height: 30,
-                  ),
-                  Container(
-                    width: double.infinity,
-                    height: 45,
-                    child: RaisedButton(
-                      color: Colors.blue,
-                      child: Text(
-                        "Salvar produto",
-                        style: TextStyle(fontSize: 18),
-                      ),
-                      onPressed: () {
-                        if (formkey.currentState.validate()) {
-                          formkey.currentState.save();
-                        }
-                      },
-                    ),
-                  )
-                ],
-              ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text("Nome"),
+                TextField(),
+                Text("Preço"),
+                TextField(),
+                Text("Descrição"),
+                TextField(),
+                SizedBox(
+                  height: 30,
+                ),
+                ButaoConfirmar(titulo: "Adicionar produto"),
+              ],
             ),
           )
         ],
@@ -262,3 +214,29 @@ class _TelaEditarProdutoState extends State<TelaEditarProduto> {
     );
   }
 }
+
+// sDialog() {
+//   SimpleDialog _simdalog = SimpleDialog(
+//     title: new Text("Add To Shopping Cart"),
+//     children: <Widget>[
+//       new SimpleDialogOption(
+//         child: new Text("Yes"),
+//         onPressed: () {
+//           final snackBar = SnackBar(content: Text('Purchase Successful'));
+//           Scaffold.of(context).showSnackBar(snackBar);
+//         },
+//       ),
+//       new SimpleDialogOption(
+//         child: new Text("Close"),
+//         onPressed: () {
+//           Navigator.pop(context);
+//         },
+//       ),
+//     ],
+//   );
+//   showDialog(
+//       context: context,
+//       builder: (BuildContext context) {
+//         return _simdalog;
+//       });
+// }
