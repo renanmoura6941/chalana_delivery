@@ -2,11 +2,13 @@ import 'dart:io';
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:chalana_delivery/componentes/butao_confirmar/butao_confirmar.dart';
 import 'package:chalana_delivery/helpers/validators_functions.dart';
+import 'package:chalana_delivery/modelos/produto_modelo.dart';
 import 'package:chalana_delivery/telas/tela_adicionar_produto/componetes/selecionar_imagem.dart';
 import 'package:chalana_delivery/telas/tela_adicionar_produto/modelo/Imagem_selecionar_modelo.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:uuid/uuid.dart';
 
 class TelaAdicionarProduto extends StatefulWidget {
   @override
@@ -19,29 +21,26 @@ class _TelaAdicionarProdutoState extends State<TelaAdicionarProduto> {
   TextEditingController precoController = TextEditingController();
   TextEditingController descricaoController = TextEditingController();
   final GlobalKey<FormState> formkey = GlobalKey<FormState>();
+  ProdutoModelo produtoModelo = ProdutoModelo();
 
-  Future<void> recuperarImagemFirebase(StorageTaskSnapshot snapshot) async {
-    String url = await snapshot.ref.getDownloadURL();
+  Future<String> salvarImagemFirebase(File imagem) async {
+    var storageRef = FirebaseStorage.instance.ref().child(produtoModelo.nome);
+
+    final StorageUploadTask task =
+        storageRef.child(Uuid().v1()).putFile(imagem);
+
+    final StorageTaskSnapshot snapshot = await task.onComplete;
+    final String url = await snapshot.ref.getDownloadURL() as String;
+
+    return url;
   }
 
-  Future salvarImagemFirebase(File imagem) async {
-    StorageReference pastaraiz = FirebaseStorage.instance.ref();
-    StorageReference arquivo = pastaraiz.child("prdutos").child("foto.jpg");
-    StorageUploadTask task = arquivo.putFile(imagem);
-
-    task.events.listen((event) {
-      if (event.type == StorageTaskEventType.progress) {
-        print("em progresso");
-      } else if (event.type == StorageTaskEventType.failure) {
-        print("falha na foto");
-      } else if (event.type == StorageTaskEventType.success) {
-        print("sucesso na foto");
-      }
-    });
-
-    task.onComplete.then((StorageTaskSnapshot snapshot) {
-      recuperarImagemFirebase(snapshot);
-    });
+  void salvarFirebase() async {
+    for (final e in imagemModelo) {
+      String url = await salvarImagemFirebase(e.imagem);
+      print("url recuperada $url");
+      produtoModelo.imagens.add(url);
+    }
   }
 
   Future _imagenCamera() async {
@@ -136,6 +135,7 @@ class _TelaAdicionarProdutoState extends State<TelaAdicionarProduto> {
   @override
   void initState() {
     imagemModelo = [];
+    produtoModelo.imagens = [];
     super.initState();
   }
 
@@ -195,28 +195,38 @@ class _TelaAdicionarProdutoState extends State<TelaAdicionarProduto> {
                 children: <Widget>[
                   Text("Nome"),
                   TextFormField(
-                    controller: nomeController,
-                    validator: (nome) => validarNome(nome),
-                  ),
+                      controller: nomeController,
+                      validator: (nome) => validarNome(nome),
+                      onChanged: (entrada) => formkey.currentState.validate(),
+                      onSaved: (entrada) => produtoModelo.nome = entrada),
                   Text("Preço"),
                   TextFormField(
-                    controller: precoController,
-                    validator: (preco) => validarPreco(preco),
-                  ),
+                      controller: precoController,
+                      validator: (preco) => validarPreco(preco),
+                      onChanged: (entrada) => formkey.currentState.validate(),
+                      onSaved: (entrada) =>
+                          produtoModelo.preco = num.parse(entrada)),
                   Text("Descrição"),
                   TextFormField(
-                    controller: descricaoController,
-                    validator: (descricao) => validarDescricao(descricao),
-                  ),
+                      controller: descricaoController,
+                      validator: (descricao) => validarDescricao(descricao),
+                      onChanged: (entrada) => formkey.currentState.validate(),
+                      onSaved: (entrada) => produtoModelo.descrissao = entrada),
                   SizedBox(
                     height: 30,
                   ),
                   ButaoConfirmar(
                       titulo: "Adicionar produto",
-                      onPressed: () {
+                      onPressed: () async {
                         //TODO:validar
                         if (formkey.currentState.validate() &&
-                            validarFoto(imagemModelo, context)) {}
+                            validarFoto(imagemModelo, context)) {
+                          formkey.currentState.save();
+
+                        await  salvarFirebase();
+
+                          produtoModelo.salvar();
+                        }
                         //TODO:salvar no firebase
                       }),
                 ],

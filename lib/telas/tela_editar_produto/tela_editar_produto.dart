@@ -232,7 +232,9 @@ class _TelaEditarProdutoState extends State<TelaEditarProduto> {
                       onPressed: () {
                         //TODO:validar
                         if (formkey.currentState.validate() &&
-                            validarFoto(imagemModelo, context)) {}
+                            validarFoto(imagemModelo, context)) {
+                            
+                            }
                         //TODO:salvar no firebase
                       }),
                 ],

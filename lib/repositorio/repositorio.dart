@@ -12,7 +12,7 @@ class Repositorio {
       return ProdutoModelo(
         id:doc.documentID,
         nome: doc['nome'].toString(),
-        preco: doc['preco'].toDouble(),
+        preco: doc['preco'],
         categorias: doc['categoria'].toString(),
         imagens: (doc['imagens'] as List).map((e) => e.toString()).toList(),
         descrissao: doc['descrissao'].toString(),

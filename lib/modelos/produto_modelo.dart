@@ -1,13 +1,16 @@
-class ProdutoModelo {
-  final String id;
-  final String nome;
-  final String descrissao;
-  final List<String> imagens;
-  final double preco;
-  final int acessos;
-  final String categorias;
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-  const ProdutoModelo({this.id, 
+class ProdutoModelo {
+  String id;
+  String nome;
+  String descrissao;
+  List<String> imagens;
+  num preco;
+  int acessos;
+  String categorias;
+
+  ProdutoModelo({
+    this.id,
     this.nome,
     this.preco,
     this.descrissao,
@@ -15,6 +18,26 @@ class ProdutoModelo {
     this.acessos,
     this.categorias,
   });
+
+  salvar() async {
+    var dados = {
+      'id': id,
+      'nome': nome,
+      'preco': preco,
+      'categorias': categorias,
+      'imagens': imagens,
+      'descrissao': descrissao,
+      'acessos': acessos,
+    };
+    final referencia =
+        await Firestore.instance.collection('produtos').add(dados);
+
+    id = referencia.documentID;
+    dados['id'] = id;
+
+    print("ID $id");
+    await referencia.updateData(dados);
+  }
 
   @override
   String toString() {

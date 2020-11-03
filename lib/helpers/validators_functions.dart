@@ -21,8 +21,6 @@ bool validarMonetario(String monetario) {
 String validarPreco(String preco) {
   if (preco.isEmpty) {
     return 'Campo vazio';
-  } else if (!validarMonetario(preco)) {
-    return 'valor inválido';
   } else {
     return null;
   }
