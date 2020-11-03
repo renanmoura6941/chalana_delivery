@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:chalana_delivery/componentes/butao_confirmar/butao_confirmar.dart';
+import 'package:chalana_delivery/helpers/validators_functions.dart';
 import 'package:chalana_delivery/telas/tela_adicionar_produto/componetes/selecionar_imagem.dart';
 import 'package:chalana_delivery/telas/tela_adicionar_produto/modelo/Imagem_selecionar_modelo.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -14,6 +15,10 @@ class TelaAdicionarProduto extends StatefulWidget {
 
 class _TelaAdicionarProdutoState extends State<TelaAdicionarProduto> {
   List<ImagemModelo> imagemModelo;
+  TextEditingController nomeController = TextEditingController();
+  TextEditingController precoController = TextEditingController();
+  TextEditingController descricaoController = TextEditingController();
+  final GlobalKey<FormState> formkey = GlobalKey<FormState>();
 
   Future<void> recuperarImagemFirebase(StorageTaskSnapshot snapshot) async {
     String url = await snapshot.ref.getDownloadURL();
@@ -65,14 +70,14 @@ class _TelaAdicionarProdutoState extends State<TelaAdicionarProduto> {
         onTap: () => remover());
   }
 
-  Widget butaoTirarFoto() {
+  Widget butaoTirarFoto(BuildContext context) {
     return InkWell(
         child: CircleAvatar(
           radius: 30,
           child: Icon(Icons.photo_camera),
         ),
         onTap: () =>
-            imagemModelo.length > 2 ? popAlerta() : _adicionar(context));
+            imagemModelo.length > 2 ? popAlerta(context,"Limite máximo de fotos!") : _adicionar(context));
   }
 
   List<Widget> abirImagens() {
@@ -123,17 +128,6 @@ class _TelaAdicionarProdutoState extends State<TelaAdicionarProduto> {
     setState(() {});
   }
 
-  popAlerta() {
-    return showDialog(
-        context: context,
-        builder: (BuildContext context) => SimpleDialog(
-              titlePadding: EdgeInsets.symmetric(vertical: 20, horizontal: 5),
-              title: Container(
-                  alignment: Alignment.center,
-                  margin: EdgeInsets.symmetric(vertical: 20),
-                  child: Text("Limite máximo de fotos!")),
-            ));
-  }
 
   int itemselecionados() => imagemModelo.where((e) => e.selecionado).length;
 
@@ -178,7 +172,7 @@ class _TelaAdicionarProdutoState extends State<TelaAdicionarProduto> {
                   bottom: 1,
                   right: 1,
                   child:
-                      temItemSelecionado() ? butaoRemover() : butaoTirarFoto()),
+                      temItemSelecionado() ? butaoRemover() :popAlerta(context,"Limite máximo de fotos!")),
               if (temItemSelecionado())
                 Positioned(
                     bottom: 0,
@@ -193,20 +187,41 @@ class _TelaAdicionarProdutoState extends State<TelaAdicionarProduto> {
           ),
           Padding(
             padding: const EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text("Nome"),
-                TextField(),
-                Text("Preço"),
-                TextField(),
-                Text("Descrição"),
-                TextField(),
-                SizedBox(
-                  height: 30,
-                ),
-                ButaoConfirmar(titulo: "Adicionar produto"),
-              ],
+            child: Form(
+              key: formkey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text("Nome"),
+                  TextFormField(
+                    controller: nomeController,
+                    validator: (nome) => validarNome(nome),
+                  ),
+                  Text("Preço"),
+                  TextFormField(
+                    controller: precoController,
+                    validator: (preco) => validarPreco(preco),
+                  ),
+                  Text("Descrição"),
+                  TextFormField(
+                    controller: descricaoController,
+                    validator: (descricao) => validarDescricao(descricao),
+                  ),
+                  SizedBox(
+                    height: 30,
+                  ),
+                  ButaoConfirmar(
+                      titulo: "Adicionar produto",
+                      onPressed: () {
+                        //TODO:validar
+                        if (formkey.currentState.validate() &&
+                            validarFoto(imagemModelo,context)){
+
+                            }
+                        //TODO:salvar no firebase
+                      }),
+                ],
+              ),
             ),
           )
         ],

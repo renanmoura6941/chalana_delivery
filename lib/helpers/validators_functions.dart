@@ -2,6 +2,9 @@ import 'dart:io';
 
 import 'dart:math';
 
+import 'package:chalana_delivery/telas/tela_adicionar_produto/modelo/Imagem_selecionar_modelo.dart';
+import 'package:flutter/material.dart';
+
 bool emailValid(String email) {
   final RegExp regex = RegExp(
       r"^(([^<>()[\]\\.,;:\s@\']+(\.[^<>()[\]\\.,;:\s@\']+)*)|(\'.+\'))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$");
@@ -45,3 +48,22 @@ String validarDescricao(String descricao) {
   }
 }
 
+bool validarFoto(List<ImagemModelo> imagens, BuildContext context) {
+  if (imagens.isEmpty) {
+    popAlerta(context, "Sem foto!");
+    return false;
+  }
+  return true;
+}
+
+popAlerta(BuildContext context, String mensagem) {
+  return showDialog(
+      context: context,
+      builder: (BuildContext context) => SimpleDialog(
+            titlePadding: EdgeInsets.symmetric(vertical: 20, horizontal: 5),
+            title: Container(
+                alignment: Alignment.center,
+                margin: EdgeInsets.symmetric(vertical: 20),
+                child: Text(mensagem)),
+          ));
+}

@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:carousel_pro/carousel_pro.dart';
+import 'package:chalana_delivery/componentes/butao_confirmar/butao_confirmar.dart';
 import 'package:chalana_delivery/helpers/validators_functions.dart';
 import 'package:chalana_delivery/modelos/produto_modelo.dart';
 import 'package:chalana_delivery/telas/tela_adicionar_produto/componetes/selecionar_imagem.dart';
@@ -80,8 +81,9 @@ class _TelaEditarProdutoState extends State<TelaEditarProduto> {
           radius: 30,
           child: Icon(Icons.photo_camera),
         ),
-        onTap: () =>
-            imagemModelo.length > 2 ? popAlerta() : _adicionar(context));
+        onTap: () => imagemModelo.length > 2
+            ? popAlerta(context, "Limite máximo de fotos!")
+            : _adicionar(context));
   }
 
   List<Widget> abirImagens() {
@@ -131,18 +133,6 @@ class _TelaEditarProdutoState extends State<TelaEditarProduto> {
   void remover() {
     imagemModelo.removeWhere((e) => e.selecionado);
     setState(() {});
-  }
-
-  popAlerta() {
-    return showDialog(
-        context: context,
-        builder: (BuildContext context) => SimpleDialog(
-              titlePadding: EdgeInsets.symmetric(vertical: 20, horizontal: 5),
-              title: Container(
-                  alignment: Alignment.center,
-                  margin: EdgeInsets.symmetric(vertical: 20),
-                  child: Text("Limite máximo de fotos!")),
-            ));
   }
 
   int itemselecionados() => imagemModelo.where((e) => e.selecionado).length;
@@ -237,22 +227,14 @@ class _TelaEditarProdutoState extends State<TelaEditarProduto> {
                   SizedBox(
                     height: 30,
                   ),
-                  Container(
-                    width: double.infinity,
-                    height: 45,
-                    child: RaisedButton(
-                      color: Colors.blue,
-                      child: Text(
-                        "Salvar produto",
-                        style: TextStyle(fontSize: 18),
-                      ),
+                  ButaoConfirmar(
+                      titulo: "Editar produto",
                       onPressed: () {
-                        if (formkey.currentState.validate()) {
-                          formkey.currentState.save();
-                        }
-                      },
-                    ),
-                  )
+                        //TODO:validar
+                        if (formkey.currentState.validate() &&
+                            validarFoto(imagemModelo, context)) {}
+                        //TODO:salvar no firebase
+                      }),
                 ],
               ),
             ),
