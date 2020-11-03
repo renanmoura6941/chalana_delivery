@@ -76,8 +76,9 @@ class _TelaAdicionarProdutoState extends State<TelaAdicionarProduto> {
           radius: 30,
           child: Icon(Icons.photo_camera),
         ),
-        onTap: () =>
-            imagemModelo.length > 2 ? popAlerta(context,"Limite máximo de fotos!") : _adicionar(context));
+        onTap: () => imagemModelo.length > 2
+            ? popAlerta(context, "Limite máximo de fotos!")
+            : _adicionar(context));
   }
 
   List<Widget> abirImagens() {
@@ -128,7 +129,6 @@ class _TelaAdicionarProdutoState extends State<TelaAdicionarProduto> {
     setState(() {});
   }
 
-
   int itemselecionados() => imagemModelo.where((e) => e.selecionado).length;
 
   bool temItemSelecionado() => itemselecionados() > 0 ? true : false;
@@ -171,8 +171,9 @@ class _TelaAdicionarProdutoState extends State<TelaAdicionarProduto> {
               Positioned(
                   bottom: 1,
                   right: 1,
-                  child:
-                      temItemSelecionado() ? butaoRemover() :popAlerta(context,"Limite máximo de fotos!")),
+                  child: temItemSelecionado()
+                      ? butaoRemover()
+                      : butaoTirarFoto(context)),
               if (temItemSelecionado())
                 Positioned(
                     bottom: 0,
@@ -215,9 +216,7 @@ class _TelaAdicionarProdutoState extends State<TelaAdicionarProduto> {
                       onPressed: () {
                         //TODO:validar
                         if (formkey.currentState.validate() &&
-                            validarFoto(imagemModelo,context)){
-
-                            }
+                            validarFoto(imagemModelo, context)) {}
                         //TODO:salvar no firebase
                       }),
                 ],
