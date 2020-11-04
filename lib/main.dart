@@ -25,12 +25,8 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  final Repositorio repo = GetIt.I.get<Repositorio>();
-
   @override
   void initState() {
-   //repo.getProdutos();
-
     super.initState();
   }
 

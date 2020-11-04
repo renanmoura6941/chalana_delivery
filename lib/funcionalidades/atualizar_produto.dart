@@ -1,16 +1,15 @@
 import 'dart:async';
-
 import 'package:chalana_delivery/modelos/produto_modelo.dart';
 import 'package:chalana_delivery/repositorio/repositorio.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get_it/get_it.dart';
 
-class Bloc {
+class AtualizarProduto {
   final StreamController<List<ProdutoModelo>> stream = StreamController();
   Sink<List<ProdutoModelo>> get entrada => stream.sink;
   Stream get saida => stream.stream;
 
-  escultar() async {
+  escultarAlteracoes() async {
     await Firestore.instance
         .collection('produtos')
         .snapshots()
