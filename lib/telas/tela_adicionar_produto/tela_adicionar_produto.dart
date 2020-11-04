@@ -22,6 +22,7 @@ class _TelaAdicionarProdutoState extends State<TelaAdicionarProduto> {
   TextEditingController descricaoController = TextEditingController();
   final GlobalKey<FormState> formkey = GlobalKey<FormState>();
   ProdutoModelo produtoModelo = ProdutoModelo();
+  bool processando = false;
 
   Future<String> salvarImagemFirebase(File imagem) async {
     var storageRef = FirebaseStorage.instance.ref().child(produtoModelo.nome);
@@ -215,20 +216,25 @@ class _TelaAdicionarProdutoState extends State<TelaAdicionarProduto> {
                   SizedBox(
                     height: 30,
                   ),
-                  ButaoConfirmar(
-                      titulo: "Adicionar produto",
-                      onPressed: () async {
-                        //TODO:validar
-                        if (formkey.currentState.validate() &&
-                            validarFoto(imagemModelo, context)) {
-                          formkey.currentState.save();
+                  processando
+                      ? CircularProgressIndicator()
+                      : ButaoConfirmar(
+                          titulo: "Adicionar produto",
+                          onPressed: () async {
+                            if (formkey.currentState.validate() &&
+                                validarFoto(imagemModelo, context)) {
+                              setState(() {
+                                processando = true;
+                              });
+                              formkey.currentState.save();
 
-                        await  salvarFirebase();
+                              await salvarFirebase();
 
-                          produtoModelo.salvar();
-                        }
-                        //TODO:salvar no firebase
-                      }),
+                              produtoModelo.salvar();
+                              Navigator.pushReplacementNamed(context, "principal");
+                           
+                            }
+                          }),
                 ],
               ),
             ),

@@ -15,6 +15,7 @@ class _TelaPrincipalState extends State<TelaPrincipal> {
     return GridView.count(
         physics: BouncingScrollPhysics(),
         padding: EdgeInsets.symmetric(vertical: 10),
+        scrollDirection: Axis.vertical,
         crossAxisCount: 2,
         shrinkWrap: true,
         crossAxisSpacing: 10,
@@ -32,9 +33,16 @@ class _TelaPrincipalState extends State<TelaPrincipal> {
   }
 
   @override
+  void dispose() {
+    // TODO: implement dispose
+    print("dispose");
+    super.dispose();
+  }
+
+  @override
   void initState() {
     atualizar();
-
+    GetIt.I.get<Repositorio>().getProdutos();
     super.initState();
   }
 
@@ -56,11 +64,7 @@ class _TelaPrincipalState extends State<TelaPrincipal> {
               future: GetIt.I.get<Repositorio>().getProdutos(),
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
-                  return Column(
-                    children: [
-                      gridView(snapshot.data),
-                    ],
-                  );
+                  return gridView(snapshot.data);
                 } else {
                   return CircularProgressIndicator();
                 }
