@@ -1,10 +1,8 @@
 import 'dart:io';
 
 class ImagemModelo {
-  File imagem;
+  File novaImagem;
   bool selecionado;
   String imagemUrl;
-  ImagemModelo({this.imagem, this.selecionado, this.imagemUrl}) {
-    this.selecionado = selecionado ?? false;
-  }
+  ImagemModelo({this.novaImagem, this.selecionado = false, this.imagemUrl}) {}
 }

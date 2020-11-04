@@ -3,12 +3,12 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 
 class ImagemWidget extends StatefulWidget {
-  File imagem;
+  File novaImagem;
   String imagemUrl;
   bool selecionado;
   Function(bool) onPressed;
 
-  ImagemWidget({this.imagem, this.selecionado, this.onPressed, this.imagemUrl});
+  ImagemWidget({this.novaImagem, this.selecionado, this.onPressed, this.imagemUrl});
 
   @override
   _ImagemWidgetState createState() => _ImagemWidgetState();
@@ -26,10 +26,10 @@ class _ImagemWidgetState extends State<ImagemWidget> {
           width: 5.0,
         ),
       ),
-      child: widget.imagem == null
+      child: widget.novaImagem == null
           ? Image.network(widget.imagemUrl)
           : Image.file(
-              widget.imagem,
+              widget.novaImagem,
               fit: BoxFit.cover,
             ),
     );

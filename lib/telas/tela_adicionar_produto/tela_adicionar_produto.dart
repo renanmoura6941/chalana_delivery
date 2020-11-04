@@ -38,7 +38,7 @@ class _TelaAdicionarProdutoState extends State<TelaAdicionarProduto> {
 
   void salvarFirebase() async {
     for (final e in imagemModelo) {
-      String url = await salvarImagemFirebase(e.imagem);
+      String url = await salvarImagemFirebase(e.novaImagem);
       print("url recuperada $url");
       produtoModelo.imagens.add(url);
     }
@@ -48,7 +48,7 @@ class _TelaAdicionarProdutoState extends State<TelaAdicionarProduto> {
     final pickedFile = await ImagePicker().getImage(source: ImageSource.camera);
     if (pickedFile != null)
       setState(() {
-        imagemModelo.add(ImagemModelo(imagem: File(pickedFile.path)));
+        imagemModelo.add(ImagemModelo(novaImagem: File(pickedFile.path)));
       });
   }
 
@@ -57,7 +57,7 @@ class _TelaAdicionarProdutoState extends State<TelaAdicionarProduto> {
         await ImagePicker().getImage(source: ImageSource.gallery);
     if (pickedFile != null)
       setState(() {
-        imagemModelo.add(ImagemModelo(imagem: File(pickedFile.path)));
+        imagemModelo.add(ImagemModelo(novaImagem: File(pickedFile.path)));
       });
   }
 
@@ -88,7 +88,7 @@ class _TelaAdicionarProdutoState extends State<TelaAdicionarProduto> {
           imagemModelo[index].selecionado = !imagemModelo[index].selecionado;
         }),
         child: ImagemWidget(
-            imagem: imagemModelo[index].imagem,
+            novaImagem: imagemModelo[index].novaImagem,
             selecionado: imagemModelo[index].selecionado),
       );
     });

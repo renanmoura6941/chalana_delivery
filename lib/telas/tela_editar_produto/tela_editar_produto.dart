@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:chalana_delivery/componentes/butao_confirmar/butao_confirmar.dart';
+import 'package:chalana_delivery/funcionalidades/carrocel_imagens.dart';
 import 'package:chalana_delivery/helpers/validators_functions.dart';
 import 'package:chalana_delivery/modelos/produto_modelo.dart';
 import 'package:chalana_delivery/telas/tela_adicionar_produto/componetes/selecionar_imagem.dart';
@@ -8,8 +9,8 @@ import 'package:chalana_delivery/telas/tela_adicionar_produto/modelo/Imagem_sele
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:uuid/uuid.dart';
 
-// ignore: must_be_immutable
 class TelaEditarProduto extends StatefulWidget {
   ProdutoModelo produtoModelo;
   TelaEditarProduto(this.produtoModelo);
@@ -18,84 +19,44 @@ class TelaEditarProduto extends StatefulWidget {
 }
 
 class _TelaEditarProdutoState extends State<TelaEditarProduto> {
+  List<ImagemModelo> imagemModelo;
   TextEditingController nomeController = TextEditingController();
   TextEditingController precoController = TextEditingController();
   TextEditingController descricaoController = TextEditingController();
   final GlobalKey<FormState> formkey = GlobalKey<FormState>();
-  List<String> imagens = [];
-  List<ImagemModelo> imagemModelo = [];
+  ProdutoModelo produtoModelo = ProdutoModelo();
+  bool processando = false;
+  CarrocelImagens carrocelImagens = CarrocelImagens();
 
-  Future<void> recuperarImagemFirebase(StorageTaskSnapshot snapshot) async {
-    String url = await snapshot.ref.getDownloadURL();
-  }
-
-  Future salvarImagemFirebase(File imagem) async {
-    StorageReference pastaraiz = FirebaseStorage.instance.ref();
-    StorageReference arquivo = pastaraiz.child("prdutos").child("foto.jpg");
-    StorageUploadTask task = arquivo.putFile(imagem);
-
-    task.events.listen((event) {
-      if (event.type == StorageTaskEventType.progress) {
-        print("em progresso");
-      } else if (event.type == StorageTaskEventType.failure) {
-        print("falha na foto");
-      } else if (event.type == StorageTaskEventType.success) {
-        print("sucesso na foto");
-      }
-    });
-
-    task.onComplete.then((StorageTaskSnapshot snapshot) {
-      recuperarImagemFirebase(snapshot);
-    });
-  }
-
-  Future _imagenCamera() async {
-    final pickedFile = await ImagePicker().getImage(source: ImageSource.camera);
-    if (pickedFile != null)
-      setState(() {
-        imagemModelo.add(ImagemModelo(imagem: File(pickedFile.path)));
-      });
-  }
-
-  Future _imagenGaleria() async {
-    final pickedFile =
-        await ImagePicker().getImage(source: ImageSource.gallery);
-    if (pickedFile != null)
-      setState(() {
-        imagemModelo.add(ImagemModelo(imagem: File(pickedFile.path)));
-      });
-  }
-
+ 
   Widget butaoRemover() {
     return InkWell(
         child: CircleAvatar(
           radius: 30,
           child: Icon(Icons.remove),
         ),
-        onTap: () => remover());
+        onTap: () =>  carrocelImagens.removerImagem());
   }
 
-  Widget butaoTirarFoto() {
+  Widget butaoTirarFoto(BuildContext context) {
     return InkWell(
         child: CircleAvatar(
           radius: 30,
           child: Icon(Icons.photo_camera),
         ),
-        onTap: () => imagemModelo.length > 2
+        onTap: () => carrocelImagens.listaImagens.length > 2
             ? popAlerta(context, "Limite máximo de fotos!")
             : _adicionar(context));
   }
 
   List<Widget> abirImagens() {
-    return List<Widget>.generate(imagemModelo.length, (index) {
+    return List<Widget>.generate(carrocelImagens.listaImagens.length, (index) {
       return GestureDetector(
-        onLongPress: () => setState(() {
-          imagemModelo[index].selecionado = !imagemModelo[index].selecionado;
-        }),
+        onLongPress: () => carrocelImagens.selecionadoItem(index),
         child: ImagemWidget(
-            imagem: imagemModelo[index].imagem,
-            imagemUrl: imagemModelo[index].imagemUrl,
-            selecionado: imagemModelo[index].selecionado),
+            novaImagem: carrocelImagens.listaImagens[index].novaImagem ?? null,
+            imagemUrl: carrocelImagens.listaImagens[index].imagemUrl,
+            selecionado: carrocelImagens.listaImagens[index].selecionado),
       );
     });
   }
@@ -112,14 +73,14 @@ class _TelaEditarProdutoState extends State<TelaEditarProduto> {
                       leading: Icon(Icons.photo_library),
                       title: Text('Galeria'),
                       onTap: () {
-                        _imagenGaleria();
+                        carrocelImagens.adicionarGaleria();
                         Navigator.of(context).pop();
                       }),
                   ListTile(
                     leading: Icon(Icons.photo_camera),
                     title: Text('Camera'),
                     onTap: () {
-                      _imagenCamera();
+                      carrocelImagens.adicionarCamera();
                       Navigator.of(context).pop();
                     },
                   ),
@@ -130,42 +91,21 @@ class _TelaEditarProdutoState extends State<TelaEditarProduto> {
         });
   }
 
-  void remover() {
-    imagemModelo.removeWhere((e) => e.selecionado);
-    setState(() {});
-  }
-
-  int itemselecionados() => imagemModelo.where((e) => e.selecionado).length;
-
-  bool temItemSelecionado() => itemselecionados() > 0 ? true : false;
-
-  void carregarDadosProduto() {
-    nomeController.text = widget.produtoModelo.nome;
-    precoController.text = widget.produtoModelo.preco.toStringAsFixed(2);
-    descricaoController.text = widget.produtoModelo.descrissao;
-    widget.produtoModelo.imagens.forEach((e) {
-      imagemModelo.add(ImagemModelo(
-        imagemUrl: e,
-      ));
-    });
-  }
-
+ 
   @override
   void initState() {
-    carregarDadosProduto();
+    carrocelImagens.pegandoDados(widget.produtoModelo);
     super.initState();
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Editar produto"),
-        centerTitle: true,
-      ),
-      body: ListView(
-        children: [
-          Stack(
+  carrocelImagen() {
+    print(carrocelImagens.listaImagens.length);
+    return StreamBuilder<List<ImagemModelo>>(
+      initialData: carrocelImagens.listaImagens,
+      stream: carrocelImagens.saida,
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          return Stack(
             children: [
               AspectRatio(
                 aspectRatio: 1,
@@ -175,33 +115,98 @@ class _TelaEditarProdutoState extends State<TelaEditarProduto> {
                   dotIncreasedColor: Colors.blue,
                   dotBgColor: Colors.transparent,
                   dotColor: Colors.blue,
-                  images: imagemModelo.isEmpty
-                      ? [
-                          Icon(
-                            Icons.photo,
-                            size: 100,
-                          )
-                        ]
-                      : abirImagens(),
+                  images: abirImagens(),
                 ),
               ),
               Positioned(
                   bottom: 1,
                   right: 1,
-                  child:
-                      temItemSelecionado() ? butaoRemover() : butaoTirarFoto()),
-              if (temItemSelecionado())
+                  child: carrocelImagens.temItemSelecionado()
+                      ? butaoRemover()
+                      : butaoTirarFoto(context)),
+              if (carrocelImagens.temItemSelecionado())
                 Positioned(
                     bottom: 0,
                     left: 7,
                     child: FloatingActionButton.extended(
                       onPressed: null,
-                      label: Text("${itemselecionados()} item selecionado",
+                      label: Text(
+                          "${carrocelImagens.itemSelecionados()} item selecionado",
                           style: TextStyle(
                               fontSize: 15, fontWeight: FontWeight.bold)),
                     ))
             ],
-          ),
+          );
+        } else {
+          AspectRatio(
+            aspectRatio: 1,
+            child: Carousel(
+              dotSize: 6,
+              autoplay: false,
+              dotIncreasedColor: Colors.blue,
+              dotBgColor: Colors.transparent,
+              dotColor: Colors.blue,
+              images: [
+                Icon(
+                  Icons.photo,
+                  size: 100,
+                )
+              ],
+            ),
+          );
+        }
+      },
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Adicionar produto"),
+        centerTitle: true,
+      ),
+      body: ListView(
+        children: [
+          carrocelImagen(),
+          // Stack(
+          //   children: [
+          //     AspectRatio(
+          //       aspectRatio: 1,
+          //       child: Carousel(
+          //         dotSize: 6,
+          //         autoplay: false,
+          //         dotIncreasedColor: Colors.blue,
+          //         dotBgColor: Colors.transparent,
+          //         dotColor: Colors.blue,
+          //         images: imagemModelo.isEmpty
+          //             ? [
+          //                 Icon(
+          //                   Icons.photo,
+          //                   size: 100,
+          //                 )
+          //               ]
+          //             : abirImagens(),
+          //       ),
+          //     ),
+          //     Positioned(
+          //         bottom: 1,
+          //         right: 1,
+          //         child: temItemSelecionado()
+          //             ? butaoRemover()
+          //             : butaoTirarFoto(context)),
+          //     if (temItemSelecionado())
+          //       Positioned(
+          //           bottom: 0,
+          //           left: 7,
+          //           child: FloatingActionButton.extended(
+          //             onPressed: null,
+          //             label: Text("${itemselecionados()} item selecionado",
+          //                 style: TextStyle(
+          //                     fontSize: 15, fontWeight: FontWeight.bold)),
+          //           ))
+          //   ],
+          // ),
           Padding(
             padding: const EdgeInsets.all(16),
             child: Form(
@@ -211,32 +216,46 @@ class _TelaEditarProdutoState extends State<TelaEditarProduto> {
                 children: <Widget>[
                   Text("Nome"),
                   TextFormField(
-                    controller: nomeController,
-                    validator: (valor) => validarNome(valor),
-                  ),
+                      initialValue: widget.produtoModelo.nome.toString(),
+                      validator: (nome) => validarNome(nome),
+                      onChanged: (entrada) => formkey.currentState.validate(),
+                      onSaved: (entrada) => produtoModelo.nome = entrada),
                   Text("Preço"),
                   TextFormField(
-                    controller: precoController,
-                    validator: (valor) => validarPreco(valor),
-                  ),
+                      initialValue:
+                          widget.produtoModelo.preco.toStringAsFixed(2),
+                      validator: (preco) => validarPreco(preco),
+                      onChanged: (entrada) => formkey.currentState.validate(),
+                      onSaved: (entrada) =>
+                          produtoModelo.preco = num.parse(entrada)),
                   Text("Descrição"),
                   TextFormField(
-                    controller: descricaoController,
-                    validator: (valor) => validarDescricao(valor),
-                  ),
+                      initialValue: widget.produtoModelo.descrissao,
+                      validator: (descricao) => validarDescricao(descricao),
+                      onChanged: (entrada) => formkey.currentState.validate(),
+                      onSaved: (entrada) => produtoModelo.descrissao = entrada),
                   SizedBox(
                     height: 30,
                   ),
-                  ButaoConfirmar(
-                      titulo: "Editar produto",
-                      onPressed: () {
-                        //TODO:validar
-                        if (formkey.currentState.validate() &&
-                            validarFoto(imagemModelo, context)) {
-                            
-                            }
-                        //TODO:salvar no firebase
-                      }),
+                  processando
+                      ? CircularProgressIndicator()
+                      : ButaoConfirmar(
+                          titulo: "Adicionar produto",
+                          onPressed: () async {
+                            // if (formkey.currentState.validate() &&
+                            //     validarFoto(imagemModelo, context)) {
+                            //   setState(() {
+                            //     processando = true;
+                            //   });
+                            //   formkey.currentState.save();
+
+                            //   await salvarFirebase();
+
+                            //   produtoModelo.salvar();
+                            //   Navigator.pushReplacementNamed(
+                            //       context, "principal");
+                            // }
+                          }),
                 ],
               ),
             ),
