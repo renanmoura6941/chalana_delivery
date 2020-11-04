@@ -1,7 +1,7 @@
-import 'package:chalana_delivery/funcionalidades/atualizar_produto.dart';
 import 'package:chalana_delivery/modelos/produto_modelo.dart';
 import 'package:chalana_delivery/repositorio/repositorio.dart';
 import 'package:chalana_delivery/telas/tela_principal/componentes/card.dart';
+import 'package:chalana_delivery/telas/tela_principal/funcionalidades/atualizar_produto.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
