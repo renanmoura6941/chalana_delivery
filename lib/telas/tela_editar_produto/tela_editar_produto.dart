@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:chalana_delivery/componentes/butao_confirmar/butao_confirmar.dart';
-import 'package:chalana_delivery/funcionalidades/carrocel_imagens.dart';
 import 'package:chalana_delivery/helpers/validators_functions.dart';
 import 'package:chalana_delivery/modelos/produto_modelo.dart';
 import 'package:chalana_delivery/telas/tela_adicionar_produto/componetes/selecionar_imagem.dart';
@@ -10,6 +9,8 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:uuid/uuid.dart';
+
+import 'funcionalidades/carrocel_imagens.dart';
 
 class TelaEditarProduto extends StatefulWidget {
   ProdutoModelo produtoModelo;
@@ -28,14 +29,13 @@ class _TelaEditarProdutoState extends State<TelaEditarProduto> {
   bool processando = false;
   CarrocelImagens carrocelImagens = CarrocelImagens();
 
- 
   Widget butaoRemover() {
     return InkWell(
         child: CircleAvatar(
           radius: 30,
           child: Icon(Icons.remove),
         ),
-        onTap: () =>  carrocelImagens.removerImagem());
+        onTap: () => carrocelImagens.removerImagem());
   }
 
   Widget butaoTirarFoto(BuildContext context) {
@@ -91,7 +91,6 @@ class _TelaEditarProdutoState extends State<TelaEditarProduto> {
         });
   }
 
- 
   @override
   void initState() {
     carrocelImagens.pegandoDados(widget.produtoModelo);
