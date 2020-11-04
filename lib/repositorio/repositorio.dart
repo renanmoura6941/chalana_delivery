@@ -3,14 +3,17 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Repositorio {
   Future<List<ProdutoModelo>> getProdutos() async {
+    print("pegar produtos Firebase");
     final querySnapshot = await Firestore.instance
         .collection('produtos')
         .orderBy("acessos", descending: true)
         .getDocuments();
+    print("pegar produtos Firebase (V)SUCESSO!");
+  
 
     return querySnapshot.documents.map((doc) {
       return ProdutoModelo(
-        id:doc.documentID,
+        id: doc.documentID,
         nome: doc['nome'].toString(),
         preco: doc['preco'],
         categorias: doc['categoria'].toString(),

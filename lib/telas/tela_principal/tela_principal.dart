@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:chalana_delivery/modelos/produto_modelo.dart';
 import 'package:chalana_delivery/repositorio/repositorio.dart';
+import 'package:chalana_delivery/telas/tela_principal/bloc.dart';
 import 'package:chalana_delivery/telas/tela_principal/componentes/card.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -25,24 +28,11 @@ class _TelaPrincipalState extends State<TelaPrincipal> {
         }).toList());
   }
 
-  atualizar() async {
-    await Firestore.instance.collection('produtos').snapshots().listen((event) {
-      print("escultando");
-      setState(() {});
-    });
-  }
-
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    print("dispose");
-    super.dispose();
-  }
-
+  Bloc bloc = Bloc();
   @override
   void initState() {
-    atualizar();
-    GetIt.I.get<Repositorio>().getProdutos();
+    // TODO: implement initState
+
     super.initState();
   }
 
@@ -60,16 +50,29 @@ class _TelaPrincipalState extends State<TelaPrincipal> {
           child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15),
         child: Center(
-          child: FutureBuilder(
-              future: GetIt.I.get<Repositorio>().getProdutos(),
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  return gridView(snapshot.data);
-                } else {
-                  return CircularProgressIndicator();
-                }
-              }),
-        ),
+            child: FutureBuilder<List<ProdutoModelo>>(
+                future: GetIt.I.get<Repositorio>().getProdutos(),
+                builder: (ctx, snapshot) {
+                  if (snapshot.hasData) {
+                    bloc.escultar();
+                    return StreamBuilder<List<ProdutoModelo>>(
+                      initialData: snapshot.data,
+                      stream: bloc.saida,
+                      builder: (context, snapshot) {
+                        //print("REBUIL dados:${snapshot.data}");
+                        print("Construindo a tela de Produtos");
+
+                        if (snapshot.hasData) {
+                          return gridView(snapshot.data);
+                        } else {
+                          return CircularProgressIndicator();
+                        }
+                      },
+                    );
+                  } else {
+                    return CircularProgressIndicator();
+                  }
+                })),
       )),
     );
   }
