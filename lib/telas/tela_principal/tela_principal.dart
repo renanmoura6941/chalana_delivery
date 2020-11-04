@@ -1,6 +1,7 @@
 import 'package:chalana_delivery/modelos/produto_modelo.dart';
 import 'package:chalana_delivery/repositorio/repositorio.dart';
 import 'package:chalana_delivery/telas/tela_principal/componentes/card.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
@@ -21,6 +22,20 @@ class _TelaPrincipalState extends State<TelaPrincipal> {
         children: produtos.map((elemeto) {
           return CardPrincipal(elemeto);
         }).toList());
+  }
+
+  atualizar() async {
+    await Firestore.instance.collection('produtos').snapshots().listen((event) {
+      print("escultando");
+      setState(() {});
+    });
+  }
+
+  @override
+  void initState() {
+    atualizar();
+
+    super.initState();
   }
 
   @override
