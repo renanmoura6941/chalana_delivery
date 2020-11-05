@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'dart:math';
 
+import 'package:chalana_delivery/modelos/foto_modelo.dart';
 import 'package:chalana_delivery/telas/tela_adicionar_produto/modelo/Imagem_selecionar_modelo.dart';
 import 'package:flutter/material.dart';
 
@@ -47,6 +48,14 @@ String validarDescricao(String descricao) {
 }
 
 bool validarFoto(List<ImagemModeloLocal> imagens, BuildContext context) {
+  if (imagens.isEmpty) {
+    popAlerta(context, "Sem foto!");
+    return false;
+  }
+  return true;
+}
+
+bool validarImagens(List<FotoModelo> imagens, BuildContext context) {
   if (imagens.isEmpty) {
     popAlerta(context, "Sem foto!");
     return false;

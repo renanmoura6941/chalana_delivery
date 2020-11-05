@@ -14,4 +14,8 @@ class FotoModelo {
       'uuid': uuid,
     };
   }
+   @override
+  String toString() {
+    return "Imagem: id: $uuid, url: $url, local: $local,selecionada: $selecionado";
+  }
 }

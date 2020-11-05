@@ -51,6 +51,13 @@ class _TelaPrincipalState extends State<TelaPrincipal> {
         title: Text(
           "Chalana delivery",
         ),
+        actions: [
+          IconButton(
+              icon: Icon(Icons.add),
+              onPressed: () {
+                Navigator.pushNamed(context, "tela_adicionar_produto");
+              })
+        ],
       ),
       backgroundColor: Colors.white,
       body: SafeArea(

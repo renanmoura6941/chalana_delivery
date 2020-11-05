@@ -36,8 +36,27 @@ class ProdutoModelo {
     id = referencia.documentID;
     dados['id'] = id;
 
-    print("ID $id");
     await referencia.updateData(dados);
+    print(toString());
+    print("SALVO");
+  }
+
+  atualizar() async {
+    print("atualinzando no firebase!");
+    print(toString());
+    var dados = {
+      'nome': nome,
+      'preco': preco,
+      'categorias': categorias,
+      'imagens': imagens.map((e) => e.toMap()).toList(),
+      'descrissao': descrissao,
+    };
+
+    await Firestore.instance
+        .collection('produtos')
+        .document(id)
+        .updateData(dados);
+      print("ATUALIZADO");
   }
 
   @override

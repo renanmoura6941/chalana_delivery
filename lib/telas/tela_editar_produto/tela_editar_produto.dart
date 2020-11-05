@@ -4,6 +4,7 @@ import 'package:chalana_delivery/helpers/validators_functions.dart';
 import 'package:chalana_delivery/modelos/foto_modelo.dart';
 import 'package:chalana_delivery/modelos/produto_modelo.dart';
 import 'package:chalana_delivery/telas/tela_adicionar_produto/componetes/selecionar_imagem.dart';
+import 'package:chalana_delivery/telas/tela_editar_produto/funcionalidades/carrocel_imagens.dart';
 import 'package:flutter/material.dart';
 
 import 'funcionalidades/carrocel_imagens.dart';
@@ -17,8 +18,7 @@ class TelaEditarProduto extends StatefulWidget {
 
 class _TelaEditarProdutoState extends State<TelaEditarProduto> {
   final GlobalKey<FormState> formkey = GlobalKey<FormState>();
-  ProdutoModelo produtoModelo = ProdutoModelo();
-  CarrocelImagens carrocelImagens = CarrocelImagens();
+  EditaRegraNegocio editaRegraNegocio = EditaRegraNegocio();
 
   Widget butaoRemover() {
     return InkWell(
@@ -26,7 +26,7 @@ class _TelaEditarProdutoState extends State<TelaEditarProduto> {
           radius: 30,
           child: Icon(Icons.remove),
         ),
-        onTap: () => carrocelImagens.removerImagem());
+        onTap: () => editaRegraNegocio.removerImagem());
   }
 
   Widget butaoTirarFoto(BuildContext context) {
@@ -35,19 +35,19 @@ class _TelaEditarProdutoState extends State<TelaEditarProduto> {
           radius: 30,
           child: Icon(Icons.photo_camera),
         ),
-        onTap: () => carrocelImagens.produto.imagens.length > 2
+        onTap: () => editaRegraNegocio.produto.imagens.length > 2
             ? popAlerta(context, "Limite máximo de fotos!")
             : _adicionar(context));
   }
 
   List<Widget> abirImagens() {
-    return List<Widget>.generate(carrocelImagens.produto.imagens.length,
+    return List<Widget>.generate(editaRegraNegocio.produto.imagens.length,
         (index) {
       return ImagemWidget(
-          onPressed: () => carrocelImagens.selecionadoItem(index),
-          novaImagem: carrocelImagens.produto.imagens[index].local ?? null,
-          imagemUrl: carrocelImagens.produto.imagens[index].url,
-          selecionado: carrocelImagens.produto.imagens[index].selecionado);
+          onPressed: () => editaRegraNegocio.selecionadoItem(index),
+          novaImagem: editaRegraNegocio.produto.imagens[index].local ?? null,
+          imagemUrl: editaRegraNegocio.produto.imagens[index].url,
+          selecionado: editaRegraNegocio.produto.imagens[index].selecionado);
     });
   }
 
@@ -63,14 +63,14 @@ class _TelaEditarProdutoState extends State<TelaEditarProduto> {
                       leading: Icon(Icons.photo_library),
                       title: Text('Galeria'),
                       onTap: () async {
-                        await carrocelImagens.adicionarGaleria();
+                        await editaRegraNegocio.adicionarGaleria();
                         Navigator.of(context).pop();
                       }),
                   ListTile(
                     leading: Icon(Icons.photo_camera),
                     title: Text('Camera'),
                     onTap: () async {
-                      await carrocelImagens.adicionarCamera();
+                      await editaRegraNegocio.adicionarCamera();
                       Navigator.of(context).pop();
                     },
                   ),
@@ -83,14 +83,14 @@ class _TelaEditarProdutoState extends State<TelaEditarProduto> {
 
   @override
   void initState() {
-    carrocelImagens.pegandoDados(widget.produtoModelo);
+    editaRegraNegocio.pegandoDados(widget.produtoModelo);
     super.initState();
   }
 
   carrocelImagen() {
     return StreamBuilder<List<FotoModelo>>(
-      initialData: carrocelImagens.produto.imagens,
-      stream: carrocelImagens.saida,
+      initialData: editaRegraNegocio.produto.imagens,
+      stream: editaRegraNegocio.saida,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           return Stack(
@@ -103,7 +103,7 @@ class _TelaEditarProdutoState extends State<TelaEditarProduto> {
                   dotIncreasedColor: Colors.blue,
                   dotBgColor: Colors.transparent,
                   dotColor: Colors.blue,
-                  images: carrocelImagens.produto.imagens.isEmpty
+                  images: editaRegraNegocio.produto.imagens.isEmpty
                       ? [
                           Icon(
                             Icons.photo,
@@ -116,17 +116,17 @@ class _TelaEditarProdutoState extends State<TelaEditarProduto> {
               Positioned(
                   bottom: 1,
                   right: 1,
-                  child: carrocelImagens.temItemSelecionado()
+                  child: editaRegraNegocio.temItemSelecionado
                       ? butaoRemover()
                       : butaoTirarFoto(context)),
-              if (carrocelImagens.temItemSelecionado())
+              if (editaRegraNegocio.temItemSelecionado)
                 Positioned(
                     bottom: 0,
                     left: 7,
                     child: FloatingActionButton.extended(
                       onPressed: null,
                       label: Text(
-                          "${carrocelImagens.itemSelecionados()} item selecionado",
+                          "${editaRegraNegocio.itemSelecionados} item selecionado",
                           style: TextStyle(
                               fontSize: 15, fontWeight: FontWeight.bold)),
                     ))
@@ -176,7 +176,8 @@ class _TelaEditarProdutoState extends State<TelaEditarProduto> {
                       initialValue: widget.produtoModelo.nome.toString(),
                       validator: (nome) => validarNome(nome),
                       onChanged: (entrada) => formkey.currentState.validate(),
-                      onSaved: (entrada) => produtoModelo.nome = entrada),
+                      onSaved: (entrada) =>
+                          editaRegraNegocio.produto..nome = entrada),
                   Text("Preço"),
                   TextFormField(
                       initialValue:
@@ -184,32 +185,37 @@ class _TelaEditarProdutoState extends State<TelaEditarProduto> {
                       validator: (preco) => validarPreco(preco),
                       onChanged: (entrada) => formkey.currentState.validate(),
                       onSaved: (entrada) =>
-                          produtoModelo.preco = num.parse(entrada)),
+                          editaRegraNegocio.produto.preco = num.parse(entrada)),
                   Text("Descrição"),
                   TextFormField(
                       initialValue: widget.produtoModelo.descrissao,
                       validator: (descricao) => validarDescricao(descricao),
                       onChanged: (entrada) => formkey.currentState.validate(),
-                      onSaved: (entrada) => produtoModelo.descrissao = entrada),
+                      onSaved: (entrada) =>
+                          editaRegraNegocio.produto.descrissao = entrada),
                   SizedBox(
                     height: 30,
                   ),
-                  ButaoConfirmar(
-                      titulo: "Adicionar produto",
-                      onPressed: () async {
-                        // if (formkey.currentState.validate() &&
-                        //     validarFoto(imagemModelo, context)) {
-                        //   setState(() {
-                        //     processando = true;
-                        //   });
-                        //   formkey.currentState.save();
-
-                        //   await salvarFirebase();
-
-                        //   produtoModelo.salvar();
-                        //   Navigator.pushReplacementNamed(
-                        //       context, "principal");
-                        // }
+                  StreamBuilder<bool>(
+                      initialData: editaRegraNegocio.processando,
+                      stream: editaRegraNegocio.saidaPreocesso,
+                      builder: (context, snapshot) {
+                        if (snapshot.data) {
+                          return CircularProgressIndicator();
+                        }
+                        return ButaoConfirmar(
+                            titulo: "Adicionar produto",
+                            onPressed: () async {
+                              if (formkey.currentState.validate() &&
+                                  validarImagens(
+                                      editaRegraNegocio.produto.imagens,
+                                      context)) {
+                                formkey.currentState.save();
+                                await editaRegraNegocio.editarProduto();
+                                Navigator.pushReplacementNamed(
+                                    context, "principal");
+                              }
+                            });
                       }),
                 ],
               ),

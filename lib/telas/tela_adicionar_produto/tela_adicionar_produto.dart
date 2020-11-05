@@ -26,20 +26,23 @@ class _TelaAdicionarProdutoState extends State<TelaAdicionarProduto> {
   bool processando = false;
 
   Future<FotoModelo> salvarImagemFirebase(File imagem) async {
-
-    var storageRef = FirebaseStorage.instance.ref().child(produtoModelo.nome);
+    print("id ${produtoModelo.id}");
+    var storageRef =
+        await FirebaseStorage.instance.ref().child(produtoModelo.id);
 
     String uuid = Uuid().v1();
 
-    final StorageUploadTask task = storageRef.child(uuid).putFile(imagem);
+    final StorageUploadTask task = await storageRef.child(uuid).putFile(imagem);
 
     final StorageTaskSnapshot snapshot = await task.onComplete;
+
     final String url = await snapshot.ref.getDownloadURL() as String;
 
-    return FotoModelo(url:url, uuid:uuid);
+    return FotoModelo(url: url, uuid: uuid);
   }
 
   void salvarFirebase() async {
+    print(produtoModelo);
     for (final e in imagemModelo) {
       FotoModelo fotoModelo = await salvarImagemFirebase(e.novaImagem);
       produtoModelo.imagens.add(fotoModelo);
@@ -230,9 +233,10 @@ class _TelaAdicionarProdutoState extends State<TelaAdicionarProduto> {
                               });
                               formkey.currentState.save();
 
-                              await salvarFirebase();
+                              await produtoModelo.salvar();
 
-                              produtoModelo.salvar();
+                              await salvarFirebase();
+                              await produtoModelo.atualizar();
                               Navigator.pushReplacementNamed(
                                   context, "principal");
                             }

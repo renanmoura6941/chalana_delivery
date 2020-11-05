@@ -2,23 +2,57 @@ import 'dart:async';
 import 'dart:io';
 import 'package:chalana_delivery/modelos/foto_modelo.dart';
 import 'package:chalana_delivery/modelos/produto_modelo.dart';
-import 'package:chalana_delivery/telas/tela_adicionar_produto/modelo/Imagem_selecionar_modelo.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:uuid/uuid.dart';
 
-class CarrocelImagens {
+class EditaRegraNegocio {
   final StreamController<List<FotoModelo>> stream = StreamController();
   Sink<List<FotoModelo>> get entrada => stream.sink;
   Stream get saida => stream.stream;
 
-  ProdutoModelo produto = ProdutoModelo();
-  List<FotoModelo> urlRemover;
+  final StreamController<bool> streamProcessando = StreamController();
+  Sink<bool> get entradaProcesso => streamProcessando.sink;
+  Stream get saidaPreocesso => streamProcessando.stream;
 
-  pegandoDados(ProdutoModelo produto) {
+  ProdutoModelo produto = ProdutoModelo();
+  List<FotoModelo> urlRemover = [];
+  bool processando = false;
+
+  void pegandoDados(ProdutoModelo produto) {
     this.produto = produto;
   }
 
-  Future adicionarCamera() async {
+  void removerImagem() {
+    print("urls para remover no firebase");
+
+    produto.imagens.forEach((e) {
+      if (e.selecionado && e.url != null) {
+        urlRemover.add(e);
+      }
+    });
+
+    urlRemover.addAll(urlRemover.toSet().toList());
+
+    print("${urlRemover.length} url");
+
+    print("Removendo localmente");
+    produto.imagens.removeWhere((e) => e.selecionado);
+
+    entrada.add(produto.imagens);
+  }
+
+  void selecionadoItem(int indice) {
+    produto.imagens[indice].selecionado = !produto.imagens[indice].selecionado;
+    entrada.add(produto.imagens);
+  }
+
+  int get itemSelecionados =>
+      produto.imagens.where((e) => e.selecionado).length;
+
+  bool get temItemSelecionado => itemSelecionados > 0 ? true : false;
+
+  Future<void> adicionarCamera() async {
     final pickedFile = await ImagePicker().getImage(source: ImageSource.camera);
     if (pickedFile != null) {
       produto.imagens.add(FotoModelo(local: File(pickedFile.path), url: null));
@@ -26,7 +60,7 @@ class CarrocelImagens {
     }
   }
 
-  Future adicionarGaleria() async {
+  Future<void> adicionarGaleria() async {
     final pickedFile =
         await ImagePicker().getImage(source: ImageSource.gallery);
     if (pickedFile != null) {
@@ -36,71 +70,59 @@ class CarrocelImagens {
   }
 
   Future<void> removerFirebase() async {
-    urlRemover =
-        produto.imagens.where((e) => e.selecionado && e.url != null).toList();
-
     if (urlRemover.isNotEmpty) {
+      print("removendo ${urlRemover.length} do firebase");
       urlRemover.forEach((e) async {
         await FirebaseStorage.instance
             .ref()
-            .child(produto.nome)
+            .child(produto.id)
             .child(e.uuid)
             .delete();
       });
+    } else {
+      print("Sem imagens para remover!");
     }
   }
 
-  void removerImagem()  {
-    print("urls para remover no firebase");
-    urlRemover =
-        produto.imagens.where((e) => e.selecionado && e.url != null).toList();
-    print("${urlRemover} url");
+  Future<FotoModelo> salvarFirebaseStorage(File file) async {
+    var refencia = FirebaseStorage.instance.ref().child(produto.id);
+    String id = Uuid().v1();
+    final StorageUploadTask task = await refencia.child(id).putFile(file);
+    final StorageTaskSnapshot snapshot = await task.onComplete;
+    final String url = await snapshot.ref.getDownloadURL() as String;
 
-    print("Removendo localmente");
-    produto.imagens.removeWhere((e) => e.selecionado);
-
-    entrada.add(produto.imagens);
+    return FotoModelo(url: url, uuid: id);
   }
 
-  int itemSelecionados() => produto.imagens.where((e) => e.selecionado).length;
+  Future<void> salvarmagemFirebase() async {
+    var imagemNova = produto.imagens.where((e) => e.local != null).toList();
+    print(imagemNova);
 
-  bool temItemSelecionado() => itemSelecionados() > 0 ? true : false;
+    if (imagemNova.isNotEmpty) {
+      produto.imagens.removeWhere((e) => e.local != null);
 
-  selecionadoItem(int indice) {
-    produto.imagens[indice].selecionado = !produto.imagens[indice].selecionado;
-    entrada.add(produto.imagens);
-  }
-
-  //  Future<String> salvarImagemFirebase(File imagem) async {
-  //   var storageRef = FirebaseStorage.instance.ref().child(produtoModelo.nome);
-
-  //   final StorageUploadTask task =
-  //       storageRef.child(Uuid().v1()).putFile(imagem);
-
-  //   final StorageTaskSnapshot snapshot = await task.onComplete;
-  //   final String url = await snapshot.ref.getDownloadURL() as String;
-
-  //   return url;
-  // }
-
-  //  Future<String> imagemFirebase(File imagem) async {
-  //   var storageRef = FirebaseStorage.instance.ref().child(produtoModelo.nome);
-
-  //   final StorageUploadTask task =
-  //       storageRef.child(Uuid().v1()).putFile(imagem);
-
-  //   final StorageTaskSnapshot snapshot = await task.onComplete;
-  //   final String url = await snapshot.ref.getDownloadURL() as String;
-
-  //   return url;
-  // }
-
-  void salvarimagemFirebase(String nomeProduto) async {
-    for (final itens in produto.imagens) {
-      //itens.
-      // String url = await salvarImagemFirebase(e.imagem);
-      // print("url recuperada $url");
-      // produtoModelo.imagens.add(url);
+      for (final itens in imagemNova) {
+        FotoModelo imagem = await salvarFirebaseStorage(itens.local);
+        produto.imagens.add(imagem);
+      }
     }
+  }
+
+  Future<void> editarProduto() async {
+    print("produto Editado");
+
+    processando = true;
+    streamProcessando.add(processando);
+    print("Removendo url firebase");
+    await removerFirebase();
+    print("salvando imagem Firebase");
+
+    await salvarmagemFirebase();
+    print("atualizando produto Firebase");
+
+    await produto.atualizar();
+    print("produto Editado com SUCESSO!");
+    processando = false;
+    streamProcessando.add(processando);
   }
 }
