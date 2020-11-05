@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:io';
+import 'package:chalana_delivery/modelos/foto_modelo.dart';
 import 'package:chalana_delivery/modelos/produto_modelo.dart';
 import 'package:chalana_delivery/telas/tela_adicionar_produto/modelo/Imagem_selecionar_modelo.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -7,7 +8,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:uuid/uuid.dart';
 
 class CarrocelImagens {
-
   final StreamController<List<ImagemModeloLocal>> stream = StreamController();
   Sink<List<ImagemModeloLocal>> get entrada => stream.sink;
   Stream get saida => stream.stream;
@@ -17,17 +17,17 @@ class CarrocelImagens {
   var referenciaImagens;
 
   pegandoDados(ProdutoModelo produto) {
-    this.produto =produto;
+    this.produto = produto;
 
     produto.imagens.forEach((imagem) {
-      listaImagens.add(ImagemModeloLocal(imagemUrl: imagem.url));
+      listaImagens.add(ImagemModeloLocal(imagem: imagem));
     });
   }
 
   Future adicionarCamera() async {
     final pickedFile = await ImagePicker().getImage(source: ImageSource.camera);
     if (pickedFile != null) {
-      listaImagens.add(ImagemModeloLocal(novaImagem: File(pickedFile.path)));
+      listaImagens.add(ImagemModeloLocal(novaImagem: File(pickedFile.path),imagem: FotoModelo()));
       entrada.add(listaImagens);
     }
   }
@@ -36,14 +36,31 @@ class CarrocelImagens {
     final pickedFile =
         await ImagePicker().getImage(source: ImageSource.gallery);
     if (pickedFile != null) {
-      listaImagens.add(ImagemModeloLocal(novaImagem: File(pickedFile.path)));
+      listaImagens.add(ImagemModeloLocal(novaImagem: File(pickedFile.path),imagem: FotoModelo()));
       entrada.add(listaImagens);
     }
   }
 
-  adicionarImagens() {}
+  Future<void> removerFirebase() async {
+    print("removendo imagens firebase:");
+    final itensRemover = listaImagens
+        .where((e) => e.selecionado && e.imagem.url != null)
+        .toList();
 
-  removerImagem() {
+    print(itensRemover);
+    if (itensRemover.isNotEmpty) {
+      itensRemover.forEach((e) async {
+        await FirebaseStorage.instance
+            .ref()
+            .child(produto.nome)
+            .child(e.imagem.uuid)
+            .delete();
+      });
+    }
+  }
+
+  Future<void> removerImagem() async {
+    await removerFirebase();
     listaImagens.removeWhere((e) => e.selecionado);
     entrada.add(listaImagens);
   }
@@ -81,17 +98,12 @@ class CarrocelImagens {
   //   return url;
   // }
 
-  void salvarimagemFirebase( String nomeProduto) async {
-
-
-
+  void salvarimagemFirebase(String nomeProduto) async {
     for (final itens in listaImagens) {
-
       //itens.
       // String url = await salvarImagemFirebase(e.imagem);
       // print("url recuperada $url");
       // produtoModelo.imagens.add(url);
     }
   }
-
 }

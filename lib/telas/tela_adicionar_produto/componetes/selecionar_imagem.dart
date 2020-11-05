@@ -6,7 +6,7 @@ class ImagemWidget extends StatefulWidget {
   File novaImagem;
   String imagemUrl;
   bool selecionado;
-  Function(bool) onPressed;
+  Function onPressed;
 
   ImagemWidget({this.novaImagem, this.selecionado, this.onPressed, this.imagemUrl});
 
@@ -15,23 +15,32 @@ class ImagemWidget extends StatefulWidget {
 }
 
 class _ImagemWidgetState extends State<ImagemWidget> {
+ 
+ 
+
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        border: Border.all(
-          color: widget.selecionado ?? false
-              ? Colors.red
-              : Colors.transparent, //                   <--- border color
-          width: 5.0,
+
+    return GestureDetector(
+      onLongPress: widget.onPressed,
+      child: Container(
+        decoration: BoxDecoration(
+          border: Border.all(
+            color: widget.selecionado ?? false
+                ? Colors.red
+                : Colors.transparent, //                   <--- border color
+            width: 5.0,
+          ),
         ),
+        child: widget.imagemUrl != null
+            ? Image.network(widget.imagemUrl)
+            : Image.file(
+                widget.novaImagem,
+                fit: BoxFit.cover,
+              ),
       ),
-      child: widget.novaImagem == null
-          ? Image.network(widget.imagemUrl)
-          : Image.file(
-              widget.novaImagem,
-              fit: BoxFit.cover,
-            ),
     );
   }
 }
+

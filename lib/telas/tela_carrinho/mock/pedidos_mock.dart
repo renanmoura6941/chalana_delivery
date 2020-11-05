@@ -7,7 +7,7 @@ class MockCarrinho {
   static List<PedidoModelo> pedidos_mock = [
     PedidoModelo(
       produto: ProdutoModelo(
-        imagens: [FotoModelo(IMG_CERVEJA, "0")],
+        imagens: [FotoModelo(url:IMG_CERVEJA, uuid:"0")],
         nome: "Cerveja Corona",
         preco: 3.5,
       ),
@@ -15,7 +15,7 @@ class MockCarrinho {
     ),
     PedidoModelo(
       produto: ProdutoModelo(
-        imagens: [FotoModelo(IMG_NOTEBOOK,"1")],
+        imagens: [FotoModelo(url:IMG_NOTEBOOK,uuid:"1")],
         nome: "Notebook",
         preco: 1999.99,
       ),
@@ -23,7 +23,7 @@ class MockCarrinho {
     ),
     PedidoModelo(
       produto: ProdutoModelo(
-        imagens: [FotoModelo(IMG_CELULAR, "2")],
+        imagens: [FotoModelo(url:IMG_CELULAR,uuid: "2")],
         nome: "Iphone 1200",
         preco: 70000,
       ),

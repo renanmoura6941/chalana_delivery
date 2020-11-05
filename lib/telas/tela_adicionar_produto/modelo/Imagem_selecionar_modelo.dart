@@ -1,8 +1,11 @@
 import 'dart:io';
 
+import 'package:chalana_delivery/modelos/foto_modelo.dart';
+
 class ImagemModeloLocal {
+  String nome;
   File novaImagem;
   bool selecionado;
-  String imagemUrl;
-  ImagemModeloLocal({this.novaImagem, this.selecionado = false, this.imagemUrl});
+  FotoModelo imagem;
+  ImagemModeloLocal({this.nome,this.novaImagem, this.selecionado = false, this.imagem});
 }

@@ -36,7 +36,7 @@ class _TelaAdicionarProdutoState extends State<TelaAdicionarProduto> {
     final StorageTaskSnapshot snapshot = await task.onComplete;
     final String url = await snapshot.ref.getDownloadURL() as String;
 
-    return FotoModelo(url, uuid);
+    return FotoModelo(url:url, uuid:uuid);
   }
 
   void salvarFirebase() async {

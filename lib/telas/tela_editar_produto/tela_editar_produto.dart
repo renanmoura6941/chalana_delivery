@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:chalana_delivery/componentes/butao_confirmar/butao_confirmar.dart';
 import 'package:chalana_delivery/helpers/validators_functions.dart';
+import 'package:chalana_delivery/modelos/foto_modelo.dart';
 import 'package:chalana_delivery/modelos/produto_modelo.dart';
 import 'package:chalana_delivery/telas/tela_adicionar_produto/componetes/selecionar_imagem.dart';
 import 'package:chalana_delivery/telas/tela_adicionar_produto/modelo/Imagem_selecionar_modelo.dart';
@@ -35,7 +36,7 @@ class _TelaEditarProdutoState extends State<TelaEditarProduto> {
           radius: 30,
           child: Icon(Icons.remove),
         ),
-        onTap: () => carrocelImagens.removerImagem());
+        onTap: () async => carrocelImagens.removerImagem());
   }
 
   Widget butaoTirarFoto(BuildContext context) {
@@ -50,14 +51,19 @@ class _TelaEditarProdutoState extends State<TelaEditarProduto> {
   }
 
   List<Widget> abirImagens() {
+    print((carrocelImagens.listaImagens));
+    print("lista:${carrocelImagens.listaImagens.length}");
+
     return List<Widget>.generate(carrocelImagens.listaImagens.length, (index) {
-      return GestureDetector(
-        onLongPress: () => carrocelImagens.selecionadoItem(index),
-        child: ImagemWidget(
-            novaImagem: carrocelImagens.listaImagens[index].novaImagem ?? null,
-            imagemUrl: carrocelImagens.listaImagens[index].imagemUrl,
-            selecionado: carrocelImagens.listaImagens[index].selecionado),
-      );
+      print("indce: $index");
+
+ 
+    
+      return ImagemWidget(
+          onPressed: () => carrocelImagens.selecionadoItem(index),
+          novaImagem: carrocelImagens.listaImagens[index].novaImagem ?? null,
+          imagemUrl: carrocelImagens.listaImagens[index].imagem.url,
+          selecionado: carrocelImagens.listaImagens[index].selecionado);
     });
   }
 
@@ -72,15 +78,15 @@ class _TelaEditarProdutoState extends State<TelaEditarProduto> {
                   ListTile(
                       leading: Icon(Icons.photo_library),
                       title: Text('Galeria'),
-                      onTap: () {
-                        carrocelImagens.adicionarGaleria();
+                      onTap: () async {
+                        await carrocelImagens.adicionarGaleria();
                         Navigator.of(context).pop();
                       }),
                   ListTile(
                     leading: Icon(Icons.photo_camera),
                     title: Text('Camera'),
-                    onTap: () {
-                      carrocelImagens.adicionarCamera();
+                    onTap: () async {
+                      await carrocelImagens.adicionarCamera();
                       Navigator.of(context).pop();
                     },
                   ),
@@ -98,11 +104,12 @@ class _TelaEditarProdutoState extends State<TelaEditarProduto> {
   }
 
   carrocelImagen() {
-    print(carrocelImagens.listaImagens.length);
     return StreamBuilder<List<ImagemModeloLocal>>(
       initialData: carrocelImagens.listaImagens,
       stream: carrocelImagens.saida,
       builder: (context, snapshot) {
+
+        print("dados: ${snapshot.data}");
         if (snapshot.hasData) {
           return Stack(
             children: [
@@ -175,44 +182,6 @@ class _TelaEditarProdutoState extends State<TelaEditarProduto> {
       body: ListView(
         children: [
           carrocelImagen(),
-          // Stack(
-          //   children: [
-          //     AspectRatio(
-          //       aspectRatio: 1,
-          //       child: Carousel(
-          //         dotSize: 6,
-          //         autoplay: false,
-          //         dotIncreasedColor: Colors.blue,
-          //         dotBgColor: Colors.transparent,
-          //         dotColor: Colors.blue,
-          //         images: imagemModelo.isEmpty
-          //             ? [
-          //                 Icon(
-          //                   Icons.photo,
-          //                   size: 100,
-          //                 )
-          //               ]
-          //             : abirImagens(),
-          //       ),
-          //     ),
-          //     Positioned(
-          //         bottom: 1,
-          //         right: 1,
-          //         child: temItemSelecionado()
-          //             ? butaoRemover()
-          //             : butaoTirarFoto(context)),
-          //     if (temItemSelecionado())
-          //       Positioned(
-          //           bottom: 0,
-          //           left: 7,
-          //           child: FloatingActionButton.extended(
-          //             onPressed: null,
-          //             label: Text("${itemselecionados()} item selecionado",
-          //                 style: TextStyle(
-          //                     fontSize: 15, fontWeight: FontWeight.bold)),
-          //           ))
-          //   ],
-          // ),
           Padding(
             padding: const EdgeInsets.all(16),
             child: Form(

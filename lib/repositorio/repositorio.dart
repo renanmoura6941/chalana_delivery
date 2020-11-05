@@ -5,7 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class Repositorio {
   List<FotoModelo> _mapImg(List doc) {
     return doc.map((e) {
-      return FotoModelo(e['url'], e['uuid']);
+      return FotoModelo(url:e['url'], uuid:e['uuid']);
     }).toList();
   }
 
