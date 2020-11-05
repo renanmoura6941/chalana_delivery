@@ -26,7 +26,7 @@ class ProdutoModelo {
       'nome': nome,
       'preco': preco,
       'categorias': categorias,
-      'imagens': imagens,
+      'imagens': imagens.map((e) => e.toMap()).toList(),
       'descrissao': descrissao,
       'acessos': acessos,
     };
