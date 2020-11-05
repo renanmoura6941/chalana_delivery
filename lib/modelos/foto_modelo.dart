@@ -1,8 +1,12 @@
-class FotoModelo {
-  final String url;
-  final String uuid;
+import 'dart:io';
 
-  const FotoModelo({this.url, this.uuid});
+class FotoModelo {
+   String url;
+   String uuid;
+   bool selecionado;
+   File local;
+
+   FotoModelo({this.local, this.selecionado = false, this.url, this.uuid});
 
   Map<String, dynamic> toMap() {
     return {

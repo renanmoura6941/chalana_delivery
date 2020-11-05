@@ -1,15 +1,10 @@
-import 'dart:io';
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:chalana_delivery/componentes/butao_confirmar/butao_confirmar.dart';
 import 'package:chalana_delivery/helpers/validators_functions.dart';
 import 'package:chalana_delivery/modelos/foto_modelo.dart';
 import 'package:chalana_delivery/modelos/produto_modelo.dart';
 import 'package:chalana_delivery/telas/tela_adicionar_produto/componetes/selecionar_imagem.dart';
-import 'package:chalana_delivery/telas/tela_adicionar_produto/modelo/Imagem_selecionar_modelo.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:uuid/uuid.dart';
 
 import 'funcionalidades/carrocel_imagens.dart';
 
@@ -21,13 +16,8 @@ class TelaEditarProduto extends StatefulWidget {
 }
 
 class _TelaEditarProdutoState extends State<TelaEditarProduto> {
-  List<ImagemModeloLocal> imagemModelo;
-  TextEditingController nomeController = TextEditingController();
-  TextEditingController precoController = TextEditingController();
-  TextEditingController descricaoController = TextEditingController();
   final GlobalKey<FormState> formkey = GlobalKey<FormState>();
   ProdutoModelo produtoModelo = ProdutoModelo();
-  bool processando = false;
   CarrocelImagens carrocelImagens = CarrocelImagens();
 
   Widget butaoRemover() {
@@ -36,7 +26,7 @@ class _TelaEditarProdutoState extends State<TelaEditarProduto> {
           radius: 30,
           child: Icon(Icons.remove),
         ),
-        onTap: () async => carrocelImagens.removerImagem());
+        onTap: () => carrocelImagens.removerImagem());
   }
 
   Widget butaoTirarFoto(BuildContext context) {
@@ -45,25 +35,19 @@ class _TelaEditarProdutoState extends State<TelaEditarProduto> {
           radius: 30,
           child: Icon(Icons.photo_camera),
         ),
-        onTap: () => carrocelImagens.listaImagens.length > 2
+        onTap: () => carrocelImagens.produto.imagens.length > 2
             ? popAlerta(context, "Limite máximo de fotos!")
             : _adicionar(context));
   }
 
   List<Widget> abirImagens() {
-    print((carrocelImagens.listaImagens));
-    print("lista:${carrocelImagens.listaImagens.length}");
-
-    return List<Widget>.generate(carrocelImagens.listaImagens.length, (index) {
-      print("indce: $index");
-
- 
-    
+    return List<Widget>.generate(carrocelImagens.produto.imagens.length,
+        (index) {
       return ImagemWidget(
           onPressed: () => carrocelImagens.selecionadoItem(index),
-          novaImagem: carrocelImagens.listaImagens[index].novaImagem ?? null,
-          imagemUrl: carrocelImagens.listaImagens[index].imagem.url,
-          selecionado: carrocelImagens.listaImagens[index].selecionado);
+          novaImagem: carrocelImagens.produto.imagens[index].local ?? null,
+          imagemUrl: carrocelImagens.produto.imagens[index].url,
+          selecionado: carrocelImagens.produto.imagens[index].selecionado);
     });
   }
 
@@ -104,12 +88,10 @@ class _TelaEditarProdutoState extends State<TelaEditarProduto> {
   }
 
   carrocelImagen() {
-    return StreamBuilder<List<ImagemModeloLocal>>(
-      initialData: carrocelImagens.listaImagens,
+    return StreamBuilder<List<FotoModelo>>(
+      initialData: carrocelImagens.produto.imagens,
       stream: carrocelImagens.saida,
       builder: (context, snapshot) {
-
-        print("dados: ${snapshot.data}");
         if (snapshot.hasData) {
           return Stack(
             children: [
@@ -121,7 +103,7 @@ class _TelaEditarProdutoState extends State<TelaEditarProduto> {
                   dotIncreasedColor: Colors.blue,
                   dotBgColor: Colors.transparent,
                   dotColor: Colors.blue,
-                  images: carrocelImagens.listaImagens.isEmpty
+                  images: carrocelImagens.produto.imagens.isEmpty
                       ? [
                           Icon(
                             Icons.photo,
@@ -212,25 +194,23 @@ class _TelaEditarProdutoState extends State<TelaEditarProduto> {
                   SizedBox(
                     height: 30,
                   ),
-                  processando
-                      ? CircularProgressIndicator()
-                      : ButaoConfirmar(
-                          titulo: "Adicionar produto",
-                          onPressed: () async {
-                            // if (formkey.currentState.validate() &&
-                            //     validarFoto(imagemModelo, context)) {
-                            //   setState(() {
-                            //     processando = true;
-                            //   });
-                            //   formkey.currentState.save();
+                  ButaoConfirmar(
+                      titulo: "Adicionar produto",
+                      onPressed: () async {
+                        // if (formkey.currentState.validate() &&
+                        //     validarFoto(imagemModelo, context)) {
+                        //   setState(() {
+                        //     processando = true;
+                        //   });
+                        //   formkey.currentState.save();
 
-                            //   await salvarFirebase();
+                        //   await salvarFirebase();
 
-                            //   produtoModelo.salvar();
-                            //   Navigator.pushReplacementNamed(
-                            //       context, "principal");
-                            // }
-                          }),
+                        //   produtoModelo.salvar();
+                        //   Navigator.pushReplacementNamed(
+                        //       context, "principal");
+                        // }
+                      }),
                 ],
               ),
             ),

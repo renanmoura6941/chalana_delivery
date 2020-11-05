@@ -5,30 +5,24 @@ import 'package:chalana_delivery/modelos/produto_modelo.dart';
 import 'package:chalana_delivery/telas/tela_adicionar_produto/modelo/Imagem_selecionar_modelo.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:uuid/uuid.dart';
 
 class CarrocelImagens {
-  final StreamController<List<ImagemModeloLocal>> stream = StreamController();
-  Sink<List<ImagemModeloLocal>> get entrada => stream.sink;
+  final StreamController<List<FotoModelo>> stream = StreamController();
+  Sink<List<FotoModelo>> get entrada => stream.sink;
   Stream get saida => stream.stream;
 
   ProdutoModelo produto = ProdutoModelo();
-  List<ImagemModeloLocal> listaImagens = [];
-  var referenciaImagens;
+  List<FotoModelo> urlRemover;
 
   pegandoDados(ProdutoModelo produto) {
     this.produto = produto;
-
-    produto.imagens.forEach((imagem) {
-      listaImagens.add(ImagemModeloLocal(imagem: imagem));
-    });
   }
 
   Future adicionarCamera() async {
     final pickedFile = await ImagePicker().getImage(source: ImageSource.camera);
     if (pickedFile != null) {
-      listaImagens.add(ImagemModeloLocal(novaImagem: File(pickedFile.path),imagem: FotoModelo()));
-      entrada.add(listaImagens);
+      produto.imagens.add(FotoModelo(local: File(pickedFile.path), url: null));
+      entrada.add(produto.imagens);
     }
   }
 
@@ -36,42 +30,45 @@ class CarrocelImagens {
     final pickedFile =
         await ImagePicker().getImage(source: ImageSource.gallery);
     if (pickedFile != null) {
-      listaImagens.add(ImagemModeloLocal(novaImagem: File(pickedFile.path),imagem: FotoModelo()));
-      entrada.add(listaImagens);
+      produto.imagens.add(FotoModelo(local: File(pickedFile.path), url: null));
+      entrada.add(produto.imagens);
     }
   }
 
   Future<void> removerFirebase() async {
-    print("removendo imagens firebase:");
-    final itensRemover = listaImagens
-        .where((e) => e.selecionado && e.imagem.url != null)
-        .toList();
+    urlRemover =
+        produto.imagens.where((e) => e.selecionado && e.url != null).toList();
 
-    print(itensRemover);
-    if (itensRemover.isNotEmpty) {
-      itensRemover.forEach((e) async {
+    if (urlRemover.isNotEmpty) {
+      urlRemover.forEach((e) async {
         await FirebaseStorage.instance
             .ref()
             .child(produto.nome)
-            .child(e.imagem.uuid)
+            .child(e.uuid)
             .delete();
       });
     }
   }
 
-  Future<void> removerImagem() async {
-    await removerFirebase();
-    listaImagens.removeWhere((e) => e.selecionado);
-    entrada.add(listaImagens);
+  void removerImagem()  {
+    print("urls para remover no firebase");
+    urlRemover =
+        produto.imagens.where((e) => e.selecionado && e.url != null).toList();
+    print("${urlRemover} url");
+
+    print("Removendo localmente");
+    produto.imagens.removeWhere((e) => e.selecionado);
+
+    entrada.add(produto.imagens);
   }
 
-  int itemSelecionados() => listaImagens.where((e) => e.selecionado).length;
+  int itemSelecionados() => produto.imagens.where((e) => e.selecionado).length;
 
   bool temItemSelecionado() => itemSelecionados() > 0 ? true : false;
 
   selecionadoItem(int indice) {
-    listaImagens[indice].selecionado = !listaImagens[indice].selecionado;
-    entrada.add(listaImagens);
+    produto.imagens[indice].selecionado = !produto.imagens[indice].selecionado;
+    entrada.add(produto.imagens);
   }
 
   //  Future<String> salvarImagemFirebase(File imagem) async {
@@ -99,7 +96,7 @@ class CarrocelImagens {
   // }
 
   void salvarimagemFirebase(String nomeProduto) async {
-    for (final itens in listaImagens) {
+    for (final itens in produto.imagens) {
       //itens.
       // String url = await salvarImagemFirebase(e.imagem);
       // print("url recuperada $url");
