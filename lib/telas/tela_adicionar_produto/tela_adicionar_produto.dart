@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:chalana_delivery/componentes/butao_confirmar/butao_confirmar.dart';
 import 'package:chalana_delivery/helpers/validators_functions.dart';
+import 'package:chalana_delivery/modelos/foto_modelo.dart';
 import 'package:chalana_delivery/modelos/produto_modelo.dart';
 import 'package:chalana_delivery/telas/tela_adicionar_produto/componetes/selecionar_imagem.dart';
 import 'package:chalana_delivery/telas/tela_adicionar_produto/modelo/Imagem_selecionar_modelo.dart';
@@ -24,23 +25,23 @@ class _TelaAdicionarProdutoState extends State<TelaAdicionarProduto> {
   ProdutoModelo produtoModelo = ProdutoModelo();
   bool processando = false;
 
-  Future<String> salvarImagemFirebase(File imagem) async {
+  Future<FotoModelo> salvarImagemFirebase(File imagem) async {
     var storageRef = FirebaseStorage.instance.ref().child(produtoModelo.nome);
 
-    final StorageUploadTask task =
-        storageRef.child(Uuid().v1()).putFile(imagem);
+    String uuid = Uuid().v1();
+
+    final StorageUploadTask task = storageRef.child(uuid).putFile(imagem);
 
     final StorageTaskSnapshot snapshot = await task.onComplete;
     final String url = await snapshot.ref.getDownloadURL() as String;
 
-    return url;
+    return FotoModelo(url, uuid);
   }
 
   void salvarFirebase() async {
     for (final e in imagemModelo) {
-      String url = await salvarImagemFirebase(e.novaImagem);
-      print("url recuperada $url");
-      produtoModelo.imagens.add(url);
+      FotoModelo fotoModelo = await salvarImagemFirebase(e.novaImagem);
+      produtoModelo.imagens.add(fotoModelo);
     }
   }
 
@@ -231,8 +232,8 @@ class _TelaAdicionarProdutoState extends State<TelaAdicionarProduto> {
                               await salvarFirebase();
 
                               produtoModelo.salvar();
-                              Navigator.pushReplacementNamed(context, "principal");
-                           
+                              Navigator.pushReplacementNamed(
+                                  context, "principal");
                             }
                           }),
                 ],

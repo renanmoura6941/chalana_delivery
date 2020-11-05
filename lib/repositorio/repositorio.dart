@@ -1,7 +1,14 @@
+import 'package:chalana_delivery/modelos/foto_modelo.dart';
 import 'package:chalana_delivery/modelos/produto_modelo.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Repositorio {
+  List<FotoModelo> _mapImg(List doc) {
+    return doc.map((e) {
+      return FotoModelo(e['url'], e['uuid']);
+    }).toList();
+  }
+
   Future<List<ProdutoModelo>> getProdutos() async {
     print("pegar produtos Firebase");
     final querySnapshot = await Firestore.instance
@@ -9,7 +16,6 @@ class Repositorio {
         .orderBy("acessos", descending: true)
         .getDocuments();
     print("pegar produtos Firebase (V)SUCESSO!");
-  
 
     return querySnapshot.documents.map((doc) {
       return ProdutoModelo(
@@ -17,7 +23,7 @@ class Repositorio {
         nome: doc['nome'].toString(),
         preco: doc['preco'],
         categorias: doc['categoria'].toString(),
-        imagens: (doc['imagens'] as List).map((e) => e.toString()).toList(),
+        imagens: _mapImg(doc['imagens']),
         descrissao: doc['descrissao'].toString(),
         acessos: doc['acessos'] as int,
       );
