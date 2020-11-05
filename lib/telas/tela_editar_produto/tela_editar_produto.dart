@@ -114,7 +114,14 @@ class _TelaEditarProdutoState extends State<TelaEditarProduto> {
                   dotIncreasedColor: Colors.blue,
                   dotBgColor: Colors.transparent,
                   dotColor: Colors.blue,
-                  images: abirImagens(),
+                  images: carrocelImagens.listaImagens.isEmpty
+                      ? [
+                          Icon(
+                            Icons.photo,
+                            size: 100,
+                          )
+                        ]
+                      : abirImagens(),
                 ),
               ),
               Positioned(
@@ -162,7 +169,7 @@ class _TelaEditarProdutoState extends State<TelaEditarProduto> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Adicionar produto"),
+        title: Text("Editando produto"),
         centerTitle: true,
       ),
       body: ListView(
