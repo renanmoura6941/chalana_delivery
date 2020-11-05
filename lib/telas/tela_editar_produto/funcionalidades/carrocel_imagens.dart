@@ -19,8 +19,8 @@ class CarrocelImagens {
   pegandoDados(ProdutoModelo produto) {
     this.produto =produto;
 
-    produto.imagens.forEach((url) {
-      listaImagens.add(ImagemModelo(imagemUrl: url));
+    produto.imagens.forEach((imagem) {
+      listaImagens.add(ImagemModelo(imagemUrl: imagem.url));
     });
   }
 

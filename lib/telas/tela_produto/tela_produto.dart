@@ -60,8 +60,8 @@ class _TelaProdutoState extends State<TelaProduto> {
               dotSize: 6,
               //dotBgColor: Colors.transparent,
               autoplay: false,
-              images: widget.produtoModelo.imagens.map((url) {
-                return Image.network(url, loadingBuilder: (BuildContext context,
+              images: widget.produtoModelo.imagens.map((imagem) {
+                return Image.network(imagem.url, loadingBuilder: (BuildContext context,
                     Widget child, ImageChunkEvent loadingProgress) {
                   if (loadingProgress == null) return child;
                   return Center(

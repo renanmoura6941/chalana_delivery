@@ -18,7 +18,7 @@ class CardPrincipal extends StatelessWidget {
           children: [
             AspectRatio(
               aspectRatio: 1.7,
-              child: Image.network(produtoModelo.imagens.first, loadingBuilder:
+              child: Image.network(produtoModelo.imagens.first.url, loadingBuilder:
                   (BuildContext context, Widget child,
                       ImageChunkEvent loadingProgress) {
                 if (loadingProgress == null) return child;

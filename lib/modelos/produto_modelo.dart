@@ -1,10 +1,11 @@
+import 'package:chalana_delivery/modelos/foto_modelo.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ProdutoModelo {
   String id;
   String nome;
   String descrissao;
-  List<String> imagens;
+  List<FotoModelo> imagens;
   num preco;
   int acessos;
   String categorias;

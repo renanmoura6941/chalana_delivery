@@ -19,7 +19,7 @@ class DescricaoProdutoCarrinho extends StatelessWidget {
             child: Container(
               // color: Colors.cyan,
               child: Image.network(
-                produto.imagens[0],
+                produto.imagens[0].url,
                 fit: BoxFit.contain,
               ),
             ),

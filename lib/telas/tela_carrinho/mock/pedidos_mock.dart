@@ -1,3 +1,4 @@
+import 'package:chalana_delivery/modelos/foto_modelo.dart';
 import 'package:chalana_delivery/modelos/pedido_modelo.dart';
 import 'package:chalana_delivery/modelos/produto_modelo.dart';
 import 'package:chalana_delivery/telas/tela_carrinho/constants.dart';
@@ -6,7 +7,7 @@ class MockCarrinho {
   static List<PedidoModelo> pedidos_mock = [
     PedidoModelo(
       produto: ProdutoModelo(
-        imagens: [IMG_CERVEJA],
+        imagens: [FotoModelo(IMG_CERVEJA, "0")],
         nome: "Cerveja Corona",
         preco: 3.5,
       ),
@@ -14,7 +15,7 @@ class MockCarrinho {
     ),
     PedidoModelo(
       produto: ProdutoModelo(
-        imagens: [IMG_NOTEBOOK],
+        imagens: [FotoModelo(IMG_NOTEBOOK,"1")],
         nome: "Notebook",
         preco: 1999.99,
       ),
@@ -22,7 +23,7 @@ class MockCarrinho {
     ),
     PedidoModelo(
       produto: ProdutoModelo(
-        imagens: [IMG_CELULAR],
+        imagens: [FotoModelo(IMG_CELULAR, "2")],
         nome: "Iphone 1200",
         preco: 70000,
       ),
