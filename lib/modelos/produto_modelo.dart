@@ -56,7 +56,12 @@ class ProdutoModelo {
         .collection('produtos')
         .document(id)
         .updateData(dados);
-      print("ATUALIZADO");
+
+    print("ATUALIZADO");
+  }
+
+  remover() async {
+    await Firestore.instance..collection('produtos').document(id).delete();
   }
 
   @override

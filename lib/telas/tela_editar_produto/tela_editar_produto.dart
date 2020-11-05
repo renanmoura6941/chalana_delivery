@@ -212,8 +212,8 @@ class _TelaEditarProdutoState extends State<TelaEditarProduto> {
                                       context)) {
                                 formkey.currentState.save();
                                 await editaRegraNegocio.editarProduto();
-                                Navigator.pushReplacementNamed(
-                                    context, "principal");
+                         
+                                Navigator.pushNamedAndRemoveUntil(context, "principal", (route) => false);
                               }
                             });
                       }),

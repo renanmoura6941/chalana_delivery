@@ -63,16 +63,15 @@ class _TelaPrincipalState extends State<TelaPrincipal> {
       body: SafeArea(
           child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15),
-        child: Center(
-            child: FutureBuilder<List<ProdutoModelo>>(
-                future: GetIt.I.get<Repositorio>().getProdutos(),
-                builder: (ctx, snapshot) {
-                  if (snapshot.hasData) {
-                    return aguardandoProdutos(snapshot);
-                  } else {
-                    return CircularProgressIndicator();
-                  }
-                })),
+        child: FutureBuilder<List<ProdutoModelo>>(
+            future: GetIt.I.get<Repositorio>().getProdutos(),
+            builder: (ctx, snapshot) {
+              if (snapshot.hasData) {
+                return aguardandoProdutos(snapshot);
+              } else {
+                return Center(child: CircularProgressIndicator());
+              }
+            }),
       )),
     );
   }

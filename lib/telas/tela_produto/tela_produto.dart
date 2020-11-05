@@ -1,6 +1,7 @@
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:chalana_delivery/modelos/pedido_modelo.dart';
 import 'package:chalana_delivery/modelos/produto_modelo.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
@@ -24,6 +25,15 @@ class _TelaProdutoState extends State<TelaProduto> {
         .isNotEmpty;
   }
 
+  Future<void> removerImagemStorege() async {
+    var referencia =
+        await FirebaseStorage.instance.ref().child(widget.produtoModelo.id);
+    
+    widget.produtoModelo.imagens.forEach((e) async {
+      await referencia.child(e.uuid).delete();
+    });
+  }
+
   @override
   void initState() {
     setState(() {
@@ -40,10 +50,11 @@ class _TelaProdutoState extends State<TelaProduto> {
         centerTitle: true,
         actions: [
           IconButton(
-              icon: Icon(Icons.edit),
-              onPressed: () {
-                Navigator.pushNamed(context, "tela_editar_produto",
-                    arguments: widget.produtoModelo);
+              icon: Icon(Icons.highlight_remove),
+              onPressed: () async {
+                await removerImagemStorege();
+                await widget.produtoModelo.remover();
+                Navigator.of(context).pop();
               }),
           IconButton(
               icon: Icon(Icons.add),
@@ -61,8 +72,9 @@ class _TelaProdutoState extends State<TelaProduto> {
               //dotBgColor: Colors.transparent,
               autoplay: false,
               images: widget.produtoModelo.imagens.map((imagem) {
-                return Image.network(imagem.url, loadingBuilder: (BuildContext context,
-                    Widget child, ImageChunkEvent loadingProgress) {
+                return Image.network(imagem.url, loadingBuilder:
+                    (BuildContext context, Widget child,
+                        ImageChunkEvent loadingProgress) {
                   if (loadingProgress == null) return child;
                   return Center(
                     child: CircularProgressIndicator(

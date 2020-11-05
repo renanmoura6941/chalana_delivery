@@ -237,8 +237,10 @@ class _TelaAdicionarProdutoState extends State<TelaAdicionarProduto> {
 
                               await salvarFirebase();
                               await produtoModelo.atualizar();
-                              Navigator.pushReplacementNamed(
-                                  context, "principal");
+                              Navigator.pushNamedAndRemoveUntil(
+                                  context, "principal", (route) => false);
+                              // Navigator.pushReplacementNamed(
+                              //     context, "principal");
                             }
                           }),
                 ],
