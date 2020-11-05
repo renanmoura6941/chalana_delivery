@@ -8,26 +8,26 @@ import 'package:uuid/uuid.dart';
 
 class CarrocelImagens {
 
-  final StreamController<List<ImagemModelo>> stream = StreamController();
-  Sink<List<ImagemModelo>> get entrada => stream.sink;
+  final StreamController<List<ImagemModeloLocal>> stream = StreamController();
+  Sink<List<ImagemModeloLocal>> get entrada => stream.sink;
   Stream get saida => stream.stream;
 
   ProdutoModelo produto = ProdutoModelo();
-  List<ImagemModelo> listaImagens = [];
+  List<ImagemModeloLocal> listaImagens = [];
   var referenciaImagens;
 
   pegandoDados(ProdutoModelo produto) {
     this.produto =produto;
 
     produto.imagens.forEach((imagem) {
-      listaImagens.add(ImagemModelo(imagemUrl: imagem.url));
+      listaImagens.add(ImagemModeloLocal(imagemUrl: imagem.url));
     });
   }
 
   Future adicionarCamera() async {
     final pickedFile = await ImagePicker().getImage(source: ImageSource.camera);
     if (pickedFile != null) {
-      listaImagens.add(ImagemModelo(novaImagem: File(pickedFile.path)));
+      listaImagens.add(ImagemModeloLocal(novaImagem: File(pickedFile.path)));
       entrada.add(listaImagens);
     }
   }
@@ -36,7 +36,7 @@ class CarrocelImagens {
     final pickedFile =
         await ImagePicker().getImage(source: ImageSource.gallery);
     if (pickedFile != null) {
-      listaImagens.add(ImagemModelo(novaImagem: File(pickedFile.path)));
+      listaImagens.add(ImagemModeloLocal(novaImagem: File(pickedFile.path)));
       entrada.add(listaImagens);
     }
   }

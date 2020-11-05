@@ -46,7 +46,7 @@ String validarDescricao(String descricao) {
   }
 }
 
-bool validarFoto(List<ImagemModelo> imagens, BuildContext context) {
+bool validarFoto(List<ImagemModeloLocal> imagens, BuildContext context) {
   if (imagens.isEmpty) {
     popAlerta(context, "Sem foto!");
     return false;

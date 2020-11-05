@@ -20,7 +20,7 @@ class TelaEditarProduto extends StatefulWidget {
 }
 
 class _TelaEditarProdutoState extends State<TelaEditarProduto> {
-  List<ImagemModelo> imagemModelo;
+  List<ImagemModeloLocal> imagemModelo;
   TextEditingController nomeController = TextEditingController();
   TextEditingController precoController = TextEditingController();
   TextEditingController descricaoController = TextEditingController();
@@ -99,7 +99,7 @@ class _TelaEditarProdutoState extends State<TelaEditarProduto> {
 
   carrocelImagen() {
     print(carrocelImagens.listaImagens.length);
-    return StreamBuilder<List<ImagemModelo>>(
+    return StreamBuilder<List<ImagemModeloLocal>>(
       initialData: carrocelImagens.listaImagens,
       stream: carrocelImagens.saida,
       builder: (context, snapshot) {

@@ -17,7 +17,7 @@ class TelaAdicionarProduto extends StatefulWidget {
 }
 
 class _TelaAdicionarProdutoState extends State<TelaAdicionarProduto> {
-  List<ImagemModelo> imagemModelo;
+  List<ImagemModeloLocal> imagemModelo;
   TextEditingController nomeController = TextEditingController();
   TextEditingController precoController = TextEditingController();
   TextEditingController descricaoController = TextEditingController();
@@ -26,6 +26,7 @@ class _TelaAdicionarProdutoState extends State<TelaAdicionarProduto> {
   bool processando = false;
 
   Future<FotoModelo> salvarImagemFirebase(File imagem) async {
+
     var storageRef = FirebaseStorage.instance.ref().child(produtoModelo.nome);
 
     String uuid = Uuid().v1();
@@ -49,7 +50,7 @@ class _TelaAdicionarProdutoState extends State<TelaAdicionarProduto> {
     final pickedFile = await ImagePicker().getImage(source: ImageSource.camera);
     if (pickedFile != null)
       setState(() {
-        imagemModelo.add(ImagemModelo(novaImagem: File(pickedFile.path)));
+        imagemModelo.add(ImagemModeloLocal(novaImagem: File(pickedFile.path)));
       });
   }
 
@@ -58,7 +59,7 @@ class _TelaAdicionarProdutoState extends State<TelaAdicionarProduto> {
         await ImagePicker().getImage(source: ImageSource.gallery);
     if (pickedFile != null)
       setState(() {
-        imagemModelo.add(ImagemModelo(novaImagem: File(pickedFile.path)));
+        imagemModelo.add(ImagemModeloLocal(novaImagem: File(pickedFile.path)));
       });
   }
 
