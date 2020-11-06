@@ -83,10 +83,6 @@ class _TelaEditarProdutoState extends State<TelaEditarProduto> {
 
   @override
   void initState() {
-    print("editar");
-    print("produto: ${widget.produtoModelo.hashCode}");
-    print("produto imagem: ${widget.produtoModelo.imagens.hashCode}");
-
     editaRegraNegocio.pegandoDados(widget.produtoModelo);
     super.initState();
   }

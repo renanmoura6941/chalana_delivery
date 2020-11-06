@@ -11,10 +11,8 @@ class CardPrincipal extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        print("Principal");
-        print("produto: ${produtoModelo.hashCode}");
-        print("produto imagem: ${produtoModelo.imagens.hashCode}");
-        Navigator.pushNamed(context, "produto", arguments: produtoModelo.copiar());
+        Navigator.pushNamed(context, "produto",
+            arguments: produtoModelo.copiar());
       },
       child: Container(
         child: Column(
