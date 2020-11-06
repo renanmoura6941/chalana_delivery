@@ -143,7 +143,7 @@ class _TelaAdicionarProdutoState extends State<TelaAdicionarProduto> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Editando produto"),
+        title: Text("Adicionando produto"),
         centerTitle: true,
       ),
       body: ListView(

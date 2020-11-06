@@ -204,7 +204,7 @@ class _TelaEditarProdutoState extends State<TelaEditarProduto> {
                           return CircularProgressIndicator();
                         }
                         return ButaoConfirmar(
-                            titulo: "Adicionar produto",
+                            titulo: "Editar produto",
                             onPressed: () async {
                               if (formkey.currentState.validate() &&
                                   validarImagens(
