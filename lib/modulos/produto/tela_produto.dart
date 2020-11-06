@@ -150,7 +150,7 @@ class _TelaProdutoState extends State<TelaProduto> {
                         onPressed: () async {
                           list_pedidos.add(
                             PedidoModelo(
-                              quantidade: 1,
+                           
                               produto: widget.produtoModelo,
                             ),
                           );

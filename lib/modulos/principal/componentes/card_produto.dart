@@ -1,9 +1,9 @@
 import 'package:chalana_delivery/modelos/produto_modelo.dart';
 import 'package:flutter/material.dart';
 
-class ProductListTile extends StatelessWidget {
+class CardProduto extends StatelessWidget {
   ProdutoModelo produtoModelo;
-  ProductListTile(this.produtoModelo);
+  CardProduto(this.produtoModelo);
   @override
   Widget build(BuildContext context) {
     return GestureDetector(

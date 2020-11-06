@@ -50,11 +50,11 @@ class _TelaCarrinhoState extends State<TelaCarrinho> {
                 }
                 return CardItem(
                   pedido: controller.list_pedidos[index],
-                  onPressed: () {
-                    setState(() {
-                      controller.list_pedidos.removeAt(index);
-                    });
-                  },
+                  // onPressed: () {
+                  //   setState(() {
+                  //     controller.list_pedidos.removeAt(index);
+                  //   });
+                  // },
                 );
               },
             ),

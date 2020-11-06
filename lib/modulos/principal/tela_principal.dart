@@ -24,7 +24,7 @@ class _TelaPrincipalState extends State<TelaPrincipal> {
         shrinkWrap: true,
         itemCount: produtos.length,
         itemBuilder: (_, indice) {
-          return ProductListTile(produtos[indice]);
+          return CardProduto(produtos[indice]);
         },
       );
     }
