@@ -1,5 +1,6 @@
 import 'package:chalana_delivery/modelos/produto_modelo.dart';
 import 'package:chalana_delivery/modulos/principal/componentes/card.dart';
+import 'package:chalana_delivery/modulos/principal/componentes/card_produto.dart';
 import 'package:chalana_delivery/modulos/principal/funcionalidades/atualizar_produto.dart';
 import 'package:chalana_delivery/repositorio/repositorio.dart';
 import 'package:flutter/material.dart';
@@ -11,24 +12,21 @@ class TelaPrincipal extends StatefulWidget {
 }
 
 class _TelaPrincipalState extends State<TelaPrincipal> {
-
-
   @override
   Widget build(BuildContext context) {
     AtualizarProduto atualizarProduto = AtualizarProduto();
 
     Widget gradeProdutos(List<ProdutoModelo> produtos) {
-      return GridView.count(
-          physics: BouncingScrollPhysics(),
-          padding: EdgeInsets.symmetric(vertical: 10),
-          scrollDirection: Axis.vertical,
-          crossAxisCount: 2,
-          shrinkWrap: true,
-          crossAxisSpacing: 10,
-          mainAxisSpacing: 10,
-          children: produtos.map((produto) {
-            return CardPrincipal(produto);
-          }).toList());
+      return ListView.builder(
+        physics: BouncingScrollPhysics(),
+     //   padding: EdgeInsets.symmetric(vertical: 10),
+        scrollDirection: Axis.vertical,
+        shrinkWrap: true,
+        itemCount: produtos.length,
+        itemBuilder: (_, indice) {
+          return ProductListTile(produtos[indice]);
+        },
+      );
     }
 
     Widget aguardandoProdutos(AsyncSnapshot<List<ProdutoModelo>> snapshot) {
@@ -61,14 +59,13 @@ class _TelaPrincipalState extends State<TelaPrincipal> {
               })
         ],
       ),
-      backgroundColor: Colors.white,
+    //  backgroundColor: Colors.white,
       body: SafeArea(
           child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 15),
+        padding: const EdgeInsets.symmetric(horizontal: 1),
         child: FutureBuilder<List<ProdutoModelo>>(
             future: GetIt.I.get<Repositorio>().getProdutos(),
             builder: (ctx, snapshot) {
-
               if (snapshot.hasData) {
                 return aguardandoProdutos(snapshot);
               } else {

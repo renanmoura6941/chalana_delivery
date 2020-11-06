@@ -144,6 +144,7 @@ class _TelaAdicionarProdutoState extends State<TelaAdicionarProduto> {
         title: Text("Adicionando produto"),
         centerTitle: true,
       ),
+      backgroundColor: Colors.white,
       body: ListView(
         children: [
           carrocelImagen(),
@@ -184,6 +185,7 @@ class _TelaAdicionarProdutoState extends State<TelaAdicionarProduto> {
                         }
                         return ButaoConfirmar(
                             titulo: "Adicionar produto",
+                            cor: Theme.of(context).primaryColor,
                             onPressed: () async {
                               if (chave.currentState.validate() &&
                                   validarImagens(

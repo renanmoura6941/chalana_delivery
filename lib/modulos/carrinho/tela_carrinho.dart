@@ -1,4 +1,5 @@
 import 'package:chalana_delivery/modelos/pedido_modelo.dart';
+import 'package:chalana_delivery/modulos/carrinho/components/card_item.dart';
 import 'package:chalana_delivery/modulos/carrinho/controller_carrinho.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
@@ -47,7 +48,7 @@ class _TelaCarrinhoState extends State<TelaCarrinho> {
                     },
                   );
                 }
-                return CardProdutoCarrinho(
+                return CardItem(
                   pedido: controller.list_pedidos[index],
                   onPressed: () {
                     setState(() {
