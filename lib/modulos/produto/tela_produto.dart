@@ -1,4 +1,5 @@
 import 'package:carousel_pro/carousel_pro.dart';
+import 'package:chalana_delivery/componentes/butao_confirmar/butao_confirmar.dart';
 import 'package:chalana_delivery/helpers/tratamento_erros.dart';
 import 'package:chalana_delivery/modelos/pedido_modelo.dart';
 import 'package:chalana_delivery/modelos/produto_modelo.dart';
@@ -66,6 +67,7 @@ class _TelaProdutoState extends State<TelaProduto> {
               }),
         ],
       ),
+      backgroundColor: Colors.white,
       body: ListView(
         children: [
           AspectRatio(
@@ -139,38 +141,24 @@ class _TelaProdutoState extends State<TelaProduto> {
                   height: 30,
                 ),
                 esta_no_carrinho
-                    ? Container(
-                        width: double.infinity,
-                        color: Colors.green[400],
-                        alignment: Alignment.center,
-                        height: 45,
-                        child: Text(
-                          "Produto está no carrinho",
-                          style: TextStyle(fontSize: 18),
-                        ),
-                      )
-                    : Container(
-                        width: double.infinity,
-                        height: 45,
-                        child: RaisedButton(
-                          color: Colors.blue,
-                          child: Text(
-                            "Adicionar ao carrinho",
-                            style: TextStyle(fontSize: 18),
-                          ),
-                          onPressed: () {
-                            list_pedidos.add(
-                              PedidoModelo(
-                                quantidade: 1,
-                                produto: widget.produtoModelo,
-                              ),
-                            );
-                            setState(() {
-                              esta_no_carrinho = estaNoCarrinho();
-                            });
-                          },
-                        ),
-                      ),
+                    ? ButaoConfirmar(
+                        titulo: "Produto está no carrinho",
+                        onPressed: () => null)
+                    : ButaoConfirmar(
+                        titulo: "Adicionar ao carrinho",
+                        cor: Theme.of(context).primaryColor,
+                        onPressed: () async {
+                          list_pedidos.add(
+                            PedidoModelo(
+                              quantidade: 1,
+                              produto: widget.produtoModelo,
+                            ),
+                          );
+                          setState(() {
+                            esta_no_carrinho = estaNoCarrinho();
+                          });
+                          Navigator.pushNamed(context, "Tela_carrinho");
+                        })
               ],
             ),
           )

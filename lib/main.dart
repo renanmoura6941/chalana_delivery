@@ -16,6 +16,12 @@ void main() {
     debugShowCheckedModeBanner: false,
     home: MyApp(),
     onGenerateRoute: Rotas.generateRoute,
+    theme: ThemeData(
+      primaryColor: const Color.fromARGB(255, 4, 125, 141),
+      scaffoldBackgroundColor: const Color.fromARGB(255, 4, 125, 141),
+      appBarTheme: const AppBarTheme(elevation: 0),
+      visualDensity: VisualDensity.adaptivePlatformDensity,
+    ),
   ));
 }
 

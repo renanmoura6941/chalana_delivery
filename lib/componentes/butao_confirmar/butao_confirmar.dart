@@ -12,10 +12,10 @@ class ButaoConfirmar extends StatelessWidget {
       width: double.infinity,
       height: 45,
       child: RaisedButton(
-        color: cor,
+        color: cor??Colors.grey,
         child: Text(
           titulo,
-          style: TextStyle(fontSize: 18),
+          style: TextStyle(fontSize: 18, color: Colors.white),
         ),
         onPressed: onPressed,
       ),

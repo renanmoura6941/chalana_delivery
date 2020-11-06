@@ -18,7 +18,7 @@ class Rotas {
           MaterialPageRoute(builder: (_) => TelaEditarProduto(args)),
       "tela_adicionar_produto":
           MaterialPageRoute(builder: (_) => TelaAdicionarProduto()),
-      "carrinho": MaterialPageRoute(builder: (_) => TelaCarrinho()),
+      "Tela_carrinho": MaterialPageRoute(builder: (_) => TelaCarrinho()),
       "principal": MaterialPageRoute(builder: (_) => TelaPrincipal()),
     };
     if (routes.containsKey(settings.name)) {
