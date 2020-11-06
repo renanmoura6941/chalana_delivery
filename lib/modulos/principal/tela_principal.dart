@@ -11,12 +11,7 @@ class TelaPrincipal extends StatefulWidget {
 }
 
 class _TelaPrincipalState extends State<TelaPrincipal> {
-  @override
-  void initState() {
-    // TODO: implement initState
-  
-    super.initState();
-  }
+
 
   @override
   Widget build(BuildContext context) {

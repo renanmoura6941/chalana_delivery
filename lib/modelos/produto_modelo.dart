@@ -20,6 +20,17 @@ class ProdutoModelo {
     this.categorias,
   });
 
+  copiar() {
+    return ProdutoModelo(
+        id: this.id,
+        nome: this.nome,
+        preco: this.preco,
+        descrissao: this.descrissao,
+        imagens: this.imagens.map((e) => e.copiar()).toList(),
+        acessos: this.acessos,
+        categorias: this.categorias);
+  }
+
   salvar() async {
     print("salvando produto no firebase......");
     var dados = {

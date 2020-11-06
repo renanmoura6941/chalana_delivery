@@ -40,7 +40,10 @@ class _TelaProdutoState extends State<TelaProduto> {
     setState(() {
       esta_no_carrinho = estaNoCarrinho();
     });
-    print(widget.produtoModelo);
+    print("produto");
+    print("produto: ${widget.produtoModelo.hashCode}");
+    print("produto imagem: ${widget.produtoModelo.imagens.hashCode}");
+
     super.initState();
   }
 
@@ -61,7 +64,8 @@ class _TelaProdutoState extends State<TelaProduto> {
           IconButton(
               icon: Icon(Icons.edit),
               onPressed: () async {
-                Navigator.pushNamed(context, "tela_editar_produto", arguments: widget.produtoModelo);
+                Navigator.pushNamed(context, "tela_editar_produto",
+                    arguments: widget.produtoModelo.copiar());
               }),
         ],
       ),
