@@ -57,11 +57,7 @@ class _TelaProdutoState extends State<TelaProduto> {
                 await widget.produtoModelo.remover();
                 Navigator.of(context).pop();
               }),
-          IconButton(
-              icon: Icon(Icons.add),
-              onPressed: () {
-                Navigator.pushNamed(context, "tela_adicionar_produto");
-              })
+          
         ],
       ),
       body: ListView(
