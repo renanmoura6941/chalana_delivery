@@ -1,4 +1,5 @@
 import 'package:carousel_pro/carousel_pro.dart';
+import 'package:chalana_delivery/helpers/tratamenro_erros.dart';
 import 'package:chalana_delivery/modelos/pedido_modelo.dart';
 import 'package:chalana_delivery/modelos/produto_modelo.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -28,7 +29,7 @@ class _TelaProdutoState extends State<TelaProduto> {
   Future<void> removerImagemStorege() async {
     var referencia =
         await FirebaseStorage.instance.ref().child(widget.produtoModelo.id);
-    
+
     widget.produtoModelo.imagens.forEach((e) async {
       await referencia.child(e.uuid).delete();
     });
@@ -71,21 +72,24 @@ class _TelaProdutoState extends State<TelaProduto> {
               dotSize: 6,
               //dotBgColor: Colors.transparent,
               autoplay: false,
-              images: widget.produtoModelo.imagens.map((imagem) {
-                return Image.network(imagem.url, loadingBuilder:
-                    (BuildContext context, Widget child,
-                        ImageChunkEvent loadingProgress) {
-                  if (loadingProgress == null) return child;
-                  return Center(
-                    child: CircularProgressIndicator(
-                      value: loadingProgress.expectedTotalBytes != null
-                          ? loadingProgress.cumulativeBytesLoaded /
-                              loadingProgress.expectedTotalBytes
-                          : null,
-                    ),
-                  );
-                });
-              }).toList(),
+              images: widget.produtoModelo.imagens == null ||
+                      widget.produtoModelo.imagens.isEmpty
+                  ? IMAGEM_VAZIA
+                  : widget.produtoModelo.imagens.map((imagem) {
+                      return Image.network(imagem.url, loadingBuilder:
+                          (BuildContext context, Widget child,
+                              ImageChunkEvent loadingProgress) {
+                        if (loadingProgress == null) return child;
+                        return Center(
+                          child: CircularProgressIndicator(
+                            value: loadingProgress.expectedTotalBytes != null
+                                ? loadingProgress.cumulativeBytesLoaded /
+                                    loadingProgress.expectedTotalBytes
+                                : null,
+                          ),
+                        );
+                      });
+                    }).toList(),
               dotIncreasedColor: Colors.blue,
               dotBgColor: Colors.transparent,
               dotColor: Colors.blue,

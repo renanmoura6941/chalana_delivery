@@ -4,10 +4,10 @@ import 'package:chalana_delivery/helpers/validators_functions.dart';
 import 'package:chalana_delivery/modelos/foto_modelo.dart';
 import 'package:chalana_delivery/modelos/produto_modelo.dart';
 import 'package:chalana_delivery/telas/tela_adicionar_produto/componetes/selecionar_imagem.dart';
-import 'package:chalana_delivery/telas/tela_editar_produto/funcionalidades/carrocel_imagens.dart';
+import 'package:chalana_delivery/telas/tela_editar_produto/funcionalidades/editar_regra_negocio.dart';
 import 'package:flutter/material.dart';
 
-import 'funcionalidades/carrocel_imagens.dart';
+import 'funcionalidades/editar_regra_negocio.dart';
 
 class TelaEditarProduto extends StatefulWidget {
   ProdutoModelo produtoModelo;

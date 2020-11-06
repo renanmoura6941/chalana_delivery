@@ -1,3 +1,4 @@
+import 'package:chalana_delivery/helpers/tratamenro_erros.dart';
 import 'package:chalana_delivery/modelos/produto_modelo.dart';
 import 'package:flutter/material.dart';
 
@@ -19,20 +20,22 @@ class CardPrincipal extends StatelessWidget {
             AspectRatio(
               aspectRatio: 1.7,
               child: produtoModelo.imagens.isEmpty
-                  ? Icon(Icons.hourglass_empty)
-                  : Image.network(produtoModelo.imagens.first.url,
-                      loadingBuilder: (BuildContext context, Widget child,
-                          ImageChunkEvent loadingProgress) {
-                      if (loadingProgress == null) return child;
-                      return Center(
-                        child: CircularProgressIndicator(
-                          value: loadingProgress.expectedTotalBytes != null
-                              ? loadingProgress.cumulativeBytesLoaded /
-                                  loadingProgress.expectedTotalBytes
-                              : null,
-                        ),
-                      );
-                    }),
+                  ? ERRO_SEM_FOTO
+                  : produtoModelo.imagens.first.url != null
+                      ? Image.network(produtoModelo.imagens.first.url,
+                          loadingBuilder: (BuildContext context, Widget child,
+                              ImageChunkEvent loadingProgress) {
+                          if (loadingProgress == null) return child;
+                          return Center(
+                            child: CircularProgressIndicator(
+                              value: loadingProgress.expectedTotalBytes != null
+                                  ? loadingProgress.cumulativeBytesLoaded /
+                                      loadingProgress.expectedTotalBytes
+                                  : null,
+                            ),
+                          );
+                        })
+                      : ERRO_SEM_FOTO,
             ),
             Container(
               color: Colors.transparent,

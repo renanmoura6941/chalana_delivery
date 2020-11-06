@@ -21,6 +21,7 @@ class ProdutoModelo {
   });
 
   salvar() async {
+    print("savando produto no FIREBASE");
     var dados = {
       'id': id,
       'nome': nome,
