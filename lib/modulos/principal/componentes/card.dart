@@ -1,7 +1,8 @@
-import 'package:chalana_delivery/helpers/tratamenro_erros.dart';
+import 'package:chalana_delivery/helpers/tratamento_erros.dart';
 import 'package:chalana_delivery/modelos/produto_modelo.dart';
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class CardPrincipal extends StatelessWidget {
   ProdutoModelo produtoModelo;
   CardPrincipal(this.produtoModelo);

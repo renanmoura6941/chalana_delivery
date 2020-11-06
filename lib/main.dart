@@ -1,6 +1,6 @@
+import 'package:chalana_delivery/modulos/menu/tela_menu.dart';
 import 'package:chalana_delivery/repositorio/repositorio.dart';
 import 'package:chalana_delivery/rotas/rotas.dart';
-import 'package:chalana_delivery/telas/tela_menu/tela_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 

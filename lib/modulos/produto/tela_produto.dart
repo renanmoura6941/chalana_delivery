@@ -1,5 +1,5 @@
 import 'package:carousel_pro/carousel_pro.dart';
-import 'package:chalana_delivery/helpers/tratamenro_erros.dart';
+import 'package:chalana_delivery/helpers/tratamento_erros.dart';
 import 'package:chalana_delivery/modelos/pedido_modelo.dart';
 import 'package:chalana_delivery/modelos/produto_modelo.dart';
 import 'package:firebase_storage/firebase_storage.dart';

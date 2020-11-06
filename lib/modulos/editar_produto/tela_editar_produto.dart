@@ -1,14 +1,15 @@
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:chalana_delivery/componentes/butao_confirmar/butao_confirmar.dart';
+import 'package:chalana_delivery/componentes/image_carrocel/selecionar_imagem.dart';
+import 'package:chalana_delivery/helpers/alertas.dart';
+import 'package:chalana_delivery/helpers/tratamento_erros.dart';
 import 'package:chalana_delivery/helpers/validators_functions.dart';
 import 'package:chalana_delivery/modelos/foto_modelo.dart';
 import 'package:chalana_delivery/modelos/produto_modelo.dart';
-import 'package:chalana_delivery/telas/tela_adicionar_produto/componetes/selecionar_imagem.dart';
-import 'package:chalana_delivery/telas/tela_editar_produto/funcionalidades/editar_regra_negocio.dart';
 import 'package:flutter/material.dart';
-
 import 'funcionalidades/editar_regra_negocio.dart';
 
+// ignore: must_be_immutable
 class TelaEditarProduto extends StatefulWidget {
   ProdutoModelo produtoModelo;
   TelaEditarProduto(this.produtoModelo);
@@ -40,14 +41,13 @@ class _TelaEditarProdutoState extends State<TelaEditarProduto> {
             : _adicionar(context));
   }
 
-  List<Widget> abirImagens() {
-    return List<Widget>.generate(editaRegraNegocio.produto.imagens.length,
-        (index) {
+  List<Widget> abirImagens(List<FotoModelo> imagens) {
+    return List<Widget>.generate(imagens.length, (index) {
       return ImagemWidget(
           onPressed: () => editaRegraNegocio.selecionadoItem(index),
-          novaImagem: editaRegraNegocio.produto.imagens[index].local ?? null,
-          imagemUrl: editaRegraNegocio.produto.imagens[index].url,
-          selecionado: editaRegraNegocio.produto.imagens[index].selecionado);
+          novaImagem: imagens[index].local ?? null,
+          imagemUrl: imagens[index].url,
+          selecionado: imagens[index].selecionado);
     });
   }
 
@@ -87,11 +87,11 @@ class _TelaEditarProdutoState extends State<TelaEditarProduto> {
     super.initState();
   }
 
-  carrocelImagen() {
+  Widget carrocelImagen() {
     return StreamBuilder<List<FotoModelo>>(
       initialData: editaRegraNegocio.produto.imagens,
       stream: editaRegraNegocio.saida,
-      builder: (context, snapshot) {
+      builder: (_, snapshot) {
         if (snapshot.hasData) {
           return Stack(
             children: [
@@ -104,13 +104,8 @@ class _TelaEditarProdutoState extends State<TelaEditarProduto> {
                   dotBgColor: Colors.transparent,
                   dotColor: Colors.blue,
                   images: editaRegraNegocio.produto.imagens.isEmpty
-                      ? [
-                          Icon(
-                            Icons.photo,
-                            size: 100,
-                          )
-                        ]
-                      : abirImagens(),
+                      ? IMAGEM_VAZIA
+                      : abirImagens(snapshot.data),
                 ),
               ),
               Positioned(
@@ -133,7 +128,7 @@ class _TelaEditarProdutoState extends State<TelaEditarProduto> {
             ],
           );
         } else {
-          AspectRatio(
+          return AspectRatio(
             aspectRatio: 1,
             child: Carousel(
               dotSize: 6,
@@ -212,8 +207,9 @@ class _TelaEditarProdutoState extends State<TelaEditarProduto> {
                                       context)) {
                                 formkey.currentState.save();
                                 await editaRegraNegocio.editarProduto();
-                         
-                                Navigator.pushNamedAndRemoveUntil(context, "principal", (route) => false);
+
+                                Navigator.pushNamedAndRemoveUntil(
+                                    context, "principal", (route) => false);
                               }
                             });
                       }),

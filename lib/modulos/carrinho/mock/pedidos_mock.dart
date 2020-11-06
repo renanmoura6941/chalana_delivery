@@ -1,7 +1,7 @@
 import 'package:chalana_delivery/modelos/foto_modelo.dart';
 import 'package:chalana_delivery/modelos/pedido_modelo.dart';
 import 'package:chalana_delivery/modelos/produto_modelo.dart';
-import 'package:chalana_delivery/telas/tela_carrinho/constants.dart';
+import 'package:chalana_delivery/modulos/carrinho/constants.dart';
 
 class MockCarrinho {
   static List<PedidoModelo> pedidos_mock = [

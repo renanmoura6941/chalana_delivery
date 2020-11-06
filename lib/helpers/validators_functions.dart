@@ -1,9 +1,5 @@
-import 'dart:io';
-
-import 'dart:math';
-
+import 'package:chalana_delivery/helpers/alertas.dart';
 import 'package:chalana_delivery/modelos/foto_modelo.dart';
-import 'package:chalana_delivery/telas/tela_adicionar_produto/modelo/Imagem_selecionar_modelo.dart';
 import 'package:flutter/material.dart';
 
 bool emailValid(String email) {
@@ -47,14 +43,6 @@ String validarDescricao(String descricao) {
   }
 }
 
-bool validarFoto(List<ImagemModeloLocal> imagens, BuildContext context) {
-  if (imagens.isEmpty) {
-    popAlerta(context, "Sem foto!");
-    return false;
-  }
-  return true;
-}
-
 bool validarImagens(List<FotoModelo> imagens, BuildContext context) {
   if (imagens.isEmpty) {
     popAlerta(context, "Sem foto!");
@@ -62,16 +50,3 @@ bool validarImagens(List<FotoModelo> imagens, BuildContext context) {
   }
   return true;
 }
-
-popAlerta(BuildContext context, String mensagem) {
-  return showDialog(
-      context: context,
-      builder: (BuildContext context) => SimpleDialog(
-            titlePadding: EdgeInsets.symmetric(vertical: 20, horizontal: 5),
-            title: Container(
-                alignment: Alignment.center,
-                margin: EdgeInsets.symmetric(vertical: 20),
-                child: Text(mensagem)),
-          ));
-}
-

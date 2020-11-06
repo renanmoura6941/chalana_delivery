@@ -1,5 +1,5 @@
 import 'package:chalana_delivery/modelos/pedido_modelo.dart';
-import 'package:chalana_delivery/telas/tela_carrinho/components/descricao_produto_carrinho.dart';
+import 'package:chalana_delivery/modulos/carrinho/components/descricao_produto_carrinho.dart';
 import 'package:flutter/material.dart';
 import 'gerenciar_pedido_carrinho.dart';
 

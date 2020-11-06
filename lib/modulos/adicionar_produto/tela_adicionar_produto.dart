@@ -1,10 +1,11 @@
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:chalana_delivery/componentes/butao_confirmar/butao_confirmar.dart';
-import 'package:chalana_delivery/helpers/tratamenro_erros.dart';
+import 'package:chalana_delivery/componentes/image_carrocel/selecionar_imagem.dart';
+import 'package:chalana_delivery/helpers/alertas.dart';
+import 'package:chalana_delivery/helpers/tratamento_erros.dart';
 import 'package:chalana_delivery/helpers/validators_functions.dart';
 import 'package:chalana_delivery/modelos/foto_modelo.dart';
-import 'package:chalana_delivery/telas/tela_adicionar_produto/componetes/selecionar_imagem.dart';
-import 'package:chalana_delivery/telas/tela_adicionar_produto/funcionalidades/adicionar_regra_negocio.dart';
+import 'package:chalana_delivery/modulos/adicionar_produto/funcionalidades/adicionar_regra_negocio.dart';
 import 'package:flutter/material.dart';
 
 class TelaAdicionarProduto extends StatefulWidget {
@@ -36,16 +37,13 @@ class _TelaAdicionarProdutoState extends State<TelaAdicionarProduto> {
             : _adicionar(context));
   }
 
-  List<Widget> abirImagens() {
-    return List<Widget>.generate(adicionarRegraNegocio.produto.imagens.length,
-        (index) {
+  List<Widget> abirImagens(List<FotoModelo> imagens) {
+    return List<Widget>.generate(imagens.length, (index) {
       return ImagemWidget(
           onPressed: () => adicionarRegraNegocio.selecionadoItem(index),
-          novaImagem:
-              adicionarRegraNegocio.produto.imagens[index].local ?? null,
-          imagemUrl: adicionarRegraNegocio.produto.imagens[index].url,
-          selecionado:
-              adicionarRegraNegocio.produto.imagens[index].selecionado);
+          novaImagem: imagens[index].local ?? null,
+          imagemUrl: imagens[index].url,
+          selecionado: imagens[index].selecionado);
     });
   }
 
@@ -77,7 +75,7 @@ class _TelaAdicionarProdutoState extends State<TelaAdicionarProduto> {
         });
   }
 
-  carrocelImagen() {
+  Widget carrocelImagen() {
     return StreamBuilder<List<FotoModelo>>(
       initialData: [],
       stream: adicionarRegraNegocio.saida,
@@ -95,7 +93,7 @@ class _TelaAdicionarProdutoState extends State<TelaAdicionarProduto> {
                   dotColor: Colors.blue,
                   images: adicionarRegraNegocio.produto.imagens.isEmpty
                       ? IMAGEM_VAZIA
-                      : abirImagens(),
+                      : abirImagens(snapshot.data),
                 ),
               ),
               Positioned(
@@ -118,7 +116,7 @@ class _TelaAdicionarProdutoState extends State<TelaAdicionarProduto> {
             ],
           );
         } else {
-          AspectRatio(
+          return AspectRatio(
             aspectRatio: 1,
             child: Carousel(
               dotSize: 6,

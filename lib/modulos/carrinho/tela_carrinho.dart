@@ -1,6 +1,5 @@
 import 'package:chalana_delivery/modelos/pedido_modelo.dart';
-import 'package:chalana_delivery/telas/tela_carrinho/controller_carrinho.dart';
-
+import 'package:chalana_delivery/modulos/carrinho/controller_carrinho.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'components/card_produto_carrinho.dart';

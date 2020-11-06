@@ -1,5 +1,6 @@
-import 'package:chalana_delivery/telas/tela_carrinho/tela_carrinho.dart';
-import 'package:chalana_delivery/telas/tela_principal/tela_principal.dart';
+import 'package:chalana_delivery/modulos/carrinho/tela_carrinho.dart';
+import 'package:chalana_delivery/modulos/principal/tela_principal.dart';
+
 import 'package:flutter/material.dart';
 
 class TelaMenu extends StatefulWidget {
