@@ -11,40 +11,47 @@ class TelaPrincipal extends StatefulWidget {
 }
 
 class _TelaPrincipalState extends State<TelaPrincipal> {
-  AtualizarProduto atualizarProduto = AtualizarProduto();
-
-  Widget gradeProdutos(List<ProdutoModelo> produtos) {
-    return GridView.count(
-        physics: BouncingScrollPhysics(),
-        padding: EdgeInsets.symmetric(vertical: 10),
-        scrollDirection: Axis.vertical,
-        crossAxisCount: 2,
-        shrinkWrap: true,
-        crossAxisSpacing: 10,
-        mainAxisSpacing: 10,
-        children: produtos.map((produto) {
-          return CardPrincipal(produto);
-        }).toList());
-  }
-
-  Widget aguardandoProdutos(AsyncSnapshot<List<ProdutoModelo>> snapshot) {
-    atualizarProduto.escultarAlteracoes();
-    return StreamBuilder<List<ProdutoModelo>>(
-      initialData: snapshot.data,
-      stream: atualizarProduto.saida,
-      builder: (context, snapshot) {
-        print("Construindo a tela de Produtos");
-        if (snapshot.hasData) {
-          return gradeProdutos(snapshot.data);
-        } else {
-          return CircularProgressIndicator();
-        }
-      },
-    );
+  @override
+  void initState() {
+    // TODO: implement initState
+  
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    AtualizarProduto atualizarProduto = AtualizarProduto();
+
+    Widget gradeProdutos(List<ProdutoModelo> produtos) {
+      return GridView.count(
+          physics: BouncingScrollPhysics(),
+          padding: EdgeInsets.symmetric(vertical: 10),
+          scrollDirection: Axis.vertical,
+          crossAxisCount: 2,
+          shrinkWrap: true,
+          crossAxisSpacing: 10,
+          mainAxisSpacing: 10,
+          children: produtos.map((produto) {
+            return CardPrincipal(produto);
+          }).toList());
+    }
+
+    Widget aguardandoProdutos(AsyncSnapshot<List<ProdutoModelo>> snapshot) {
+      atualizarProduto.escultarAlteracoes();
+      return StreamBuilder<List<ProdutoModelo>>(
+        initialData: snapshot.data,
+        stream: atualizarProduto.saida,
+        builder: (context, snapshotTwo) {
+          print("Construindo a tela de Produtos");
+          if (snapshotTwo.hasData) {
+            return gradeProdutos(snapshotTwo.data);
+          } else {
+            return CircularProgressIndicator();
+          }
+        },
+      );
+    }
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -66,6 +73,7 @@ class _TelaPrincipalState extends State<TelaPrincipal> {
         child: FutureBuilder<List<ProdutoModelo>>(
             future: GetIt.I.get<Repositorio>().getProdutos(),
             builder: (ctx, snapshot) {
+
               if (snapshot.hasData) {
                 return aguardandoProdutos(snapshot);
               } else {

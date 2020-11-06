@@ -87,12 +87,20 @@ class _TelaEditarProdutoState extends State<TelaEditarProduto> {
     super.initState();
   }
 
+  @override
+  void dispose() {
+    print("destruir");
+    editaRegraNegocio.destruir();
+    super.dispose();
+  }
+
   Widget carrocelImagen() {
     return StreamBuilder<List<FotoModelo>>(
-      initialData: editaRegraNegocio.produto.imagens,
+      initialData: widget.produtoModelo.imagens,
       stream: editaRegraNegocio.saida,
       builder: (_, snapshot) {
         if (snapshot.hasData) {
+          print("recontruindo carrocel ${snapshot.data.length}");
           return Stack(
             children: [
               AspectRatio(
@@ -103,7 +111,7 @@ class _TelaEditarProdutoState extends State<TelaEditarProduto> {
                   dotIncreasedColor: Colors.blue,
                   dotBgColor: Colors.transparent,
                   dotColor: Colors.blue,
-                  images: editaRegraNegocio.produto.imagens.isEmpty
+                  images: snapshot.data.isEmpty
                       ? IMAGEM_VAZIA
                       : abirImagens(snapshot.data),
                 ),
@@ -209,7 +217,7 @@ class _TelaEditarProdutoState extends State<TelaEditarProduto> {
                                 await editaRegraNegocio.editarProduto();
 
                                 Navigator.pushNamedAndRemoveUntil(
-                                    context, "principal", (route) => false);
+                                    context, "tela_menu", (route) => false);
                               }
                             });
                       }),

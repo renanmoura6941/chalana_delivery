@@ -193,7 +193,7 @@ class _TelaAdicionarProdutoState extends State<TelaAdicionarProduto> {
                                 await adicionarRegraNegocio
                                     .adicionarProduto(context);
                                 Navigator.pushNamedAndRemoveUntil(
-                                    context, "principal", (route) => false);
+                                    context, "tela_menu", (route) => false);
                               }
                             });
                       }),

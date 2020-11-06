@@ -21,7 +21,7 @@ class ProdutoModelo {
   });
 
   salvar() async {
-    print("savando produto no FIREBASE");
+    print("salvando produto no firebase......");
     var dados = {
       'id': id,
       'nome': nome,
@@ -38,13 +38,13 @@ class ProdutoModelo {
     dados['id'] = id;
 
     await referencia.updateData(dados);
-    print(toString());
-    print("SALVO");
+
+    print("salvo produto $nome no firebase SUCESSO(V)");
   }
 
   atualizar() async {
-    print("atualinzando no firebase!");
-    print(toString());
+    print("atualizando produto $nome no firebase......");
+
     var dados = {
       'nome': nome,
       'preco': preco,
@@ -58,11 +58,12 @@ class ProdutoModelo {
         .document(id)
         .updateData(dados);
 
-    print("ATUALIZADO");
+    print("atualizado produto $nome no firebase SUCESSO(V)");
   }
 
   remover() async {
-    await Firestore.instance..collection('produtos').document(id).delete();
+    await Firestore.instance
+      ..collection('produtos').document(id).delete();
   }
 
   @override

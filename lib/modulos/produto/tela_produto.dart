@@ -40,6 +40,7 @@ class _TelaProdutoState extends State<TelaProduto> {
     setState(() {
       esta_no_carrinho = estaNoCarrinho();
     });
+    print(widget.produtoModelo);
     super.initState();
   }
 

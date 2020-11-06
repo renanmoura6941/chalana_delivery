@@ -11,6 +11,7 @@ class CardPrincipal extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
+        print("enviando dados para tela de produto :${produtoModelo.imagens}");
         Navigator.pushNamed(context, "produto", arguments: produtoModelo);
       },
       child: Container(
