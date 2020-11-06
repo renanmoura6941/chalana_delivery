@@ -8,7 +8,7 @@ class PedidoModelo {
   int get quantidade => this._quantidade;
 
   set quantidade(int valor) {
-    if (valor >= 0) {
+    if (valor > 0) {
       this._quantidade = valor;
     }
   }

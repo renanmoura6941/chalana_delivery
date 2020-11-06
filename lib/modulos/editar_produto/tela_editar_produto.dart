@@ -33,8 +33,12 @@ class _TelaEditarProdutoState extends State<TelaEditarProduto> {
   Widget butaoTirarFoto(BuildContext context) {
     return InkWell(
         child: CircleAvatar(
+          backgroundColor: Theme.of(context).primaryColor,
           radius: 30,
-          child: Icon(Icons.photo_camera),
+          child: Icon(
+            Icons.photo_camera,
+            color: Colors.white,
+          ),
         ),
         onTap: () => editaRegraNegocio.produto.imagens.length > 2
             ? popAlerta(context, "Limite máximo de fotos!")
@@ -106,11 +110,11 @@ class _TelaEditarProdutoState extends State<TelaEditarProduto> {
               AspectRatio(
                 aspectRatio: 1,
                 child: Carousel(
-                  dotSize: 6,
+                  dotSize: 8,
                   autoplay: false,
-                  dotIncreasedColor: Colors.blue,
+                  dotIncreasedColor: Theme.of(context).primaryColor,
                   dotBgColor: Colors.transparent,
-                  dotColor: Colors.blue,
+                  dotColor: Theme.of(context).primaryColor,
                   images: snapshot.data.isEmpty
                       ? IMAGEM_VAZIA
                       : abirImagens(snapshot.data),
@@ -164,6 +168,7 @@ class _TelaEditarProdutoState extends State<TelaEditarProduto> {
         title: Text("Editando produto"),
         centerTitle: true,
       ),
+      backgroundColor: Colors.white,
       body: ListView(
         children: [
           carrocelImagen(),

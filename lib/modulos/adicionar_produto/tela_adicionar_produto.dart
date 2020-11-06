@@ -29,8 +29,12 @@ class _TelaAdicionarProdutoState extends State<TelaAdicionarProduto> {
   Widget butaoTirarFoto(BuildContext context) {
     return InkWell(
         child: CircleAvatar(
+          backgroundColor: Theme.of(context).primaryColor,
           radius: 30,
-          child: Icon(Icons.photo_camera),
+          child: Icon(
+            Icons.photo_camera,
+            color: Colors.white,
+          ),
         ),
         onTap: () => adicionarRegraNegocio.produto.imagens.length > 2
             ? popAlerta(context, "Limite máximo de fotos!")
@@ -88,9 +92,9 @@ class _TelaAdicionarProdutoState extends State<TelaAdicionarProduto> {
                 child: Carousel(
                   dotSize: 6,
                   autoplay: false,
-                  dotIncreasedColor: Colors.blue,
+                  dotIncreasedColor: Theme.of(context).primaryColor,
                   dotBgColor: Colors.transparent,
-                  dotColor: Colors.blue,
+                  dotColor: Theme.of(context).primaryColor,
                   images: adicionarRegraNegocio.produto.imagens.isEmpty
                       ? IMAGEM_VAZIA
                       : abirImagens(snapshot.data),
@@ -121,9 +125,9 @@ class _TelaAdicionarProdutoState extends State<TelaAdicionarProduto> {
             child: Carousel(
               dotSize: 6,
               autoplay: false,
-              dotIncreasedColor: Colors.blue,
+              dotIncreasedColor: Theme.of(context).primaryColor,
               dotBgColor: Colors.transparent,
-              dotColor: Colors.blue,
+              dotColor: Theme.of(context).primaryColor,
               images: [
                 Icon(
                   Icons.photo,

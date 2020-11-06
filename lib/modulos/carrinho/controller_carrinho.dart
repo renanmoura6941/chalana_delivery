@@ -6,6 +6,12 @@ import '../../modelos/pedido_modelo.dart';
 class ControllerCarriho {
   List<PedidoModelo> list_pedidos = [];
 
+  double get total {
+    double total = 0;
+    for (var e in list_pedidos) total += e.quantidade * e.produto.preco;
+    return total;
+  }
+
   Future<void> confirmarPedido() async {
     String q = "%0A";
     String divisor = "------------------------------------";

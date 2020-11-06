@@ -5,8 +5,10 @@ import 'package:flutter/material.dart';
 class CardItem extends StatefulWidget {
   PedidoModelo pedido;
   void Function() onPressed;
+ 
+  void Function() estado;
 
-  CardItem({this.pedido, this.onPressed});
+  CardItem({this.pedido, this.onPressed, this.estado});
 
   @override
   _CardItemState createState() => _CardItemState();
@@ -71,6 +73,7 @@ class _CardItemState extends State<CardItem> {
                         setState(() {
                           widget.pedido.quantidade++;
                         });
+                        widget.estado;
                       }),
                   Text(
                     '${widget.pedido.quantidade}',
@@ -85,6 +88,7 @@ class _CardItemState extends State<CardItem> {
                       setState(() {
                         widget.pedido.quantidade--;
                       });
+                      widget.estado;
                     },
                   ),
                 ],
