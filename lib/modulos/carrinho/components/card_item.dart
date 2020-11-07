@@ -3,6 +3,7 @@ import 'package:chalana_delivery/modulos/carrinho/components/icone_custumizado.d
 import 'package:chalana_delivery/modulos/carrinho/funcionalidades/carrinho_regra_negocio.dart';
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class CardItem extends StatefulWidget {
   CarrinhoRegraNegocio carrinhoRegra;
   int indice;

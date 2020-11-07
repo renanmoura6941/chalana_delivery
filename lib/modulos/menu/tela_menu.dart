@@ -1,16 +1,19 @@
+import 'package:chalana_delivery/modulos/animacao/tela_animacao.dart';
 import 'package:chalana_delivery/modulos/carrinho/tela_carrinho.dart';
 import 'package:chalana_delivery/modulos/principal/tela_principal.dart';
 
 import 'package:flutter/material.dart';
 
 class TelaMenu extends StatefulWidget {
+  int indice;
+
+   TelaMenu({Key key, this.indice}) : super(key: key);
   @override
   _TelaMenuState createState() => _TelaMenuState();
 }
 
 class _TelaMenuState extends State<TelaMenu> {
-
-  List<Widget> telas = [TelaPrincipal(), TelaCarrinho()];
+  List<Widget> telas = [TelaPrincipal(), TelaAnimacao()];
   int _selectedIndex = 0;
 
   void _onItemTapped(int index) {
@@ -23,23 +26,6 @@ class _TelaMenuState extends State<TelaMenu> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: telas.elementAt(_selectedIndex),
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.white,
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_basket),
-            label: 'Carrinho',
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Colors.amber[800],
-        onTap: _onItemTapped,
-      ),
     );
   }
 }

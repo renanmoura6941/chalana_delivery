@@ -1,5 +1,4 @@
 import 'package:chalana_delivery/modelos/pedido_modelo.dart';
-import 'package:chalana_delivery/modelos/produto_modelo.dart';
 import 'package:get_it/get_it.dart';
 
 class CarrinhoModelo {

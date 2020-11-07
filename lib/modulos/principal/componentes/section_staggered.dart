@@ -4,6 +4,7 @@ import 'package:chalana_delivery/modulos/principal/componentes/card_produto.dart
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class SectionStaggered extends StatelessWidget {
   List<ProdutoModelo> produtos;
 
@@ -12,6 +13,7 @@ class SectionStaggered extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: double.infinity,
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

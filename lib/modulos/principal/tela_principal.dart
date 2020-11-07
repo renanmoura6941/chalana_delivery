@@ -1,13 +1,14 @@
+import 'package:chalana_delivery/helpers/alertas.dart';
 import 'package:chalana_delivery/modelos/produto_modelo.dart';
-import 'package:chalana_delivery/modulos/principal/componentes/card.dart';
-import 'package:chalana_delivery/modulos/principal/componentes/card_produto.dart';
 import 'package:chalana_delivery/modulos/principal/componentes/section_staggered.dart';
 import 'package:chalana_delivery/modulos/principal/funcionalidades/atualizar_produto.dart';
-import 'package:chalana_delivery/repositorio/repositorio.dart';
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
 
 class TelaPrincipal extends StatefulWidget {
+  final List<ProdutoModelo> produtos;
+
+  const TelaPrincipal({Key key, this.produtos}) : super(key: key);
+
   @override
   _TelaPrincipalState createState() => _TelaPrincipalState();
 }
@@ -38,17 +39,17 @@ class _TelaPrincipalState extends State<TelaPrincipal> {
       // );
     }
 
-    Widget aguardandoProdutos(AsyncSnapshot<List<ProdutoModelo>> snapshot) {
+    Widget aguardandoProdutos(List<ProdutoModelo> produtos) {
       atualizarProduto.escultarAlteracoes();
       return StreamBuilder<List<ProdutoModelo>>(
-        initialData: snapshot.data,
+        initialData: produtos,
         stream: atualizarProduto.saida,
         builder: (context, snapshotTwo) {
           print("Construindo a tela de Produtos");
           if (snapshotTwo.hasData) {
             return gradeProdutos(snapshotTwo.data);
           } else {
-            return CircularProgressIndicator();
+            return Center(child: CARREGANDO);
           }
         },
       );
@@ -72,15 +73,10 @@ class _TelaPrincipalState extends State<TelaPrincipal> {
       body: SafeArea(
           child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 5),
-        child: FutureBuilder<List<ProdutoModelo>>(
-            future: GetIt.I.get<Repositorio>().getProdutos(),
-            builder: (ctx, snapshot) {
-              if (snapshot.hasData) {
-                return aguardandoProdutos(snapshot);
-              } else {
-                return Center(child: CircularProgressIndicator());
-              }
-            }),
+        child: 
+                 aguardandoProdutos(widget.produtos)
+              
+           
       )),
 
       floatingActionButton: FloatingActionButton(

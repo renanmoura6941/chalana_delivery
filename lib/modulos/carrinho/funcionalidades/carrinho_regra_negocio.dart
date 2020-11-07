@@ -62,9 +62,9 @@ class CarrinhoRegraNegocio {
         q +
         q +
         "*Preço total da solicitação*: ${total.toStringAsFixed(2)}";
-
+String numero = "5585997732024";
     String url =
-        "https://api.whatsapp.com/send/?phone=5585992954232&text=${mensagem}&app_absent=0";
+        "https://api.whatsapp.com/send/?phone=$numero&text=${mensagem}&app_absent=0";
 
     try {
       await launch(url);

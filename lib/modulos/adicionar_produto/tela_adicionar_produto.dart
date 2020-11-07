@@ -143,7 +143,7 @@ class _TelaAdicionarProdutoState extends State<TelaAdicionarProduto> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return  Scaffold(
       appBar: AppBar(
         title: Text("Adicionando produto"),
         centerTitle: true,
@@ -185,7 +185,7 @@ class _TelaAdicionarProdutoState extends State<TelaAdicionarProduto> {
                       stream: adicionarRegraNegocio.saidaPreocesso,
                       builder: (context, snapshot) {
                         if (snapshot.data) {
-                          return CircularProgressIndicator();
+                          return CARREGANDO;
                         }
                         return ButaoConfirmar(
                             titulo: "Adicionar produto",

@@ -1,5 +1,6 @@
 
 import 'package:chalana_delivery/modulos/adicionar_produto/tela_adicionar_produto.dart';
+import 'package:chalana_delivery/modulos/animacao/tela_animacao.dart';
 import 'package:chalana_delivery/modulos/carrinho/tela_carrinho.dart';
 import 'package:chalana_delivery/modulos/editar_produto/tela_editar_produto.dart';
 import 'package:chalana_delivery/modulos/menu/tela_menu.dart';
@@ -11,7 +12,7 @@ class Rotas {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     final args = settings.arguments;
     final Map<String, dynamic> routes = {
-     // "login": MaterialPageRoute(builder: (_) => TelaLogin()),
+      "Tela_animacao": MaterialPageRoute(builder: (_) => TelaAnimacao()),
       "tela_menu": MaterialPageRoute(builder: (_) => TelaMenu()),
       "produto": MaterialPageRoute(builder: (_) => TelaProduto(args)),
       "tela_editar_produto":
@@ -19,7 +20,7 @@ class Rotas {
       "tela_adicionar_produto":
           MaterialPageRoute(builder: (_) => TelaAdicionarProduto()),
       "Tela_carrinho": MaterialPageRoute(builder: (_) => TelaCarrinho()),
-      "principal": MaterialPageRoute(builder: (_) => TelaPrincipal()),
+      "Tela_principal": MaterialPageRoute(builder: (_) => TelaPrincipal()),
     };
     if (routes.containsKey(settings.name)) {
       return routes[settings.name];

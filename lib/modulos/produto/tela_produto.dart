@@ -1,5 +1,5 @@
 import 'package:carousel_pro/carousel_pro.dart';
-import 'package:chalana_delivery/componentes/butao_confirmar/butao_confirmar.dart';
+import 'package:chalana_delivery/helpers/alertas.dart';
 import 'package:chalana_delivery/helpers/tratamento_erros.dart';
 import 'package:chalana_delivery/modelos/produto_modelo.dart';
 import 'package:chalana_delivery/modulos/produto/funcinalidades/produto_regra_negicio.dart';
@@ -73,14 +73,7 @@ class _TelaProdutoState extends State<TelaProduto> {
                             (BuildContext context, Widget child,
                                 ImageChunkEvent loadingProgress) {
                           if (loadingProgress == null) return child;
-                          return Center(
-                            child: CircularProgressIndicator(
-                              value: loadingProgress.expectedTotalBytes != null
-                                  ? loadingProgress.cumulativeBytesLoaded /
-                                      loadingProgress.expectedTotalBytes
-                                  : null,
-                            ),
-                          );
+                          return CARREGANDO;
                         });
                       }).toList(),
                 dotIncreasedColor: Colors.blue,

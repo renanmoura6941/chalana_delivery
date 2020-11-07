@@ -3,6 +3,7 @@ import 'package:chalana_delivery/modulos/principal/componentes/SectionHeader.dar
 import 'package:chalana_delivery/modulos/principal/componentes/card_produto.dart';
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class SectionList extends StatelessWidget {
   List<ProdutoModelo> produtos;
 

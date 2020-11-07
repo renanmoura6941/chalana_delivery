@@ -2,6 +2,7 @@ import 'package:chalana_delivery/modelos/produto_modelo.dart';
 import 'package:flutter/material.dart';
 import 'package:transparent_image/transparent_image.dart';
 
+// ignore: must_be_immutable
 class CardProduto extends StatelessWidget {
   ProdutoModelo produtoModelo;
   CardProduto(this.produtoModelo);
@@ -27,6 +28,7 @@ class CardProduto extends StatelessWidget {
           image: produtoModelo.imagens.first.url,
           placeholder: kTransparentImage,
           fit: BoxFit.fill,
+          
         ),
       ),
 

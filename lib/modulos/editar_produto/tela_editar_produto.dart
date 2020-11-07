@@ -209,7 +209,7 @@ class _TelaEditarProdutoState extends State<TelaEditarProduto> {
                       stream: editaRegraNegocio.saidaPreocesso,
                       builder: (context, snapshot) {
                         if (snapshot.data) {
-                          return CircularProgressIndicator();
+                          return CARREGANDO;
                         }
                         return ButaoConfirmar(
                             titulo: "Editar produto",
