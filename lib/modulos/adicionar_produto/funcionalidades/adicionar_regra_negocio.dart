@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:io';
+import 'package:chalana_delivery/helpers/alertas.dart';
 import 'package:chalana_delivery/modelos/foto_modelo.dart';
 import 'package:chalana_delivery/modelos/produto_modelo.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -36,7 +37,7 @@ class AdicionarRegraNegocio {
   bool get temItemSelecionado => itemSelecionados > 0 ? true : false;
 
   Future<void> adicionarCamera(BuildContext context) async {
-    final pickedFile = await ImagePicker().getImage(source: ImageSource.camera);
+    final pickedFile = await ImagePicker().getImage(source: ImageSource.camera, imageQuality:QUALIDADE );
     if (pickedFile != null) {
       produto.imagens.add(FotoModelo(local: File(pickedFile.path), url: null));
     }
@@ -46,7 +47,7 @@ class AdicionarRegraNegocio {
 
   Future<void> adicionarGaleria(BuildContext context) async {
     final pickedFile =
-        await ImagePicker().getImage(source: ImageSource.gallery);
+        await ImagePicker().getImage(source: ImageSource.gallery,imageQuality: QUALIDADE);
     if (pickedFile != null) {
       produto.imagens.add(FotoModelo(local: File(pickedFile.path), url: null));
     }

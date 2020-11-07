@@ -13,17 +13,25 @@ class SectionStaggered extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: double.infinity,
+    
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
+          Divider(
+            color: Colors.white,
+          ),
           SectionHeader("produtos"),
+          Divider(
+            color: Colors.white,
+          ),
           StaggeredGridView.countBuilder(
             padding: EdgeInsets.zero,
             shrinkWrap: true,
             crossAxisCount: 4,
             itemCount: produtos.length,
+            physics:
+                BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
             itemBuilder: (_, index) {
               return CardProduto(produtos[index]);
             },

@@ -19,8 +19,7 @@ class _TelaPrincipalState extends State<TelaPrincipal> {
     AtualizarProduto atualizarProduto = AtualizarProduto();
 
     Widget gradeProdutos(List<ProdutoModelo> produtos) {
-
-    return SectionStaggered(produtos);
+      return SectionStaggered(produtos);
       // return GridView.builder(
       //   physics: BouncingScrollPhysics(),
       //   //   padding: EdgeInsets.symmetric(vertical: 10),
@@ -47,7 +46,14 @@ class _TelaPrincipalState extends State<TelaPrincipal> {
         builder: (context, snapshotTwo) {
           print("Construindo a tela de Produtos");
           if (snapshotTwo.hasData) {
-            return gradeProdutos(snapshotTwo.data);
+            return 
+              ListView(
+                children: [
+                  gradeProdutos(snapshotTwo.data),
+                ],
+              );
+              
+              
           } else {
             return Center(child: CARREGANDO);
           }
@@ -72,12 +78,8 @@ class _TelaPrincipalState extends State<TelaPrincipal> {
       //  backgroundColor: Colors.white,
       body: SafeArea(
           child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 5),
-        child: 
-                 aguardandoProdutos(widget.produtos)
-              
-           
-      )),
+              padding: const EdgeInsets.symmetric(horizontal: 5),
+              child: aguardandoProdutos(widget.produtos))),
 
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.red,
