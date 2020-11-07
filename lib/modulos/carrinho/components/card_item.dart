@@ -1,14 +1,14 @@
 import 'package:chalana_delivery/modelos/pedido_modelo.dart';
 import 'package:chalana_delivery/modulos/carrinho/components/icone_custumizado.dart';
+import 'package:chalana_delivery/modulos/carrinho/funcionalidades/carrinho_regra_negocio.dart';
 import 'package:flutter/material.dart';
 
 class CardItem extends StatefulWidget {
-  PedidoModelo pedido;
-  void Function() onPressed;
- 
-  void Function() estado;
+  CarrinhoRegraNegocio carrinhoRegra;
+  int indice;
+  Function onPressed;
 
-  CardItem({this.pedido, this.onPressed, this.estado});
+  CardItem({this.carrinhoRegra, this.indice, this.onPressed});
 
   @override
   _CardItemState createState() => _CardItemState();
@@ -17,6 +17,9 @@ class CardItem extends StatefulWidget {
 class _CardItemState extends State<CardItem> {
   @override
   Widget build(BuildContext context) {
+    PedidoModelo pedido =
+        widget.carrinhoRegra.carrinho.listaPedidos[widget.indice];
+
     return GestureDetector(
       onTap: widget.onPressed,
       child: Card(
@@ -28,7 +31,7 @@ class _CardItemState extends State<CardItem> {
               SizedBox(
                 height: 80,
                 width: 80,
-                child: Image.network(widget.pedido.produto.imagens.first.url),
+                child: Image.network(pedido.produto.imagens.first.url),
               ),
               Expanded(
                 child: Padding(
@@ -37,7 +40,7 @@ class _CardItemState extends State<CardItem> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(
-                        widget.pedido.produto.nome,
+                        pedido.produto.nome,
                         style: TextStyle(
                           fontWeight: FontWeight.w500,
                           fontSize: 17.0,
@@ -54,7 +57,7 @@ class _CardItemState extends State<CardItem> {
                         ),
                       ),
                       Text(
-                        'R\$ ${widget.pedido.preco()}',
+                        'R\$ ${pedido.preco().toStringAsFixed(2)}',
                         style: TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.w800,
@@ -71,26 +74,29 @@ class _CardItemState extends State<CardItem> {
                       color: Theme.of(context).primaryColor,
                       onTap: () {
                         setState(() {
-                          widget.pedido.quantidade++;
+                          widget.carrinhoRegra.incrementar(widget.indice);
                         });
-                        widget.estado;
                       }),
                   Text(
-                    '${widget.pedido.quantidade}',
+                    '${pedido.quantidade}',
                     style: const TextStyle(fontSize: 20),
                   ),
-                  IconeCustumizado(
-                    iconData: Icons.remove,
-                    color: widget.pedido.quantidade > 1
-                        ? Theme.of(context).primaryColor
-                        : Colors.red,
-                    onTap: () {
-                      setState(() {
-                        widget.pedido.quantidade--;
-                      });
-                      widget.estado;
-                    },
-                  ),
+                  pedido.quantidade == 1
+                      ? RaisedButton(
+                          color: Colors.red,
+                          onPressed: () {
+                            widget.carrinhoRegra.removerPedido(widget.indice);
+                          },
+                          child: Text("Remover"),
+                        )
+                      : IconeCustumizado(
+                          iconData: Icons.remove,
+                          color: Theme.of(context).primaryColor,
+                          onTap: () {
+                            setState(() {
+                              widget.carrinhoRegra.decrementar(widget.indice);
+                            });
+                          }),
                 ],
               )
             ],

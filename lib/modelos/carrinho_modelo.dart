@@ -1,8 +1,12 @@
 import 'package:chalana_delivery/modelos/pedido_modelo.dart';
+import 'package:get_it/get_it.dart';
 
 class CarrinhoModelo {
-  final List<PedidoModelo> listaPedidos = [];
+  List<PedidoModelo> listaPedidos = [];
 
+  CarrinhoModelo() {
+    listaPedidos = GetIt.I.get<List<PedidoModelo>>();
+  }
   void adicionar(PedidoModelo pedido) {
     listaPedidos.add(pedido);
   }
@@ -11,7 +15,7 @@ class CarrinhoModelo {
     listaPedidos.removeAt(index);
   }
 
-  double total() {
+  double get total {
     double soma = 0;
 
     for (final pedido in listaPedidos) {
@@ -19,5 +23,9 @@ class CarrinhoModelo {
     }
 
     return soma;
+  }
+
+  limpar() {
+    listaPedidos.clear();
   }
 }

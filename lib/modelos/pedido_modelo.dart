@@ -5,6 +5,7 @@ class PedidoModelo {
   int _quantidade = 1;
 
   PedidoModelo({this.produto});
+  
   int get quantidade => this._quantidade;
 
   set quantidade(int valor) {
@@ -13,5 +14,5 @@ class PedidoModelo {
     }
   }
 
-  double preco() => produto.preco * quantidade;
+  double preco() => 1.0 *produto.preco * quantidade;
 }

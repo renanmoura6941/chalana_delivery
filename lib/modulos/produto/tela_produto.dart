@@ -19,6 +19,7 @@ class TelaProduto extends StatefulWidget {
 
 class _TelaProdutoState extends State<TelaProduto> {
   bool esta_no_carrinho = false;
+  
   List<PedidoModelo> list_pedidos = GetIt.I.get<List<PedidoModelo>>();
 
   bool estaNoCarrinho() {
@@ -148,6 +149,7 @@ class _TelaProdutoState extends State<TelaProduto> {
                         titulo: "Adicionar ao carrinho",
                         cor: Theme.of(context).primaryColor,
                         onPressed: () async {
+                          
                           list_pedidos.add(
                             PedidoModelo(
                            

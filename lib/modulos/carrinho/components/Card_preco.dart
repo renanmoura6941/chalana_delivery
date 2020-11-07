@@ -1,9 +1,8 @@
-
-import 'package:chalana_delivery/modulos/carrinho/controller_carrinho.dart';
+import 'package:chalana_delivery/modelos/carrinho_modelo.dart';
 import 'package:flutter/material.dart';
 
 class CardPreco extends StatelessWidget {
-  final ControllerCarriho carrinho;
+  final CarrinhoModelo carrinho;
 
   const CardPreco({this.buttonText, this.onPressed, this.carrinho});
   final String buttonText;
