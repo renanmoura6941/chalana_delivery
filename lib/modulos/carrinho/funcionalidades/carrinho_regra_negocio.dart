@@ -1,19 +1,26 @@
 import 'dart:async';
 import 'package:chalana_delivery/modelos/carrinho_modelo.dart';
+import 'package:chalana_delivery/modelos/pedido_modelo.dart';
+import 'package:chalana_delivery/modelos/produto_modelo.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class CarrinhoRegraNegocio {
   final StreamController<CarrinhoModelo> streamCarrinho = StreamController();
-  final StreamController<CarrinhoModelo> streamPedido = StreamController();
 
   Sink<CarrinhoModelo> get entradaCarrinho => streamCarrinho.sink;
   Stream get saidaCarrinho => streamCarrinho.stream;
-
-  Sink<CarrinhoModelo> get entradaPedido => streamPedido.sink;
-  Stream get saidaPedido => streamPedido.stream;
-
   CarrinhoModelo carrinho = CarrinhoModelo();
+
+  final StreamController<bool> streamNoCarrinho = StreamController();
+  Sink<bool> get entradaNoCarrinho => streamNoCarrinho.sink;
+  Stream get saidaNoCarrinho => streamNoCarrinho.stream;
+  bool noCarrinho = false;
+
+  estaNoCarrinho(ProdutoModelo produto) {
+    noCarrinho = carrinho.listaPedidos.contains(produto);
+    entradaNoCarrinho.add(noCarrinho);
+  }
 
   incrementar(int indice) {
     carrinho.listaPedidos[indice].quantidade++;
@@ -26,8 +33,16 @@ class CarrinhoRegraNegocio {
   }
 
   removerPedido(int indice) {
-    carrinho.remover(indice);
+    carrinho.listaPedidos.removeAt(indice);
     entradaCarrinho.add(carrinho);
+  }
+
+  void adicionar(PedidoModelo pedido) {
+    carrinho.listaPedidos.add(pedido);
+  }
+
+  limpar() {
+    carrinho.listaPedidos.clear();
   }
 
   Future<void> confirmarPedido() async {
@@ -53,7 +68,7 @@ class CarrinhoRegraNegocio {
 
     try {
       await launch(url);
-      carrinho.limpar();
+      limpar();
       entradaCarrinho.add(carrinho);
     } catch (erro) {
       debugPrint("erro ao enviar mensagem: $erro");

@@ -19,7 +19,7 @@ class _TelaPrincipalState extends State<TelaPrincipal> {
     Widget gradeProdutos(List<ProdutoModelo> produtos) {
       return ListView.builder(
         physics: BouncingScrollPhysics(),
-     //   padding: EdgeInsets.symmetric(vertical: 10),
+        //   padding: EdgeInsets.symmetric(vertical: 10),
         scrollDirection: Axis.vertical,
         shrinkWrap: true,
         itemCount: produtos.length,
@@ -59,7 +59,7 @@ class _TelaPrincipalState extends State<TelaPrincipal> {
               })
         ],
       ),
-    //  backgroundColor: Colors.white,
+      //  backgroundColor: Colors.white,
       body: SafeArea(
           child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 1),
@@ -73,6 +73,17 @@ class _TelaPrincipalState extends State<TelaPrincipal> {
               }
             }),
       )),
+
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.red,
+        onPressed: () {
+          Navigator.pushNamed(context, "Tela_carrinho");
+        },
+        child: Icon(
+          Icons.shopping_cart,
+          color: Colors.white,
+        ),
+      ),
     );
   }
 }

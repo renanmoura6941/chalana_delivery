@@ -3,9 +3,10 @@ import 'package:chalana_delivery/modelos/produto_modelo.dart';
 class PedidoModelo {
   final ProdutoModelo produto;
   int _quantidade = 1;
-
-  PedidoModelo({this.produto});
+  bool estaNoCarrinho = false;
+  PedidoModelo({this.produto, this.estaNoCarrinho});
   
+
   int get quantidade => this._quantidade;
 
   set quantidade(int valor) {

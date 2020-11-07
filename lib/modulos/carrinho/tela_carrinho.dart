@@ -18,6 +18,7 @@ class _TelaCarrinhoState extends State<TelaCarrinho> {
       appBar: AppBar(
         centerTitle: true,
         title: Text('Carrinho'),
+        
       ),
       body: StreamBuilder<Object>(
           stream: carrinhoRegraNegocio.saidaCarrinho,
