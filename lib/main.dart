@@ -1,3 +1,4 @@
+import 'package:chalana_delivery/modulos/animacao/tela_animacao.dart';
 import 'package:chalana_delivery/modulos/menu/tela_menu.dart';
 import 'package:chalana_delivery/modulos/principal/tela_principal.dart';
 import 'package:chalana_delivery/repositorio/repositorio.dart';
@@ -39,6 +40,6 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return TelaPrincipal();
+    return TelaAnimacao();
   }
 }

@@ -1,6 +1,7 @@
 import 'package:chalana_delivery/modelos/produto_modelo.dart';
 import 'package:chalana_delivery/modulos/principal/componentes/card.dart';
 import 'package:chalana_delivery/modulos/principal/componentes/card_produto.dart';
+import 'package:chalana_delivery/modulos/principal/componentes/section_staggered.dart';
 import 'package:chalana_delivery/modulos/principal/funcionalidades/atualizar_produto.dart';
 import 'package:chalana_delivery/repositorio/repositorio.dart';
 import 'package:flutter/material.dart';
@@ -17,16 +18,24 @@ class _TelaPrincipalState extends State<TelaPrincipal> {
     AtualizarProduto atualizarProduto = AtualizarProduto();
 
     Widget gradeProdutos(List<ProdutoModelo> produtos) {
-      return ListView.builder(
-        physics: BouncingScrollPhysics(),
-        //   padding: EdgeInsets.symmetric(vertical: 10),
-        scrollDirection: Axis.vertical,
-        shrinkWrap: true,
-        itemCount: produtos.length,
-        itemBuilder: (_, indice) {
-          return CardProduto(produtos[indice]);
-        },
-      );
+
+    return SectionStaggered(produtos);
+      // return GridView.builder(
+      //   physics: BouncingScrollPhysics(),
+      //   //   padding: EdgeInsets.symmetric(vertical: 10),
+      //   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+      //     crossAxisCount: 2,
+      //     childAspectRatio:1,
+      //     crossAxisSpacing:1,
+      //     mainAxisSpacing: 10
+      //   ),
+      //   scrollDirection: Axis.vertical,
+      //   shrinkWrap: true,
+      //   itemCount: produtos.length,
+      //   itemBuilder: (_, indice) {
+      //     return CardProduto(produtos[indice]);
+      //   },
+      // );
     }
 
     Widget aguardandoProdutos(AsyncSnapshot<List<ProdutoModelo>> snapshot) {
@@ -62,7 +71,7 @@ class _TelaPrincipalState extends State<TelaPrincipal> {
       //  backgroundColor: Colors.white,
       body: SafeArea(
           child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 1),
+        padding: const EdgeInsets.symmetric(horizontal: 5),
         child: FutureBuilder<List<ProdutoModelo>>(
             future: GetIt.I.get<Repositorio>().getProdutos(),
             builder: (ctx, snapshot) {
