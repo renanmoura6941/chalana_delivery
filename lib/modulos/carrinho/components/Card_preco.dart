@@ -1,3 +1,4 @@
+import 'package:chalana_delivery/helpers/alertas.dart';
 import 'package:chalana_delivery/modelos/carrinho_modelo.dart';
 import 'package:flutter/material.dart';
 
@@ -42,7 +43,7 @@ class CardPreco extends StatelessWidget {
                 Text(
                   'R\$ ${carrinho.total.toStringAsFixed(2)}',
                   style: TextStyle(
-                    color: Theme.of(context).primaryColor,
+                    color:COR_PRINCIPAL,
                     fontSize: 16,
                   ),
                 )
@@ -52,8 +53,8 @@ class CardPreco extends StatelessWidget {
               height: 8,
             ),
             RaisedButton(
-              color: Theme.of(context).primaryColor,
-              disabledColor: Theme.of(context).primaryColor.withAlpha(100),
+              color:COR_PRINCIPAL,
+              disabledColor:COR_PRINCIPAL.withAlpha(100),
               textColor: Colors.white,
               onPressed: onPressed,
               child: Text("Realizar pedido"),

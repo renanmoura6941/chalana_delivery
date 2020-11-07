@@ -24,6 +24,7 @@ class _TelaEditarProdutoState extends State<TelaEditarProduto> {
   Widget butaoRemover() {
     return InkWell(
         child: CircleAvatar(
+          backgroundColor: COR_PRINCIPAL,
           radius: 30,
           child: Icon(Icons.remove),
         ),
@@ -33,7 +34,7 @@ class _TelaEditarProdutoState extends State<TelaEditarProduto> {
   Widget butaoTirarFoto(BuildContext context) {
     return InkWell(
         child: CircleAvatar(
-          backgroundColor: Theme.of(context).primaryColor,
+          backgroundColor: COR_PRINCIPAL,
           radius: 30,
           child: Icon(
             Icons.photo_camera,
@@ -112,9 +113,9 @@ class _TelaEditarProdutoState extends State<TelaEditarProduto> {
                 child: Carousel(
                   dotSize: 8,
                   autoplay: false,
-                  dotIncreasedColor: Theme.of(context).primaryColor,
+                  dotIncreasedColor: COR_PRINCIPAL,
                   dotBgColor: Colors.transparent,
-                  dotColor: Theme.of(context).primaryColor,
+                  dotColor: COR_PRINCIPAL,
                   images: snapshot.data.isEmpty
                       ? IMAGEM_VAZIA
                       : abirImagens(snapshot.data),
@@ -131,6 +132,7 @@ class _TelaEditarProdutoState extends State<TelaEditarProduto> {
                     bottom: 0,
                     left: 7,
                     child: FloatingActionButton.extended(
+                      backgroundColor: COR_PRINCIPAL,
                       onPressed: null,
                       label: Text(
                           "${editaRegraNegocio.itemSelecionados} item selecionado",
@@ -209,7 +211,7 @@ class _TelaEditarProdutoState extends State<TelaEditarProduto> {
                       stream: editaRegraNegocio.saidaPreocesso,
                       builder: (context, snapshot) {
                         if (snapshot.data) {
-                          return CARREGANDO;
+                          return CARREGANDO2;
                         }
                         return ButaoConfirmar(
                             titulo: "Editar produto",

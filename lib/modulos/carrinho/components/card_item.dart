@@ -1,3 +1,4 @@
+import 'package:chalana_delivery/helpers/alertas.dart';
 import 'package:chalana_delivery/modelos/pedido_modelo.dart';
 import 'package:chalana_delivery/modulos/carrinho/components/icone_custumizado.dart';
 import 'package:chalana_delivery/modulos/carrinho/funcionalidades/carrinho_regra_negocio.dart';
@@ -62,7 +63,7 @@ class _CardItemState extends State<CardItem> {
                         style: TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.w800,
-                            color: Theme.of(context).primaryColor),
+                            color:COR_PRINCIPAL),
                       ),
                     ],
                   ),
@@ -72,7 +73,7 @@ class _CardItemState extends State<CardItem> {
                 children: <Widget>[
                   IconeCustumizado(
                       iconData: Icons.add,
-                      color: Theme.of(context).primaryColor,
+                      color:COR_PRINCIPAL,
                       onTap: () {
                         setState(() {
                           widget.carrinhoRegra.incrementar(widget.indice);
@@ -92,7 +93,7 @@ class _CardItemState extends State<CardItem> {
                         )
                       : IconeCustumizado(
                           iconData: Icons.remove,
-                          color: Theme.of(context).primaryColor,
+                          color:COR_PRINCIPAL,
                           onTap: () {
                             setState(() {
                               widget.carrinhoRegra.decrementar(widget.indice);

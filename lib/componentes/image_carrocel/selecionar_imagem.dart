@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:chalana_delivery/helpers/alertas.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
@@ -25,13 +24,7 @@ class ImagemWidget extends StatelessWidget {
           ),
         ),
         child: imagemUrl != null
-            ? Image.network(
-                imagemUrl,
-                loadingBuilder: (BuildContext context, Widget child,
-                    ImageChunkEvent loadingProgress) {
-                  return Center(child: CARREGANDO);
-                },
-              )
+            ? Image.network(imagemUrl)
             : Image.file(
                 novaImagem,
                 fit: BoxFit.cover,

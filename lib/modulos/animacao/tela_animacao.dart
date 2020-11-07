@@ -33,8 +33,9 @@ class _TelaAnimacaoState extends State<TelaAnimacao> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Theme.of(context).primaryColor.withOpacity(0.6),
+      color: COR_PRINCIPAL.withOpacity(0.6),
       child: Center(
+        
         child: Column(
           children: [
             Image.asset(

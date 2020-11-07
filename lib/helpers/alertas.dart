@@ -15,3 +15,10 @@ popAlerta(BuildContext context, String mensagem) {
 
 const CARREGANDO =
     SpinKitWave(color: Colors.white54, type: SpinKitWaveType.end);
+
+    
+const CARREGANDO2 =
+    SpinKitWave(color: const Color.fromARGB(255, 4, 125, 141), type: SpinKitWaveType.end);
+
+const COR_PRINCIPAL =  const Color.fromARGB(255, 4, 125, 141);
+

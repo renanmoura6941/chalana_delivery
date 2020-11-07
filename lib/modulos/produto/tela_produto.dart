@@ -76,9 +76,9 @@ class _TelaProdutoState extends State<TelaProduto> {
                           return CARREGANDO;
                         });
                       }).toList(),
-                dotIncreasedColor: Colors.blue,
+                dotIncreasedColor: COR_PRINCIPAL,
                 dotBgColor: Colors.transparent,
-                dotColor: Colors.blue,
+                dotColor: COR_PRINCIPAL,
               ),
             ),
             Padding(
@@ -127,7 +127,7 @@ class _TelaProdutoState extends State<TelaProduto> {
                   // if (!produtoRegraNegocio.noCarrinho)
                   //   ButaoConfirmar(
                   //       titulo: "Adicionar ao carrinho",
-                  //       cor: Theme.of(context).primaryColor,
+                  //       cor:COR_PRINCIPAL,
                   //       onPressed: () async {
                   // produtoRegraNegocio.addCarrinho(widget.produto);
 
@@ -159,7 +159,7 @@ class _TelaProdutoState extends State<TelaProduto> {
                 ),
               )
             : FloatingActionButton.extended(
-                splashColor: Theme.of(context).primaryColor,
+                splashColor:COR_PRINCIPAL,
                 label: Text("Adicionar ao carrinho"),
                 backgroundColor: Colors.red,
                 onPressed: () async {

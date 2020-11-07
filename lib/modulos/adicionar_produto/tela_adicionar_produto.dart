@@ -29,7 +29,7 @@ class _TelaAdicionarProdutoState extends State<TelaAdicionarProduto> {
   Widget butaoTirarFoto(BuildContext context) {
     return InkWell(
         child: CircleAvatar(
-          backgroundColor: Theme.of(context).primaryColor,
+          backgroundColor:COR_PRINCIPAL,
           radius: 30,
           child: Icon(
             Icons.photo_camera,
@@ -92,9 +92,9 @@ class _TelaAdicionarProdutoState extends State<TelaAdicionarProduto> {
                 child: Carousel(
                   dotSize: 6,
                   autoplay: false,
-                  dotIncreasedColor: Theme.of(context).primaryColor,
+                  dotIncreasedColor:COR_PRINCIPAL,
                   dotBgColor: Colors.transparent,
-                  dotColor: Theme.of(context).primaryColor,
+                  dotColor:COR_PRINCIPAL,
                   images: adicionarRegraNegocio.produto.imagens.isEmpty
                       ? IMAGEM_VAZIA
                       : abirImagens(snapshot.data),
@@ -125,9 +125,9 @@ class _TelaAdicionarProdutoState extends State<TelaAdicionarProduto> {
             child: Carousel(
               dotSize: 6,
               autoplay: false,
-              dotIncreasedColor: Theme.of(context).primaryColor,
+              dotIncreasedColor:COR_PRINCIPAL,
               dotBgColor: Colors.transparent,
-              dotColor: Theme.of(context).primaryColor,
+              dotColor:COR_PRINCIPAL,
               images: [
                 Icon(
                   Icons.photo,
@@ -185,11 +185,11 @@ class _TelaAdicionarProdutoState extends State<TelaAdicionarProduto> {
                       stream: adicionarRegraNegocio.saidaPreocesso,
                       builder: (context, snapshot) {
                         if (snapshot.data) {
-                          return CARREGANDO;
+                          return CARREGANDO2;
                         }
                         return ButaoConfirmar(
                             titulo: "Adicionar produto",
-                            cor: Theme.of(context).primaryColor,
+                            cor:COR_PRINCIPAL,
                             onPressed: () async {
                               if (chave.currentState.validate() &&
                                   validarImagens(
