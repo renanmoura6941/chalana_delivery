@@ -10,7 +10,7 @@ class CardProduto extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: ()  {
+      onTap: () {
         Navigator.pushNamed(context, "produto", arguments: produto.copiar());
       },
       // child: Card(
