@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:chalana_delivery/helpers/alertas.dart';
 import 'package:chalana_delivery/modelos/produto_modelo.dart';
 import 'package:flutter/material.dart';
@@ -5,14 +6,13 @@ import 'package:transparent_image/transparent_image.dart';
 
 // ignore: must_be_immutable
 class CardProduto extends StatelessWidget {
-  ProdutoModelo produtoModelo;
-  CardProduto(this.produtoModelo);
+  ProdutoModelo produto;
+  CardProduto(this.produto);
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, "produto",
-            arguments: produtoModelo.copiar());
+        Navigator.pushNamed(context, "produto", arguments: produto.copiar());
       },
       // child: Card(
       //   // margin: const EdgeInsets.symmetric(horizontal:16, vertical: 4),
@@ -24,23 +24,12 @@ class CardProduto extends StatelessWidget {
       //       children: <Widget>[
 
       child: AspectRatio(
-        aspectRatio: 1,
-        child: FadeInImage.memoryNetwork(
-          image: produtoModelo.imagens.first.url,
-          placeholder: kTransparentImage,
-          fit: BoxFit.fill,
-          imageErrorBuilder:
-              (BuildContext context, Object exception, StackTrace stackTrace) {
-            // Appropriate logging or analytics, e.g.
-            // myAnalytics.recordError(
-            //   'An error occurred loading "https://example.does.not.exist/image.jpg"',
-            //   exception,
-            //   stackTrace,
-            // );
-            return ERRO_IMAGEM;
-          },
-        ),
-      ),
+          aspectRatio: 1,
+          child: CachedNetworkImage(
+            imageUrl: produto.imagens.first.url,
+            placeholder: (context, url) => CARREGANDO,
+            errorWidget: (context, url, error) => Center(child: ERRO_IMAGEM),
+          )),
 
       // Positioned(
       //   width: 200,

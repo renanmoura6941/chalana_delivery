@@ -16,21 +16,25 @@ popAlerta(BuildContext context, String mensagem) {
 const CARREGANDO =
     SpinKitWave(color: Colors.white54, type: SpinKitWaveType.end);
 
-    
-const CARREGANDO2 =
-    SpinKitWave(color: const Color.fromARGB(255, 4, 125, 141), type: SpinKitWaveType.end);
+const CARREGANDO2 = SpinKitWave(
+    color: const Color.fromARGB(255, 4, 125, 141), type: SpinKitWaveType.end);
 
-const COR_PRINCIPAL =  const Color.fromARGB(255, 4, 125, 141);
+const COR_PRINCIPAL = const Color.fromARGB(255, 4, 125, 141);
 
 const QUALIDADE = 60;
 
-Widget ERRO_IMAGEM =  Column(
-              children: [
-                Icon(
-                  Icons.image_not_supported,
-                  color: Colors.red,
-                  size: 100,
-                ),
-                Text("Sem Imagem")
-              ],
-            );
+Widget ERRO_IMAGEM = Column(
+  mainAxisAlignment: MainAxisAlignment.center,
+  children: [
+
+    Icon(
+      Icons.image_not_supported,
+      color: Colors.red,
+      size: 50,
+    ),
+    Text(
+      "Sem Imagem",
+      style: TextStyle(fontSize: 10),
+    )
+  ],
+);

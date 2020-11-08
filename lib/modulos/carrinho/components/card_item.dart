@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:chalana_delivery/helpers/alertas.dart';
 import 'package:chalana_delivery/modelos/pedido_modelo.dart';
 import 'package:chalana_delivery/modulos/carrinho/components/icone_custumizado.dart';
@@ -31,10 +32,14 @@ class _CardItemState extends State<CardItem> {
           child: Row(
             children: <Widget>[
               SizedBox(
-                height: 80,
-                width: 80,
-                child: Image.network(pedido.produto.imagens.first.url),
-              ),
+                  height: 80,
+                  width: 80,
+                  child: CachedNetworkImage(
+                    imageUrl: pedido.produto.imagens.first.url,
+                    placeholder: (context, url) => CARREGANDO2,
+                    errorWidget: (context, url, error) =>
+                        Center(child: ERRO_IMAGEM),
+                  )),
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.only(left: 16),
@@ -63,7 +68,7 @@ class _CardItemState extends State<CardItem> {
                         style: TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.w800,
-                            color:COR_PRINCIPAL),
+                            color: COR_PRINCIPAL),
                       ),
                     ],
                   ),
@@ -73,7 +78,7 @@ class _CardItemState extends State<CardItem> {
                 children: <Widget>[
                   IconeCustumizado(
                       iconData: Icons.add,
-                      color:COR_PRINCIPAL,
+                      color: COR_PRINCIPAL,
                       onTap: () {
                         setState(() {
                           widget.carrinhoRegra.incrementar(widget.indice);
@@ -93,7 +98,7 @@ class _CardItemState extends State<CardItem> {
                         )
                       : IconeCustumizado(
                           iconData: Icons.remove,
-                          color:COR_PRINCIPAL,
+                          color: COR_PRINCIPAL,
                           onTap: () {
                             setState(() {
                               widget.carrinhoRegra.decrementar(widget.indice);

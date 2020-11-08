@@ -1,3 +1,5 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:chalana_delivery/helpers/alertas.dart';
 import 'package:chalana_delivery/helpers/tratamento_erros.dart';
@@ -69,18 +71,11 @@ class _TelaProdutoState extends State<TelaProduto> {
                         widget.produto.imagens.isEmpty
                     ? IMAGEM_VAZIA
                     : widget.produto.imagens.map((imagem) {
-                        return Image.network(
-                          imagem.url,
-                          errorBuilder: (BuildContext context, Object exception,
-                              StackTrace stackTrace) {
-                            // Appropriate logging or analytics, e.g.
-                            // myAnalytics.recordError(
-                            //   'An error occurred loading "https://example.does.not.exist/image.jpg"',
-                            //   exception,
-                            //   stackTrace,
-                            // );
-                            return Center(child: ERRO_IMAGEM);
-                          },
+                        return CachedNetworkImage(
+                          imageUrl: imagem.url,
+                          placeholder: (context, url) => CARREGANDO2,
+                          errorWidget: (context, url, error) =>
+                              Center(child: ERRO_IMAGEM),
                         );
                       }).toList(),
                 dotIncreasedColor: COR_PRINCIPAL,

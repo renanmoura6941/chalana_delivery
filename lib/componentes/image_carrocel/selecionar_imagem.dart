@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:chalana_delivery/helpers/alertas.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
@@ -24,7 +26,12 @@ class ImagemWidget extends StatelessWidget {
           ),
         ),
         child: imagemUrl != null
-            ? Image.network(imagemUrl)
+            ? CachedNetworkImage(
+                imageUrl: imagemUrl,
+                placeholder: (context, url) => CARREGANDO2,
+                errorWidget: (context, url, error) =>
+                    Center(child: ERRO_IMAGEM),
+              )
             : Image.file(
                 novaImagem,
                 fit: BoxFit.cover,
