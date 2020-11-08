@@ -1,3 +1,4 @@
+import 'package:chalana_delivery/helpers/alertas.dart';
 import 'package:chalana_delivery/modelos/produto_modelo.dart';
 import 'package:flutter/material.dart';
 import 'package:transparent_image/transparent_image.dart';
@@ -28,7 +29,16 @@ class CardProduto extends StatelessWidget {
           image: produtoModelo.imagens.first.url,
           placeholder: kTransparentImage,
           fit: BoxFit.fill,
-          
+          imageErrorBuilder:
+              (BuildContext context, Object exception, StackTrace stackTrace) {
+            // Appropriate logging or analytics, e.g.
+            // myAnalytics.recordError(
+            //   'An error occurred loading "https://example.does.not.exist/image.jpg"',
+            //   exception,
+            //   stackTrace,
+            // );
+            return ERRO_IMAGEM;
+          },
         ),
       ),
 

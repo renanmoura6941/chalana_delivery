@@ -23,3 +23,14 @@ const CARREGANDO2 =
 const COR_PRINCIPAL =  const Color.fromARGB(255, 4, 125, 141);
 
 const QUALIDADE = 60;
+
+Widget ERRO_IMAGEM =  Column(
+              children: [
+                Icon(
+                  Icons.image_not_supported,
+                  color: Colors.red,
+                  size: 100,
+                ),
+                Text("Sem Imagem")
+              ],
+            );

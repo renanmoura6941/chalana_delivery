@@ -37,7 +37,8 @@ class AdicionarRegraNegocio {
   bool get temItemSelecionado => itemSelecionados > 0 ? true : false;
 
   Future<void> adicionarCamera(BuildContext context) async {
-    final pickedFile = await ImagePicker().getImage(source: ImageSource.camera, imageQuality:QUALIDADE );
+    final pickedFile = await ImagePicker()
+        .getImage(source: ImageSource.camera, imageQuality: QUALIDADE);
     if (pickedFile != null) {
       produto.imagens.add(FotoModelo(local: File(pickedFile.path), url: null));
     }
@@ -46,8 +47,8 @@ class AdicionarRegraNegocio {
   }
 
   Future<void> adicionarGaleria(BuildContext context) async {
-    final pickedFile =
-        await ImagePicker().getImage(source: ImageSource.gallery,imageQuality: QUALIDADE);
+    final pickedFile = await ImagePicker()
+        .getImage(source: ImageSource.gallery, imageQuality: QUALIDADE);
     if (pickedFile != null) {
       produto.imagens.add(FotoModelo(local: File(pickedFile.path), url: null));
     }
@@ -68,7 +69,7 @@ class AdicionarRegraNegocio {
     print(produto.imagens.length);
 
     var imagens = produto.imagens;
-     produto.imagens = [];
+    produto.imagens = [];
 
     for (final e in imagens) {
       FotoModelo fotoModelo = await salvarFirestore(e.local);

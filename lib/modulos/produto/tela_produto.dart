@@ -69,12 +69,19 @@ class _TelaProdutoState extends State<TelaProduto> {
                         widget.produto.imagens.isEmpty
                     ? IMAGEM_VAZIA
                     : widget.produto.imagens.map((imagem) {
-                        return Image.network(imagem.url, loadingBuilder:
-                            (BuildContext context, Widget child,
-                                ImageChunkEvent loadingProgress) {
-                          if (loadingProgress == null) return child;
-                          return CARREGANDO;
-                        });
+                        return Image.network(
+                          imagem.url,
+                          errorBuilder: (BuildContext context, Object exception,
+                              StackTrace stackTrace) {
+                            // Appropriate logging or analytics, e.g.
+                            // myAnalytics.recordError(
+                            //   'An error occurred loading "https://example.does.not.exist/image.jpg"',
+                            //   exception,
+                            //   stackTrace,
+                            // );
+                            return Center(child: ERRO_IMAGEM);
+                          },
+                        );
                       }).toList(),
                 dotIncreasedColor: COR_PRINCIPAL,
                 dotBgColor: Colors.transparent,
@@ -159,7 +166,7 @@ class _TelaProdutoState extends State<TelaProduto> {
                 ),
               )
             : FloatingActionButton.extended(
-                splashColor:COR_PRINCIPAL,
+                splashColor: COR_PRINCIPAL,
                 label: Text("Adicionar ao carrinho"),
                 backgroundColor: Colors.red,
                 onPressed: () async {
