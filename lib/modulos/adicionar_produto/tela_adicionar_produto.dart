@@ -29,7 +29,7 @@ class _TelaAdicionarProdutoState extends State<TelaAdicionarProduto> {
   Widget butaoTirarFoto(BuildContext context) {
     return InkWell(
         child: CircleAvatar(
-          backgroundColor:COR_PRINCIPAL,
+          backgroundColor: COR_PRINCIPAL,
           radius: 30,
           child: Icon(
             Icons.photo_camera,
@@ -92,9 +92,9 @@ class _TelaAdicionarProdutoState extends State<TelaAdicionarProduto> {
                 child: Carousel(
                   dotSize: 6,
                   autoplay: false,
-                  dotIncreasedColor:COR_PRINCIPAL,
+                  dotIncreasedColor: COR_PRINCIPAL,
                   dotBgColor: Colors.transparent,
-                  dotColor:COR_PRINCIPAL,
+                  dotColor: COR_PRINCIPAL,
                   images: adicionarRegraNegocio.produto.imagens.isEmpty
                       ? IMAGEM_VAZIA
                       : abirImagens(snapshot.data),
@@ -125,9 +125,9 @@ class _TelaAdicionarProdutoState extends State<TelaAdicionarProduto> {
             child: Carousel(
               dotSize: 6,
               autoplay: false,
-              dotIncreasedColor:COR_PRINCIPAL,
+              dotIncreasedColor: COR_PRINCIPAL,
               dotBgColor: Colors.transparent,
-              dotColor:COR_PRINCIPAL,
+              dotColor: COR_PRINCIPAL,
               images: [
                 Icon(
                   Icons.photo,
@@ -143,7 +143,7 @@ class _TelaAdicionarProdutoState extends State<TelaAdicionarProduto> {
 
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
+    return Scaffold(
       appBar: AppBar(
         title: Text("Adicionando produto"),
         centerTitle: true,
@@ -189,7 +189,7 @@ class _TelaAdicionarProdutoState extends State<TelaAdicionarProduto> {
                         }
                         return ButaoConfirmar(
                             titulo: "Adicionar produto",
-                            cor:COR_PRINCIPAL,
+                            cor: COR_PRINCIPAL,
                             onPressed: () async {
                               if (chave.currentState.validate() &&
                                   validarImagens(
@@ -198,8 +198,6 @@ class _TelaAdicionarProdutoState extends State<TelaAdicionarProduto> {
                                 chave.currentState.save();
                                 await adicionarRegraNegocio
                                     .adicionarProduto(context);
-                                Navigator.pushNamedAndRemoveUntil(
-                                    context, "tela_menu", (route) => false);
                               }
                             });
                       }),

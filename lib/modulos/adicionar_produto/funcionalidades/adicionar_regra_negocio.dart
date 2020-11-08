@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:chalana_delivery/helpers/alertas.dart';
+import 'package:chalana_delivery/helpers/conexao.dart';
 import 'package:chalana_delivery/modelos/foto_modelo.dart';
 import 'package:chalana_delivery/modelos/produto_modelo.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -80,12 +81,16 @@ class AdicionarRegraNegocio {
   Future<void> adicionarProduto(BuildContext context) async {
     processando = true;
     streamProcessando.add(processando);
+    if (await temInternet()) {
+      await produto.salvar();
 
-    await produto.salvar();
+      await salvarFirebase();
 
-    await salvarFirebase();
-
-    await produto.atualizar();
+      await produto.atualizar();
+      Navigator.pushNamedAndRemoveUntil(context, "tela_menu", (route) => false);
+    } else {
+      popAlerta(context, "sem conexão com a internet");
+    }
 
     processando = false;
     streamProcessando.add(processando);

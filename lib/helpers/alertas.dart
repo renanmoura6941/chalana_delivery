@@ -13,6 +13,7 @@ popAlerta(BuildContext context, String mensagem) {
           ));
 }
 
+
 const CARREGANDO =
     SpinKitWave(color: Colors.white54, type: SpinKitWaveType.end);
 

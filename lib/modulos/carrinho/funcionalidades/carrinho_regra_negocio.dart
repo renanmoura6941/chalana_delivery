@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:chalana_delivery/helpers/conexao.dart';
 import 'package:chalana_delivery/modelos/carrinho_modelo.dart';
 import 'package:chalana_delivery/modelos/pedido_modelo.dart';
 import 'package:chalana_delivery/modelos/produto_modelo.dart';
@@ -46,32 +47,34 @@ class CarrinhoRegraNegocio {
   }
 
   Future<void> confirmarPedido() async {
-    String q = "%0A";
-    String divisor = "------------------------------------";
-    double total = 0;
-    String mensagem = "Minha solicitação:$q";
+    if (await temInternet()) {
+      String q = "%0A";
+      String divisor = "------------------------------------";
+      double total = 0;
+      String mensagem = "Minha solicitação:$q";
 
-    for (var e in carrinho.listaPedidos) {
-      mensagem +=
-          "$divisor$q*Produto*: ${e.produto.nome}$q*Quantidade*: ${e.quantidade}$q*Preço da unidade*: R\$ ${e.produto.preco.toStringAsFixed(2)}$q*Valor*: R\$ ${(e.quantidade * e.produto.preco).toStringAsFixed(2)}$q";
-      total += e.quantidade * e.produto.preco;
-    }
+      for (var e in carrinho.listaPedidos) {
+        mensagem +=
+            "$divisor$q*Produto*: ${e.produto.nome}$q*Quantidade*: ${e.quantidade}$q*Preço da unidade*: R\$ ${e.produto.preco.toStringAsFixed(2)}$q*Valor*: R\$ ${(e.quantidade * e.produto.preco).toStringAsFixed(2)}$q";
+        total += e.quantidade * e.produto.preco;
+      }
 
-    mensagem += divisor +
-        q +
-        q +
-        q +
-        "*Preço total da solicitação*: ${total.toStringAsFixed(2)}";
-String numero = "5585997732024";
-    String url =
-        "https://api.whatsapp.com/send/?phone=$numero&text=${mensagem}&app_absent=0";
+      mensagem += divisor +
+          q +
+          q +
+          q +
+          "*Preço total da solicitação*: ${total.toStringAsFixed(2)}";
+      String numero = "5585997732024";
+      String url =
+          "https://api.whatsapp.com/send/?phone=$numero&text=${mensagem}&app_absent=0";
 
-    try {
-      await launch(url);
-      limpar();
-      entradaCarrinho.add(carrinho);
-    } catch (erro) {
-      debugPrint("erro ao enviar mensagem: $erro");
+      try {
+        await launch(url);
+        limpar();
+        entradaCarrinho.add(carrinho);
+      } catch (erro) {
+        debugPrint("erro ao enviar mensagem: $erro");
+      }
     }
   }
 }

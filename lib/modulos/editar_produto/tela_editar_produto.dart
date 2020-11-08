@@ -221,10 +221,7 @@ class _TelaEditarProdutoState extends State<TelaEditarProduto> {
                                       editaRegraNegocio.produto.imagens,
                                       context)) {
                                 formkey.currentState.save();
-                                await editaRegraNegocio.editarProduto();
-
-                                Navigator.pushNamedAndRemoveUntil(
-                                    context, "tela_menu", (route) => false);
+                                await editaRegraNegocio.editarProduto(context);
                               }
                             });
                       }),

@@ -68,7 +68,8 @@ class _TelaProdutoState extends State<TelaProduto> {
                 //dotBgColor: Colors.transparent,
                 autoplay: false,
                 images: widget.produto.imagens == null ||
-                        widget.produto.imagens.isEmpty
+                        widget.produto.imagens.isEmpty ||
+                        widget.produto.imagens.first == null
                     ? IMAGEM_VAZIA
                     : widget.produto.imagens.map((imagem) {
                         return CachedNetworkImage(
