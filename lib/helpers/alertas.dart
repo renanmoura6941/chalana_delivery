@@ -6,13 +6,17 @@ popAlerta(BuildContext context, String mensagem) {
       context: context,
       builder: (BuildContext context) => SimpleDialog(
             titlePadding: EdgeInsets.symmetric(vertical: 20, horizontal: 5),
-            title: Container(
-                alignment: Alignment.center,
-                margin: EdgeInsets.symmetric(vertical: 20),
-                child: Text(mensagem)),
+            backgroundColor: Colors.transparent,
+            title: FloatingActionButton.extended(
+              backgroundColor: Colors.red,
+              onPressed: () {},
+              label: Container(
+                  alignment: Alignment.center,
+                  margin: EdgeInsets.symmetric(vertical: 20),
+                  child: Text(mensagem)),
+            ),
           ));
 }
-
 
 const CARREGANDO =
     SpinKitWave(color: Colors.white54, type: SpinKitWaveType.end);
@@ -27,7 +31,6 @@ const QUALIDADE = 60;
 Widget ERRO_IMAGEM = Column(
   mainAxisAlignment: MainAxisAlignment.center,
   children: [
-
     Icon(
       Icons.image_not_supported,
       color: Colors.red,

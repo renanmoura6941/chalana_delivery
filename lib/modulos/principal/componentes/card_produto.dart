@@ -10,7 +10,7 @@ class CardProduto extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
+      onTap: ()  {
         Navigator.pushNamed(context, "produto", arguments: produto.copiar());
       },
       // child: Card(
@@ -25,7 +25,6 @@ class CardProduto extends StatelessWidget {
       child: AspectRatio(
           aspectRatio: 1,
           child: produto.imagens.first.url == null
-              
               ? ERRO_IMAGEM
               : CachedNetworkImage(
                   imageUrl: produto.imagens.first.url,

@@ -89,7 +89,7 @@ class AdicionarRegraNegocio {
       await produto.atualizar();
       Navigator.pushNamedAndRemoveUntil(context, "tela_menu", (route) => false);
     } else {
-      popAlerta(context, "sem conexão com a internet");
+      popAlerta(context, "Ops!...Sem conexão com a internet");
     }
 
     processando = false;

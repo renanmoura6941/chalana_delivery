@@ -39,7 +39,7 @@ class _TelaCarrinhoState extends State<TelaCarrinho> {
                           return CardPreco(
                             carrinho: carrinhoRegraNegocio.carrinho,
                             onPressed: () async {
-                              await carrinhoRegraNegocio.confirmarPedido();
+                              await carrinhoRegraNegocio.confirmarPedido(context);
                             },
                           );
                         }

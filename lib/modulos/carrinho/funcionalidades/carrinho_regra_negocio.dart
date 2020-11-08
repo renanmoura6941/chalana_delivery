@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:chalana_delivery/helpers/alertas.dart';
 import 'package:chalana_delivery/helpers/conexao.dart';
 import 'package:chalana_delivery/modelos/carrinho_modelo.dart';
 import 'package:chalana_delivery/modelos/pedido_modelo.dart';
@@ -46,7 +47,7 @@ class CarrinhoRegraNegocio {
     carrinho.listaPedidos.clear();
   }
 
-  Future<void> confirmarPedido() async {
+  Future<void> confirmarPedido(BuildContext context) async {
     if (await temInternet()) {
       String q = "%0A";
       String divisor = "------------------------------------";
@@ -75,6 +76,8 @@ class CarrinhoRegraNegocio {
       } catch (erro) {
         debugPrint("erro ao enviar mensagem: $erro");
       }
+    }else{
+      popAlerta(context, "Ops!...Sem conexão com a internet");
     }
   }
 }
