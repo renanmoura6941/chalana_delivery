@@ -25,33 +25,33 @@ class SectionStaggered extends StatelessWidget {
             color: Colors.white,
           ),
 
-          GridView.builder(
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+          // GridView.builder(
+          //     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
 
-            padding: EdgeInsets.zero,
-            shrinkWrap: true,
-            itemCount: produtos.length,
-            physics:
-                BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
-            itemBuilder: (_, index) {
-              return CardProduto(produtos[index]);
-            },
-          )
-          // StaggeredGridView.countBuilder(
           //   padding: EdgeInsets.zero,
           //   shrinkWrap: true,
-          //   crossAxisCount: 4,
           //   itemCount: produtos.length,
           //   physics:
           //       BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
           //   itemBuilder: (_, index) {
           //     return CardProduto(produtos[index]);
           //   },
-          //   staggeredTileBuilder: (index) =>
-          //       StaggeredTile.count(2, index.isEven ? 2 : 1),
-          //   mainAxisSpacing: 4,
-          //   crossAxisSpacing: 4,
           // )
+          StaggeredGridView.countBuilder(
+            padding: EdgeInsets.zero,
+            shrinkWrap: true,
+            crossAxisCount: 4,
+            itemCount: produtos.length,
+            physics:
+                BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+            itemBuilder: (_, index) {
+              return CardProduto(produtos[index]);
+            },
+            staggeredTileBuilder: (index) =>
+                StaggeredTile.count(2, index.isEven ? 2 : 1),
+            mainAxisSpacing: 4,
+            crossAxisSpacing: 4,
+          )
         ],
       ),
     );
