@@ -27,7 +27,7 @@ class _TelaAnimacaoState extends State<TelaAnimacao> {
 
   @override
   void initState() {
-    //  pegarProdutos();
+      pegarProdutos();
 
     super.initState();
   }
