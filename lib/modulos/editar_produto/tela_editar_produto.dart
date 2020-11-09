@@ -185,7 +185,6 @@ class _TelaEditarProdutoState extends State<TelaEditarProduto> {
                   TextFormField(
                       initialValue: widget.produtoModelo.nome.toString(),
                       validator: (nome) => validarNome(nome),
-                      onChanged: (entrada) => formkey.currentState.validate(),
                       onSaved: (entrada) =>
                           editaRegraNegocio.produto..nome = entrada),
                   Text("Preço"),
@@ -193,14 +192,12 @@ class _TelaEditarProdutoState extends State<TelaEditarProduto> {
                       initialValue:
                           widget.produtoModelo.preco.toStringAsFixed(2),
                       validator: (preco) => validarPreco(preco),
-                      onChanged: (entrada) => formkey.currentState.validate(),
                       onSaved: (entrada) =>
                           editaRegraNegocio.produto.preco = num.parse(entrada)),
                   Text("Descrição"),
                   TextFormField(
                       initialValue: widget.produtoModelo.descrissao,
                       validator: (descricao) => validarDescricao(descricao),
-                      onChanged: (entrada) => formkey.currentState.validate(),
                       onSaved: (entrada) =>
                           editaRegraNegocio.produto.descrissao = entrada),
                   SizedBox(
