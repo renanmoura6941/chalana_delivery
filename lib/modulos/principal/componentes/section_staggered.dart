@@ -21,7 +21,7 @@ class SectionStaggered extends StatelessWidget {
           Divider(
             color: Colors.white,
           ),
-          SectionHeader("produtos"),
+          SectionHeader("Produtos"),
           Divider(
             color: Colors.white,
           ),
