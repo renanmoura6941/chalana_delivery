@@ -41,18 +41,51 @@ class _TelaProdutoState extends State<TelaProduto> {
 
     produtoRegraNegocio.estaNoCarrinho(widget.produto);
 
+    excluirAlerta(BuildContext context) {
+      return showDialog(
+          context: context,
+          builder: (BuildContext context) => SimpleDialog(
+                //titlePadding: EdgeInsets.symmetric(vertical: 20, horizontal: 5),
+                backgroundColor: COR_PRINCIPAL,
+                title: Center(
+                  child: Container(
+                   // color: Colors.red,
+                      alignment: Alignment.center,
+                      margin: EdgeInsets.symmetric(vertical: 20),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text("Tem certeza que deseja excluir?"),
+                          Row(
+                            children: [
+                              RaisedButton(
+                                onPressed: () async {
+                                  await removerImagemStorege();
+                                  await widget.produto.remover();
+                                  Navigator.of(context).pop();
+                                },
+                                child: Text("Sim"),
+                              ),
+                              Expanded(child: Text("")),
+                              RaisedButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                child: Text("Não"),
+                              ),
+                            ],
+                          ),
+                        ],
+                      )),
+                ),
+              ));
+    }
+
     List<Widget> adm = <Widget>[
-       IconButton(
+      IconButton(
           icon: Icon(Icons.add),
           onPressed: () {
             Navigator.pushNamed(context, "tela_adicionar_produto");
-          }),
-      IconButton(
-          icon: Icon(Icons.highlight_remove),
-          onPressed: () async {
-            await removerImagemStorege();
-            await widget.produto.remover();
-            Navigator.of(context).pop();
           }),
       IconButton(
           icon: Icon(Icons.edit),
@@ -60,7 +93,11 @@ class _TelaProdutoState extends State<TelaProduto> {
             Navigator.pushNamed(context, "tela_editar_produto",
                 arguments: widget.produto.copiar());
           }),
-          
+      IconButton(
+          icon: Icon(Icons.highlight_remove),
+          onPressed: () {
+            excluirAlerta(context);
+          }),
     ];
 
     return Scaffold(
