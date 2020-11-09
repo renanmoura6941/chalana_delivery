@@ -16,33 +16,34 @@ class _TelaAnimacaoState extends State<TelaAnimacao> {
   List<ProdutoModelo> produtos;
 
   pegarProdutos() async {
-    produtos = await GetIt.I.get<Repositorio>().getProdutos();
-    Future.delayed(Duration(seconds: 2), () {
-      Navigator.pushNamedAndRemoveUntil(context, "tela_menu", (route) => false);
-    });
+    if (!widget.automatico) {
+      produtos = await GetIt.I.get<Repositorio>().getProdutos();
+      Future.delayed(Duration(seconds: 2), () {
+        Navigator.pushNamedAndRemoveUntil(
+            context, "tela_menu", (route) => false);
+      });
+    }
   }
 
   @override
   void initState() {
-    pegarProdutos();
+    //  pegarProdutos();
 
-    GetIt.I.get<Repositorio>().getProdutos();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: COR_PRINCIPAL.withOpacity(0.6),
+      color: Colors.white,
       child: Center(
-        
         child: Column(
           children: [
             Image.asset(
-              "lib/imagens/logo2.png",
-              color: Colors.white,
+              "lib/imagens/logo1.png",
+              //color: Colors.white,
             ),
-            CARREGANDO
+            CARREGANDO2
           ],
         ),
       ),
