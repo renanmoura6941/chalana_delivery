@@ -17,6 +17,8 @@ class TelaProduto extends StatefulWidget {
 }
 
 class _TelaProdutoState extends State<TelaProduto> {
+  bool permissao = false;
+
   Future<void> removerImagemStorege() async {
     var referencia =
         await FirebaseStorage.instance.ref().child(widget.produto.id);
@@ -36,28 +38,42 @@ class _TelaProdutoState extends State<TelaProduto> {
   @override
   Widget build(BuildContext context) {
     print("reconstruindo tela produto......");
+
     produtoRegraNegocio.estaNoCarrinho(widget.produto);
+
+    List<Widget> adm = <Widget>[
+       IconButton(
+          icon: Icon(Icons.add),
+          onPressed: () {
+            Navigator.pushNamed(context, "tela_adicionar_produto");
+          }),
+      IconButton(
+          icon: Icon(Icons.highlight_remove),
+          onPressed: () async {
+            await removerImagemStorege();
+            await widget.produto.remover();
+            Navigator.of(context).pop();
+          }),
+      IconButton(
+          icon: Icon(Icons.edit),
+          onPressed: () async {
+            Navigator.pushNamed(context, "tela_editar_produto",
+                arguments: widget.produto.copiar());
+          }),
+          
+    ];
 
     return Scaffold(
         appBar: AppBar(
-          title: Text(widget.produto.nome),
-          centerTitle: true,
-          actions: [
-            IconButton(
-                icon: Icon(Icons.highlight_remove),
-                onPressed: () async {
-                  await removerImagemStorege();
-                  await widget.produto.remover();
-                  Navigator.of(context).pop();
-                }),
-            IconButton(
-                icon: Icon(Icons.edit),
-                onPressed: () async {
-                  Navigator.pushNamed(context, "tela_editar_produto",
-                      arguments: widget.produto.copiar());
-                }),
-          ],
-        ),
+            title: GestureDetector(
+                onDoubleTap: () {
+                  setState(() {
+                    permissao = !permissao;
+                  });
+                },
+                child: Text(widget.produto.nome)),
+            centerTitle: true,
+            actions: permissao ? adm : []),
         backgroundColor: Colors.white,
         body: ListView(
           children: [

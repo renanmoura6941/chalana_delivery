@@ -18,9 +18,10 @@ bool validarMonetario(String monetario) {
 String validarPreco(String preco) {
   if (preco.isEmpty) {
     return 'Campo vazio';
-  } else {
-    return null;
+  } else if (preco.contains(",")) {
+    return "Use ponto no lugar de vírgula";
   }
+  return null;
 }
 
 String validarNome(String nome) {

@@ -26,7 +26,7 @@ const CARREGANDO2 = SpinKitWave(
 
 const COR_PRINCIPAL = const Color.fromARGB(255, 4, 125, 141);
 
-const QUALIDADE = 60;
+const QUALIDADE = 45;
 
 Widget ERRO_IMAGEM = Column(
   mainAxisAlignment: MainAxisAlignment.center,

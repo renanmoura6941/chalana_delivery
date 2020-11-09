@@ -17,6 +17,7 @@ class _TelaPrincipalState extends State<TelaPrincipal> {
   @override
   Widget build(BuildContext context) {
     AtualizarProduto atualizarProduto = AtualizarProduto();
+    bool permissao = false;
 
     Widget gradeProdutos(List<ProdutoModelo> produtos) {
       return SectionStaggered(produtos);
@@ -46,14 +47,11 @@ class _TelaPrincipalState extends State<TelaPrincipal> {
         builder: (context, snapshotTwo) {
           print("Construindo a tela de Produtos");
           if (snapshotTwo.hasData) {
-            return 
-              ListView(
-                children: [
-                  gradeProdutos(snapshotTwo.data),
-                ],
-              );
-              
-              
+            return ListView(
+              children: [
+                gradeProdutos(snapshotTwo.data),
+              ],
+            );
           } else {
             return Center(child: CARREGANDO);
           }
@@ -61,20 +59,15 @@ class _TelaPrincipalState extends State<TelaPrincipal> {
       );
     }
 
+    
+
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true,
-        title: Text(
-          "Chalana delivery",
+          centerTitle: true,
+          title: Text(
+            "Chalana delivery",
+          ),
         ),
-        actions: [
-          IconButton(
-              icon: Icon(Icons.add),
-              onPressed: () {
-                Navigator.pushNamed(context, "tela_adicionar_produto");
-              })
-        ],
-      ),
       //  backgroundColor: Colors.white,
       body: SafeArea(
           child: Padding(
