@@ -161,22 +161,21 @@ class _TelaAdicionarProdutoState extends State<TelaAdicionarProduto> {
                 children: <Widget>[
                   Text("Nome"),
                   TextFormField(
-                    //  validator: (nome) => validarNome(nome),
-                      onChanged: (entrada) => chave.currentState.validate(),
+                      validator: (nome) => validarNome(nome),
                       onSaved: (entrada) =>
                           adicionarRegraNegocio.produto..nome = entrada),
                   Text("Preço"),
                   TextFormField(
-                      validator: (preco) => validarPreco(preco),
-                      //onChanged: (entrada) => chave.currentState.validate(),
-                      onSaved: (entrada) => adicionarRegraNegocio
-                          .produto.preco = num.parse(entrada)),
+                    validator: (preco) => validarPreco(preco),
+                    onSaved: (entrada) => adicionarRegraNegocio.produto.preco =
+                        num.parse(entrada),
+                  ),
                   Text("Descrição"),
                   TextFormField(
-                      validator: (descricao) => validarDescricao(descricao),
-                     // onChanged: (entrada) => chave.currentState.validate(),
-                      onSaved: (entrada) =>
-                          adicionarRegraNegocio.produto.descrissao = entrada),
+                    validator: (descricao) => validarDescricao(descricao),
+                    onSaved: (entrada) =>
+                        adicionarRegraNegocio.produto.descrissao = entrada,
+                  ),
                   SizedBox(
                     height: 30,
                   ),

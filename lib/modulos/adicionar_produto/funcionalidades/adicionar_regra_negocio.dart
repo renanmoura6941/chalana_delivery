@@ -79,7 +79,6 @@ class AdicionarRegraNegocio {
   }
 
   Future<void> adicionarProduto(BuildContext context) async {
-    processando = true;
     streamProcessando.add(processando);
     if (await temInternet()) {
       await produto.salvar();

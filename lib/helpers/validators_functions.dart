@@ -20,7 +20,13 @@ String validarPreco(String preco) {
     return 'Campo vazio';
   } else if (preco.contains(",")) {
     return "Use ponto no lugar de vírgula";
+  } else {
+    var numero = double.tryParse(preco) ?? null;
+    if (numero == null) {
+      return "Preço inválido, utilize o formato exemplo: (2.00)";
+    }
   }
+
   return null;
 }
 
