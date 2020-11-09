@@ -12,11 +12,12 @@ class SectionStaggered extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
           Divider(
             color: Colors.white,
           ),
@@ -24,34 +25,53 @@ class SectionStaggered extends StatelessWidget {
           Divider(
             color: Colors.white,
           ),
+          Expanded(
+            child: GridView.builder(
+              physics: BouncingScrollPhysics(),
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  childAspectRatio: 1,
+                  crossAxisSpacing: 1,
+                  mainAxisSpacing: 0),
+              scrollDirection: Axis.vertical,
+              shrinkWrap: true,
+              itemCount: produtos.length,
+              itemBuilder: (_, indice) {
+                return CardProduto(produtos[indice]);
+              },
 
-          // GridView.builder(
-          //     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
-
-          //   padding: EdgeInsets.zero,
-          //   shrinkWrap: true,
-          //   itemCount: produtos.length,
-          //   physics:
-          //       BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
-          //   itemBuilder: (_, index) {
-          //     return CardProduto(produtos[index]);
-          //   },
-          // )
-          StaggeredGridView.countBuilder(
-            padding: EdgeInsets.zero,
-            shrinkWrap: true,
-            crossAxisCount: 4,
-            itemCount: produtos.length,
-            physics:
-                BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
-            itemBuilder: (_, index) {
-              return CardProduto(produtos[index]);
-            },
-            staggeredTileBuilder: (index) =>
-                StaggeredTile.count(2, index.isEven ? 2 : 1),
-            mainAxisSpacing: 4,
-            crossAxisSpacing: 4,
-          )
+              // GridView.builder(
+              //   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              //       crossAxisCount: 2,
+              //       childAspectRatio: 1,
+              //       crossAxisSpacing: 0,
+              //       mainAxisSpacing: 0),
+              //   padding: EdgeInsets.zero,
+              //   shrinkWrap: true,
+              //   itemCount: produtos.length,
+              //   physics:
+              //       BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+              //   itemBuilder: (_, index) {
+              //     return CardProduto(produtos[index]);
+              //   },
+              // )
+              // StaggeredGridView.countBuilder(
+              //   padding: EdgeInsets.zero,
+              //   shrinkWrap: true,
+              //   crossAxisCount: 4,
+              //   itemCount: produtos.length,
+              //   physics:
+              //       BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+              //   itemBuilder: (_, index) {
+              //     return CardProduto(produtos[index]);
+              //   },
+              //   staggeredTileBuilder: (index) =>
+              //       StaggeredTile.count(2, index.isEven ? 2 : 1),
+              //   mainAxisSpacing: 4,
+              //   crossAxisSpacing: 4,
+              // )
+            ),
+          ),
         ],
       ),
     );

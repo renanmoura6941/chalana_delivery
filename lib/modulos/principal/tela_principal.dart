@@ -1,5 +1,7 @@
 import 'package:chalana_delivery/helpers/alertas.dart';
 import 'package:chalana_delivery/modelos/produto_modelo.dart';
+import 'package:chalana_delivery/modulos/principal/componentes/SectionHeader.dart';
+import 'package:chalana_delivery/modulos/principal/componentes/card_produto.dart';
 import 'package:chalana_delivery/modulos/principal/componentes/section_staggered.dart';
 import 'package:chalana_delivery/modulos/principal/funcionalidades/atualizar_produto.dart';
 import 'package:flutter/material.dart';
@@ -17,26 +19,9 @@ class _TelaPrincipalState extends State<TelaPrincipal> {
   @override
   Widget build(BuildContext context) {
     AtualizarProduto atualizarProduto = AtualizarProduto();
-    bool permissao = false;
 
     Widget gradeProdutos(List<ProdutoModelo> produtos) {
       return SectionStaggered(produtos);
-      // return GridView.builder(
-      //   physics: BouncingScrollPhysics(),
-      //   //   padding: EdgeInsets.symmetric(vertical: 10),
-      //   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-      //     crossAxisCount: 2,
-      //     childAspectRatio:1,
-      //     crossAxisSpacing:1,
-      //     mainAxisSpacing: 10
-      //   ),
-      //   scrollDirection: Axis.vertical,
-      //   shrinkWrap: true,
-      //   itemCount: produtos.length,
-      //   itemBuilder: (_, indice) {
-      //     return CardProduto(produtos[indice]);
-      //   },
-      // );
     }
 
     Widget aguardandoProdutos(List<ProdutoModelo> produtos) {
@@ -47,11 +32,7 @@ class _TelaPrincipalState extends State<TelaPrincipal> {
         builder: (context, snapshotTwo) {
           print("Construindo a tela de Produtos");
           if (snapshotTwo.hasData) {
-            return ListView(
-              children: [
-                gradeProdutos(snapshotTwo.data),
-              ],
-            );
+            return gradeProdutos(snapshotTwo.data);
           } else {
             return Center(child: CARREGANDO);
           }
@@ -59,15 +40,13 @@ class _TelaPrincipalState extends State<TelaPrincipal> {
       );
     }
 
-    
-
     return Scaffold(
       appBar: AppBar(
-          centerTitle: true,
-          title: Text(
-            "Chalana delivery",
-          ),
+        centerTitle: true,
+        title: Text(
+          "Chalana delivery",
         ),
+      ),
       //  backgroundColor: Colors.white,
       body: SafeArea(
           child: Padding(
