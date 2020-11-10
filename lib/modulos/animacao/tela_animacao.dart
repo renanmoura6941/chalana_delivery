@@ -44,10 +44,10 @@ class _TelaAnimacaoState extends State<TelaAnimacao> {
                 color: Colors.white,
               ),
               CARREGANDO3,
-              Text(
-                "Versão Administrador",
-                style: TextStyle(color: Colors.white),
-              )
+              // Text(
+              //   "Versão Administrador",
+              //   style: TextStyle(color: Colors.white),
+              // )
             ],
           ),
         ),

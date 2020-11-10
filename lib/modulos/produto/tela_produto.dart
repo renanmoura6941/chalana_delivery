@@ -86,9 +86,9 @@ class _TelaProdutoState extends State<TelaProduto> {
         appBar: AppBar(
             title: GestureDetector(
                 onDoubleTap: () {
-                  setState(() {
-                    permissao = !permissao;
-                  });
+                  // setState(() {
+                  //   permissao = !permissao;
+                  // });
                 },
                 child: Text(widget.produto.nome)),
             centerTitle: true,
