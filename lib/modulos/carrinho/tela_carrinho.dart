@@ -11,7 +11,12 @@ class TelaCarrinho extends StatefulWidget {
 
 class _TelaCarrinhoState extends State<TelaCarrinho> {
   CarrinhoRegraNegocio carrinhoRegraNegocio = CarrinhoRegraNegocio();
-
+ @override
+  void dispose() {
+    print("destruir");
+    carrinhoRegraNegocio.destruir();
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -47,6 +47,11 @@ class CarrinhoRegraNegocio {
     carrinho.listaPedidos.clear();
   }
 
+  destruir() {
+    streamCarrinho.close();
+    streamNoCarrinho.close();
+  }
+
   Future<void> confirmarPedido(BuildContext context) async {
     if (await temInternet()) {
       String q = "%0A";
@@ -76,7 +81,7 @@ class CarrinhoRegraNegocio {
       } catch (erro) {
         debugPrint("erro ao enviar mensagem: $erro");
       }
-    }else{
+    } else {
       popAlerta(context, "Ops!...Sem conexão com a internet");
     }
   }

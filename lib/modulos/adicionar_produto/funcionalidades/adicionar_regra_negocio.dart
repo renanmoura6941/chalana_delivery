@@ -43,8 +43,9 @@ class AdicionarRegraNegocio {
     if (pickedFile != null) {
       produto.imagens.add(FotoModelo(local: File(pickedFile.path), url: null));
     }
-    Navigator.of(context).pop();
     entrada.add(produto.imagens);
+
+    Navigator.of(context).pop();
   }
 
   Future<void> adicionarGaleria(BuildContext context) async {
@@ -53,8 +54,9 @@ class AdicionarRegraNegocio {
     if (pickedFile != null) {
       produto.imagens.add(FotoModelo(local: File(pickedFile.path), url: null));
     }
-    Navigator.of(context).pop();
     entrada.add(produto.imagens);
+
+    Navigator.of(context).pop();
   }
 
   Future<FotoModelo> salvarFirestore(File imagem) async {
@@ -79,6 +81,8 @@ class AdicionarRegraNegocio {
   }
 
   Future<void> adicionarProduto(BuildContext context) async {
+    processando = true;
+
     streamProcessando.add(processando);
     if (await temInternet()) {
       await produto.salvar();
@@ -93,5 +97,10 @@ class AdicionarRegraNegocio {
 
     processando = false;
     streamProcessando.add(processando);
+  }
+
+destruir() {
+    streamProcessando.close();
+    stream.close();
   }
 }

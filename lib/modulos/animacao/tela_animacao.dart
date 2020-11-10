@@ -43,7 +43,8 @@ class _TelaAnimacaoState extends State<TelaAnimacao> {
               "lib/imagens/logo1.png",
               //color: Colors.white,
             ),
-            CARREGANDO2
+            CARREGANDO2,
+            Text("Versão Administrador",style: TextStyle(color: COR_PRINCIPAL),)
           ],
         ),
       ),

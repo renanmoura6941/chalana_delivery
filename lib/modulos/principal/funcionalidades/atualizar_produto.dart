@@ -5,7 +5,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get_it/get_it.dart';
 
 class AtualizarProduto {
-  final StreamController<List<ProdutoModelo>> streamAtualizarProduto = StreamController();
+  final StreamController<List<ProdutoModelo>> streamAtualizarProduto =
+      StreamController();
   Sink<List<ProdutoModelo>> get entrada => streamAtualizarProduto.sink;
   Stream get saida => streamAtualizarProduto.stream;
 
@@ -22,6 +23,8 @@ class AtualizarProduto {
     });
   }
 
-
-  
+  destruir() {
+    streamAtualizarProduto.close();
+    streamAtualizarProduto.close();
+  }
 }

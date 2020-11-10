@@ -142,6 +142,13 @@ class _TelaAdicionarProdutoState extends State<TelaAdicionarProduto> {
   }
 
   @override
+  void dispose() {
+    print("destruir");
+    adicionarRegraNegocio.destruir();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
