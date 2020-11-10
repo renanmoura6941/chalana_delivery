@@ -55,7 +55,7 @@ class _TelaProdutoState extends State<TelaProduto> {
             ));
   }
 
-  adiministrador() {
+  List<Widget> adiministrador() {
     return <Widget>[
       IconButton(
           icon: Icon(Icons.add),
@@ -64,7 +64,7 @@ class _TelaProdutoState extends State<TelaProduto> {
           }),
       IconButton(
           icon: Icon(Icons.edit),
-          onPressed: () async {
+          onPressed: () {
             Navigator.pushNamed(context, "tela_editar_produto",
                 arguments: widget.produto.copiar());
           }),
@@ -97,7 +97,7 @@ class _TelaProdutoState extends State<TelaProduto> {
                 },
                 child: Text(widget.produto.nome)),
             centerTitle: true,
-            actions: permissao ? adiministrador : []),
+            actions: permissao ? adiministrador() : []),
         backgroundColor: Colors.white,
         body: ListView(
           children: [
