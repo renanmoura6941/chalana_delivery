@@ -17,71 +17,48 @@ class TelaProduto extends StatefulWidget {
 }
 
 class _TelaProdutoState extends State<TelaProduto> {
+  PeodutoRegraNegocio produtoRegraNegocio;
   bool permissao = false;
 
-  Future<void> removerImagemStorege() async {
-    var referencia =
-        await FirebaseStorage.instance.ref().child(widget.produto.id);
-
-    widget.produto.imagens.forEach((e) async {
-      await referencia.child(e.uuid).delete();
-    });
+  excluirAlerta(BuildContext context) {
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) => SimpleDialog(
+              //titlePadding: EdgeInsets.symmetric(vertical: 20, horizontal: 5),
+              backgroundColor: COR_PRINCIPAL,
+              title: Center(
+                child: Container(
+                    // color: Colors.red,
+                    alignment: Alignment.center,
+                    margin: EdgeInsets.symmetric(vertical: 20),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text("Tem certeza que deseja excluir?"),
+                        Row(
+                          children: [
+                            RaisedButton(
+                              onPressed: () async {
+                                produtoRegraNegocio.remover();
+                                Navigator.of(context).pop();
+                              },
+                              child: Text("Sim"),
+                            ),
+                            Expanded(child: Text("")),
+                            RaisedButton(
+                              onPressed: () => Navigator.pop(context),
+                              child: Text("Não"),
+                            ),
+                          ],
+                        ),
+                      ],
+                    )),
+              ),
+            ));
   }
 
-  PeodutoRegraNegocio produtoRegraNegocio;
-  @override
-  void initState() {
-    produtoRegraNegocio = PeodutoRegraNegocio();
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    print("reconstruindo tela produto......");
-
-    produtoRegraNegocio.estaNoCarrinho(widget.produto);
-
-    excluirAlerta(BuildContext context) {
-      return showDialog(
-          context: context,
-          builder: (BuildContext context) => SimpleDialog(
-                //titlePadding: EdgeInsets.symmetric(vertical: 20, horizontal: 5),
-                backgroundColor: COR_PRINCIPAL,
-                title: Center(
-                  child: Container(
-                   // color: Colors.red,
-                      alignment: Alignment.center,
-                      margin: EdgeInsets.symmetric(vertical: 20),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text("Tem certeza que deseja excluir?"),
-                          Row(
-                            children: [
-                              RaisedButton(
-                                onPressed: () async {
-                                  await removerImagemStorege();
-                                  await widget.produto.remover();
-                                  Navigator.of(context).pop();
-                                },
-                                child: Text("Sim"),
-                              ),
-                              Expanded(child: Text("")),
-                              RaisedButton(
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                                child: Text("Não"),
-                              ),
-                            ],
-                          ),
-                        ],
-                      )),
-                ),
-              ));
-    }
-
-    List<Widget> adm = <Widget>[
+  adiministrador() {
+    return <Widget>[
       IconButton(
           icon: Icon(Icons.add),
           onPressed: () {
@@ -99,6 +76,18 @@ class _TelaProdutoState extends State<TelaProduto> {
             excluirAlerta(context);
           }),
     ];
+  }
+
+  @override
+  void initState() {
+    produtoRegraNegocio = PeodutoRegraNegocio(widget.produto);
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    print("reconstruindo tela produto......");
+    produtoRegraNegocio.estaNoCarrinho(widget.produto);
 
     return Scaffold(
         appBar: AppBar(
@@ -110,7 +99,7 @@ class _TelaProdutoState extends State<TelaProduto> {
                 },
                 child: Text(widget.produto.nome)),
             centerTitle: true,
-            actions: permissao ? adm : []),
+            actions: permissao ? adiministrador : []),
         backgroundColor: Colors.white,
         body: ListView(
           children: [
@@ -179,24 +168,6 @@ class _TelaProdutoState extends State<TelaProduto> {
                   SizedBox(
                     height: 60,
                   ),
-
-                  // if (!produtoRegraNegocio.noCarrinho)
-                  //   ButaoConfirmar(
-                  //       titulo: "Adicionar ao carrinho",
-                  //       cor:COR_PRINCIPAL,
-                  //       onPressed: () async {
-                  // produtoRegraNegocio.addCarrinho(widget.produto);
-
-                  // var pop = await Navigator.pushNamed(
-                  //     context, "Tela_carrinho");
-                  // print(pop);
-                  // if (pop == true || pop == null) {
-                  //   setState(() {
-                  //     produtoRegraNegocio
-                  //         .estaNoCarrinho(widget.produto);
-                  //   });
-                  // }
-                  //       })
                 ],
               ),
             )
@@ -220,9 +191,7 @@ class _TelaProdutoState extends State<TelaProduto> {
                 backgroundColor: Colors.red,
                 onPressed: () async {
                   produtoRegraNegocio.addCarrinho(widget.produto);
-
                   var pop = await Navigator.pushNamed(context, "Tela_carrinho");
-                  print(pop);
                   if (pop == true || pop == null) {
                     setState(() {
                       produtoRegraNegocio.estaNoCarrinho(widget.produto);
