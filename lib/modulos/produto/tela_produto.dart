@@ -59,20 +59,15 @@ class _TelaProdutoState extends State<TelaProduto> {
     return <Widget>[
       IconButton(
           icon: Icon(Icons.add),
-          onPressed: () {
-            Navigator.pushNamed(context, "tela_adicionar_produto");
-          }),
+          onPressed: () =>
+              Navigator.pushNamed(context, "tela_adicionar_produto")),
       IconButton(
           icon: Icon(Icons.edit),
-          onPressed: () {
-            Navigator.pushNamed(context, "tela_editar_produto",
-                arguments: widget.produto.copiar());
-          }),
+          onPressed: () => Navigator.pushNamed(context, "tela_editar_produto",
+              arguments: widget.produto.copiar())),
       IconButton(
           icon: Icon(Icons.highlight_remove),
-          onPressed: () {
-            excluirAlerta(context);
-          }),
+          onPressed: () => excluirAlerta(context)),
     ];
   }
 

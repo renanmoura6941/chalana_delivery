@@ -90,7 +90,8 @@ class AdicionarRegraNegocio {
       await salvarFirebase();
 
       await produto.atualizar();
-      Navigator.pushNamedAndRemoveUntil(context, "tela_principal", (route) => false);
+      Navigator.pushNamedAndRemoveUntil(
+          context, "Tela_principal", (route) => false);
     } else {
       popAlerta(context, "Ops!...Sem conexão com a internet");
     }
@@ -99,7 +100,7 @@ class AdicionarRegraNegocio {
     streamProcessando.add(processando);
   }
 
-destruir() {
+  destruir() {
     streamProcessando.close();
     stream.close();
   }

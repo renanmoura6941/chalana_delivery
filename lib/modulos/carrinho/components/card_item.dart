@@ -18,6 +18,13 @@ class CardItem extends StatefulWidget {
 }
 
 class _CardItemState extends State<CardItem> {
+
+  @override
+  void dispose() {
+      widget.carrinhoRegra.destruir();
+      print("destruir");
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     PedidoModelo pedido =

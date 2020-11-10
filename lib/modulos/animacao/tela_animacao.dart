@@ -20,7 +20,7 @@ class _TelaAnimacaoState extends State<TelaAnimacao> {
       produtos = await GetIt.I.get<Repositorio>().getProdutos();
       Future.delayed(Duration(seconds: 2), () {
         Navigator.pushNamedAndRemoveUntil(
-            context, "Tela_principal", (route) => false);
+            context, "Tela_principal", (route) => false, arguments: produtos);
       });
     }
   }

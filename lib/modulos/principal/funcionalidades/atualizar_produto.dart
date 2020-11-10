@@ -9,6 +9,7 @@ class AtualizarProduto {
       StreamController();
   Sink<List<ProdutoModelo>> get entrada => streamAtualizarProduto.sink;
   Stream get saida => streamAtualizarProduto.stream;
+  bool inicio = true;
 
   escultarAlteracoes() async {
     await Firestore.instance
@@ -18,13 +19,12 @@ class AtualizarProduto {
       print("Escutando alterações do Firebase");
       final produtos = await GetIt.I.get<Repositorio>().getProdutos();
       print("total de produtos atualizados:${produtos.length}");
-
+      inicio = false;
       entrada.add(produtos);
     });
   }
 
   destruir() {
-    streamAtualizarProduto.close();
     streamAtualizarProduto.close();
   }
 }
