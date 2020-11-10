@@ -27,25 +27,29 @@ class _TelaAnimacaoState extends State<TelaAnimacao> {
 
   @override
   void initState() {
-      pegarProdutos();
-
+    pegarProdutos();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.white,
-      child: Center(
-        child: Column(
-          children: [
-            Image.asset(
-              "lib/imagens/logo1.png",
-              //color: Colors.white,
-            ),
-            CARREGANDO2,
-            Text("Versão Administrador",style: TextStyle(color: COR_PRINCIPAL),)
-          ],
+    return Scaffold(
+      body: Container(
+        color: Colors.white,
+        child: Center(
+          child: Column(
+            children: [
+              Image.asset(
+                "lib/imagens/logo1.png",
+                //color: Colors.white,
+              ),
+              CARREGANDO2,
+              Text(
+                "Versão Administrador",
+                style: TextStyle(color: COR_PRINCIPAL),
+              )
+            ],
+          ),
         ),
       ),
     );
