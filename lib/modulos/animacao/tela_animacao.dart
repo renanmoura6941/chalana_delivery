@@ -35,18 +35,18 @@ class _TelaAnimacaoState extends State<TelaAnimacao> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        color: Colors.white,
+        color: COR_PRINCIPAL,
         child: Center(
           child: Column(
             children: [
               Image.asset(
                 "lib/imagens/logo1.png",
-                //color: Colors.white,
+                color: Colors.white,
               ),
-              CARREGANDO2,
+              CARREGANDO3,
               Text(
                 "Versão Administrador",
-                style: TextStyle(color: COR_PRINCIPAL),
+                style: TextStyle(color: Colors.white),
               )
             ],
           ),

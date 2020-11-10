@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-class SectionHeader extends StatelessWidget {
+class Secao extends StatelessWidget {
   final String section;
 
-  const SectionHeader(this.section);
+  const Secao(this.section);
   @override
   Widget build(BuildContext context) {
     return Padding(

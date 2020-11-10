@@ -1,6 +1,6 @@
 import 'package:chalana_delivery/helpers/alertas.dart';
 import 'package:chalana_delivery/modelos/produto_modelo.dart';
-import 'package:chalana_delivery/modulos/principal/componentes/section_staggered.dart';
+import 'package:chalana_delivery/modulos/principal/componentes/secao_grade.dart';
 import 'package:chalana_delivery/modulos/principal/funcionalidades/atualizar_produto.dart';
 import 'package:flutter/material.dart';
 
@@ -14,7 +14,7 @@ class TelaPrincipal extends StatefulWidget {
 AtualizarProduto atualizarProduto = AtualizarProduto();
 
 Widget gradeProdutos(List<ProdutoModelo> produtos) {
-  return SectionStaggered(produtos);
+  return SecaoGrade(produtos);
 }
 
 Widget aguardandoProdutos(List<ProdutoModelo> produtos) {

@@ -24,6 +24,10 @@ const CARREGANDO =
 const CARREGANDO2 = SpinKitWave(
     color: const Color.fromARGB(255, 4, 125, 141), type: SpinKitWaveType.end);
 
+const CARREGANDO3 = SpinKitWave(
+    color: Colors.white, type: SpinKitWaveType.end);
+
+
 const COR_PRINCIPAL = const Color.fromARGB(255, 4, 125, 141);
 
 const QUALIDADE = 45;

@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:chalana_delivery/helpers/alertas.dart';
-import 'package:chalana_delivery/helpers/api_whats_app.dart';
 import 'package:chalana_delivery/helpers/conexao.dart';
 import 'package:chalana_delivery/modelos/foto_modelo.dart';
 import 'package:chalana_delivery/modelos/produto_modelo.dart';

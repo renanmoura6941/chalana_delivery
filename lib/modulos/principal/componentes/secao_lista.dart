@@ -1,5 +1,5 @@
 import 'package:chalana_delivery/modelos/produto_modelo.dart';
-import 'package:chalana_delivery/modulos/principal/componentes/SectionHeader.dart';
+import 'package:chalana_delivery/modulos/principal/componentes/secao.dart';
 import 'package:chalana_delivery/modulos/principal/componentes/card_produto.dart';
 import 'package:flutter/material.dart';
 
@@ -16,7 +16,7 @@ class SectionList extends StatelessWidget {
       child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            SectionHeader("Bebidas"),
+            Secao("Bebidas"),
             SizedBox(
               height: 150,
               child: ListView.separated(

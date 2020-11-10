@@ -1,9 +1,7 @@
-
 import 'package:chalana_delivery/modulos/adicionar_produto/tela_adicionar_produto.dart';
 import 'package:chalana_delivery/modulos/animacao/tela_animacao.dart';
 import 'package:chalana_delivery/modulos/carrinho/tela_carrinho.dart';
 import 'package:chalana_delivery/modulos/editar_produto/tela_editar_produto.dart';
-import 'package:chalana_delivery/modulos/menu/tela_menu.dart';
 import 'package:chalana_delivery/modulos/principal/tela_principal.dart';
 import 'package:chalana_delivery/modulos/produto/tela_produto.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +11,6 @@ class Rotas {
     final args = settings.arguments;
     final Map<String, dynamic> routes = {
       "Tela_animacao": MaterialPageRoute(builder: (_) => TelaAnimacao()),
-      "tela_menu": MaterialPageRoute(builder: (_) => TelaMenu()),
       "produto": MaterialPageRoute(builder: (_) => TelaProduto(args)),
       "tela_editar_produto":
           MaterialPageRoute(builder: (_) => TelaEditarProduto(args)),
